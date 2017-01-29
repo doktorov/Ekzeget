@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.model;
 
 public class Book {
     public String key;

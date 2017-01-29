@@ -1,5 +1,6 @@
 package ekzeget.ru.ekzeget;
 
+import ekzeget.ru.ekzeget.model.gson.GsonBooks;
 import rx.Observable;
 
 public class Service {

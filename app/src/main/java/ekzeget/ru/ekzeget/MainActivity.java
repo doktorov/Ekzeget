@@ -1,83 +1,104 @@
 package ekzeget.ru.ekzeget;
 
-import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Observable;
-import rx.functions.Action1;
+import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.model.Interpreting;
+import ekzeget.ru.ekzeget.model.gson.GsonBooks;
+import ekzeget.ru.ekzeget.model.gson.GsonChapter;
+import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
+import ekzeget.ru.ekzeget.util.FileUtils;
 
 public class MainActivity extends AppCompatActivity {
-    String[] data2 = {"Гл."};
-
     GsonBooks gsonBooks = new GsonBooks();
+    List<Book> books = new ArrayList<>();
+    List<String> chapters = new ArrayList<>();
 
-    ArrayList<Book> books = new ArrayList<>();
+    List<GsonInterpreting> gsonInterpreting = new ArrayList<>();
+    List<Interpreting> interpretings = new ArrayList<>();
+
+    List<GsonChapter> gsonChapter = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        InputStream XmlFileInputStream = getResources().openRawResource(R.raw.books);
-        String sxml = readTextFile(XmlFileInputStream);
-        Gson gson = new Gson();
-        gsonBooks = gson.fromJson(sxml, GsonBooks.class);
+        final Spinner sBooks = (Spinner) findViewById(R.id.books);
+        final Spinner sChapters = (Spinner) findViewById(R.id.chapters);
+        final Spinner sInterpreting = (Spinner) findViewById(R.id.interpreting);
 
+        // Books
+        InputStream inputBooks = getResources().openRawResource(R.raw.books);
+        String readBooks = FileUtils.readTextFile(inputBooks);
+        Gson gson = new Gson();
+        gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
+
+        Book bookTitle = new Book();
+        bookTitle.short_name = "Кн.";
+        bookTitle.key = "null";
+        books.add(bookTitle);
         for (GsonBooks.Book item : gsonBooks.nz) {
             Book book = new Book();
             book.short_name = item.short_name;
             book.key = item.key;
+            book.parts = item.parts;
             books.add(book);
         }
+        //
 
-        // адаптер
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // interpreting
+        InputStream inputInterpreting = getResources().openRawResource(R.raw.interpreting);
+        String readInterpreting = FileUtils.readTextFile(inputInterpreting);
+        gson = new Gson();
+        gsonInterpreting = gson.fromJson(readInterpreting,  new TypeToken<ArrayList<GsonInterpreting>>() {}.getType());
 
-        final ArrayAdapter<GsonBooks.Book> spinnerArrayAdapter = new ArrayAdapter<GsonBooks.Book>(this, android.R.layout.simple_spinner_item, gsonBooks.getNz()){
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
+        for (GsonInterpreting item : gsonInterpreting) {
+            Interpreting interpreting = new Interpreting();
+            interpreting.name = item.t_name;
+            interpretings.add(interpreting);
+        }
+        //
 
-                TextView tv = (TextView) view;
-                tv.setText(gsonBooks.getNz().get(position).short_name);
-                return view;
-            }
-        };
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        // chapters
+        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
+        String readChapter = FileUtils.readTextFile(inputChapter);
+        gson = new Gson();
+        gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
 
-        ArrayAdapter<Book> myAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setAdapter(myAdapter);
-        // заголовок
-        spinner.setPrompt("Title");
-        // выделяем элемент
-        spinner.setSelection(0);
-        // устанавливаем обработчик нажатия
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
+        sBooks.setAdapter(adapterBooks);
+        sBooks.setSelection(0);
+        sBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // показываем позиция нажатого элемента
-                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                chapters = new ArrayList<>();
+                chapters.add("Гл.");
+
+                if (books.get(position).key != "null") {
+                    chapters.add("О книге");
+                    for (int i = 0; i < books.get(position).parts; i++) {
+                        chapters.add(String.valueOf(i + 1));
+                    }
+                }
+
+                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, chapters);
+                sChapters.setAdapter(adapterChapters);
+                sChapters.setSelection(0);
             }
 
             @Override
@@ -85,31 +106,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data2);
-        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
-        spinner2.setAdapter(adapter2);
-        spinner2.setPrompt("Title");
-        spinner2.setSelection(0);
-
-
-        String s = "";
-    }
-
-    public String readTextFile(InputStream inputStream) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        byte buf[] = new byte[1024];
-        int len;
-        try {
-            while ((len = inputStream.read(buf)) != -1) {
-                outputStream.write(buf, 0, len);
-            }
-            outputStream.close();
-            inputStream.close();
-        } catch (IOException e) {
-
-        }
-        return outputStream.toString();
+        ArrayAdapter<Interpreting> adapterInterpretings = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretings);
+        sInterpreting.setAdapter(adapterInterpretings);
+        sInterpreting.setSelection(0);
     }
 }
 

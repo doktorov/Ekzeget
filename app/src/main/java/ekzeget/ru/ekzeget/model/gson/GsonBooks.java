@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.model.gson;
 
 public class GsonBooks {
     public Book[] nz;
