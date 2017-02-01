@@ -1,11 +1,19 @@
 package ekzeget.ru.ekzeget;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         String readChapter = FileUtils.readTextFile(inputChapter);
         gson = new Gson();
         gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
+        //
 
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
         sBooks.setAdapter(adapterBooks);
@@ -109,6 +118,41 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<Interpreting> adapterInterpretings = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretings);
         sInterpreting.setAdapter(adapterInterpretings);
         sInterpreting.setSelection(0);
+
+
+
+        /*TextView TV = (TextView)findViewById(R.id.textData);
+        Spannable wordtoSpan = new SpannableString("I know just how to whisper, And I know just how to cry,I know just where to find the answers");
+
+        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TV.setText(wordtoSpan);*/
+
+        StringBuilder sb = new StringBuilder();
+        for (GsonChapter item  :gsonChapter) {
+            sb.append(item.st_no + " " + item.st_text + " ");
+        }
+
+        ClickableSpan span1 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                String s = "";
+            }
+        };
+        ClickableSpan span2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                String s = "";
+            }
+        };
+
+        SpannableString ss = new SpannableString(sb.toString());
+        //ss.setSpan(span1, 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //ss.setSpan(span2, 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView textView = (TextView)findViewById(R.id.textData);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
 
