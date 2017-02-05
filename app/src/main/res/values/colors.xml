@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#60382A</color>
     <color name="colorAccent">#FF4081</color>
     <color name="splash">#FFFFFF</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorOverlayLight">#40000000</color>
+    <color name="colorOverlayDark">#AA000000</color>
 </resources>

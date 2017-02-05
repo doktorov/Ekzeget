@@ -23,7 +23,6 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".MyAndroidAppActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
