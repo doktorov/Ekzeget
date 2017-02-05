@@ -131,9 +131,16 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (GsonChapter item  :gsonChapter) {
             sb.append(item.st_no + " " + item.st_text + " ");
+
+            ClickableSpan span = new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    String s = "";
+                }
+            };
         }
 
-        ClickableSpan span1 = new ClickableSpan() {
+        /*ClickableSpan span1 = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
                 String s = "";
@@ -144,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View textView) {
                 String s = "";
             }
-        };
+        };*/
 
         SpannableString ss = new SpannableString(sb.toString());
         //ss.setSpan(span1, 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

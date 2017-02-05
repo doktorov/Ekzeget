@@ -14,19 +14,20 @@
             android:name=".SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
-
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".MyAndroidAppActivity" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

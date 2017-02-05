@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/log_in"
+            android:title="@string/log_in" />
+        <item
+            android:id="@+id/registration"
+            android:title="@string/registration" />
+    </group>
+
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/sermons"
+            android:title="@string/sermons" />
+        <item
+            android:id="@+id/dictionaries"
+            android:title="@string/dictionaries" />
+        <item
+            android:id="@+id/synopsis"
+            android:title="@string/synopsis" />
+        <item
+            android:id="@+id/exegetes"
+            android:title="@string/exegetes" />
+        <item
+            android:id="@+id/exegesis"
+            android:title="@string/exegesis" />
+    </group>
+
+    <group
+        android:id="@+id/menu_button"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/links_generator"
+            android:title="@string/links_generator" />
+        <item
+            android:id="@+id/guest_book"
+            android:title="@string/guest_book" />
+    </group>
+</menu>
+

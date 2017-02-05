@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Экзегет</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="log_in">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="sermons">Проповеди</string>
+    <string name="dictionaries">Словари</string>
+    <string name="synopsis">Синопсис</string>
+    <string name="exegetes">Экзегеты</string>
+    <string name="exegesis">Экзегеза</string>
+    <string name="links_generator">Генератор ссылок</string>
+    <string name="guest_book">Гостевая</string>
 </resources>
