@@ -32,15 +32,24 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_interpreting" />
+    <include layout="@layout/content_scrolling" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email"
+        app:fabSize="normal"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:layout_anchorGravity="bottom|end" />
 
+    <ekzeget.ru.ekzeget.fabrevealmenu.view.FABRevealMenu
+        android:id="@+id/fabMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:menuDirection="down"
+        app:showOverlay="true" />
+    <!--app:menuCustomView="@layout/layout_custom_menu"-->
 </android.support.design.widget.CoordinatorLayout>

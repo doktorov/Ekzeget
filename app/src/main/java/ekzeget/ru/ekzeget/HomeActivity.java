@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.synopsis) {
 
         } else if (id == R.id.exegetes) {
-            Intent intent = new Intent(HomeActivity.this, ScrollingActivity.class);
+            Intent intent = new Intent(HomeActivity.this, InterpretingActivity.class);
             startActivity(intent);
         } else if (id == R.id.links_generator) {
 
