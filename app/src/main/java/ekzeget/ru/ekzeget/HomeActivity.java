@@ -40,6 +40,8 @@ public class HomeActivity extends AppCompatActivity
 
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
         navigationView.getMenu().getItem(0).setChecked(true);
+
+        displaySelectedScreen(0);
     }
 
     @Override
@@ -71,33 +73,48 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        displaySelectedScreen(item.getItemId());
+
+        return true;
+    }
+
+    private void displaySelectedScreen(int itemId) {
         Fragment fragment = null;
         mCurrentFragment = null;
 
-        int id = item.getItemId();
+        switch (itemId) {
+            case R.id.log_in:
 
-        if (id == R.id.log_in) {
+                break;
+            case R.id.bible:
+                Intent intentBible = new Intent(HomeActivity.this, BibleActivity.class);
+                startActivity(intentBible);
+                break;
+            case R.id.registration:
 
-        } else if (id == R.id.bible) {
-            //fragment = new BibleFragment();
-            //mCurrentFragment = (BaseFragment) fragment;
+                break;
+            case R.id.sermons:
 
-            Intent intent = new Intent(HomeActivity.this, BibleActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.registration) {
+                break;
+            case R.id.dictionaries:
 
-        } else if (id == R.id.sermons) {
+                break;
+            case R.id.synopsis:
 
-        } else if (id == R.id.dictionaries) {
+                break;
+            case R.id.exegetes:
 
-        } else if (id == R.id.synopsis) {
+                break;
+            case R.id.links_generator:
 
-        } else if (id == R.id.exegetes) {
+                break;
+            case R.id.guest_book:
 
-        } else if (id == R.id.links_generator) {
-
-        } else if (id == R.id.guest_book) {
-
+                break;
+            default:
+                fragment = new BibleFragment();
+                mCurrentFragment = (BaseFragment) fragment;
+                break;
         }
 
         if (fragment != null) {
@@ -106,6 +123,5 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

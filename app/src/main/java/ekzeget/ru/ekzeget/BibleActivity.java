@@ -1,21 +1,19 @@
 package ekzeget.ru.ekzeget;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +28,8 @@ import ekzeget.ru.ekzeget.model.Interpreting;
 import ekzeget.ru.ekzeget.model.gson.GsonBooks;
 import ekzeget.ru.ekzeget.model.gson.GsonChapter;
 import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
+import ekzeget.ru.ekzeget.util.BookUtil;
+import ekzeget.ru.ekzeget.util.ChapterUtils;
 import ekzeget.ru.ekzeget.util.FileUtils;
 
 public class BibleActivity extends AppCompatActivity {
@@ -45,6 +45,14 @@ public class BibleActivity extends AppCompatActivity {
 
     FABRevealMenu fabMenu;
 
+    Spinner mBooks;
+    Spinner mChapters;
+    Spinner mInterpreting;
+    TextView mInterpretingText;
+
+    int book_id;
+    int chapter_id;
+
     @Override
     public void onBackPressed() {
         if (fabMenu.isShowing())
@@ -56,12 +64,23 @@ public class BibleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interpreting);
+        setContentView(R.layout.activity_bible);
+
+        book_id = getIntent().getIntExtra(BibleFragment.BIBLE_BOOK_ID, 0);
+        chapter_id = getIntent().getIntExtra(BibleFragment.BIBLE_CHAPTER_ID, 0);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mInterpreting = (Spinner) findViewById(R.id.interpreting);
+
+        mBooks = (Spinner) findViewById(R.id.books);
+        mChapters = (Spinner) findViewById(R.id.chapters);
+
+        mInterpretingText = (TextView) findViewById(R.id.interpreting_text);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fabMenu = (FABRevealMenu) findViewById(R.id.fabMenu);
@@ -79,68 +98,19 @@ public class BibleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final Spinner sBooks = (Spinner) findViewById(R.id.books);
-        final Spinner sChapters = (Spinner) findViewById(R.id.chapters);
-        final Spinner sInterpreting = (Spinner) findViewById(R.id.interpreting);
 
-        // Books
-        InputStream inputBooks = getResources().openRawResource(R.raw.books);
-        String readBooks = FileUtils.readTextFile(inputBooks);
-        Gson gson = new Gson();
-        gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
 
-        Book bookTitle = new Book();
-        bookTitle.short_name = "Кн.";
-        bookTitle.key = "null";
-        books.add(bookTitle);
-        for (GsonBooks.Book item : gsonBooks.nz) {
-            Book book = new Book();
-            book.short_name = item.short_name;
-            book.key = item.key;
-            book.parts = item.parts;
-            books.add(book);
-        }
-        //
-
-        // interpreting
-        InputStream inputInterpreting = getResources().openRawResource(R.raw.interpreting);
-        String readInterpreting = FileUtils.readTextFile(inputInterpreting);
-        gson = new Gson();
-        gsonInterpreting = gson.fromJson(readInterpreting,  new TypeToken<ArrayList<GsonInterpreting>>() {}.getType());
-
-        for (GsonInterpreting item : gsonInterpreting) {
-            Interpreting interpreting = new Interpreting();
-            interpreting.name = item.t_name;
-            interpretings.add(interpreting);
-        }
-        //
-
-        // chapters
-        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
-        String readChapter = FileUtils.readTextFile(inputChapter);
-        gson = new Gson();
-        gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
-        //
-
+        final List<Book> books = BookUtil.getBooks();
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
-        sBooks.setAdapter(adapterBooks);
-        sBooks.setSelection(0);
-        sBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mBooks.setAdapter(adapterBooks);
+        mBooks.setSelection(book_id);
+        mBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                chapters = new ArrayList<>();
-                chapters.add("Гл.");
-
-                if (books.get(position).key != "null") {
-                    chapters.add("О книге");
-                    for (int i = 0; i < books.get(position).parts; i++) {
-                        chapters.add(String.valueOf(i + 1));
-                    }
-                }
-
+                List<String> chapters = ChapterUtils.getChapters(books.get(position).key, books.get(position).parts, true);
                 ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, chapters);
-                sChapters.setAdapter(adapterChapters);
-                sChapters.setSelection(0);
+                mChapters.setAdapter(adapterChapters);
+                mChapters.setSelection(chapter_id);
             }
 
             @Override
@@ -148,19 +118,26 @@ public class BibleActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<Interpreting> adapterInterpretings = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretings);
-        sInterpreting.setAdapter(adapterInterpretings);
-        sInterpreting.setSelection(0);
+        mChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position != 0) {
 
-        StringBuilder sb = new StringBuilder();
-        for (GsonChapter item  :gsonChapter) {
-            sb.append(item.st_no + " " + item.st_text + " ");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        if (book_id > 0) {
+            mBooks.setVisibility(View.GONE);
+            mChapters.setVisibility(View.GONE);
         }
 
-        SpannableString ss = new SpannableString(sb.toString());
-        TextView interpreting = (TextView) findViewById(R.id.interpreting_text);
-        interpreting.setText(ss);
-        interpreting.setMovementMethod(LinkMovementMethod.getInstance());
+        mInterpretingText.setText("123");
     }
 
     private void setupCustomFilterView(View customView) {

@@ -115,4 +115,5 @@
     <string name="show_overlay">Show Overlay</string>
     <string name="change_direction">Change Direction :</string>
     <string name="direction_hint">(To use  \'RIGHT\' and \'DOWN\' directions, you are recommended to place your FAB at proper place on screen)</string>
+    <string name="choice_book_chapter">Выберите книгу Библии (Кн.) и главу (Гл.)</string>
 </resources>

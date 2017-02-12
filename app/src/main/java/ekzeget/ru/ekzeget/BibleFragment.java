@@ -1,9 +1,11 @@
 package ekzeget.ru.ekzeget;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,17 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ekzeget.ru.ekzeget.fabrevealmenu.enums.Direction;
 import ekzeget.ru.ekzeget.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import ekzeget.ru.ekzeget.fabrevealmenu.model.FABMenuItem;
 import ekzeget.ru.ekzeget.fabrevealmenu.view.FABRevealMenu;
+import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.util.BookUtil;
+import ekzeget.ru.ekzeget.util.ChapterUtils;
 
-public class BibleFragment extends BaseFragment implements OnFABMenuSelectedListener {
+/*public class BibleFragment extends BaseFragment implements OnFABMenuSelectedListener {
 
     private ArrayList<FABMenuItem> items;
     private String[] mDirectionStrings = {"Direction - LEFT", "Direction - UP"};
@@ -125,9 +131,17 @@ public class BibleFragment extends BaseFragment implements OnFABMenuSelectedList
             items.add(new FABMenuItem("Item " + i, BitmapFactory.decodeResource(getResources(), R.drawable.ic_done)));
         }
     }
-}
+}*/
 
-/*public class BibleFragment extends Fragment {
+public class BibleFragment extends BaseFragment {
+    public static final String BIBLE_BOOK_ID = "bible.book.id";
+    public static final String BIBLE_CHAPTER_ID = "bible.chapter.id";
+
+    Spinner mBooks;
+    Spinner mChapters;
+
+    private int mBookKey;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,6 +151,46 @@ public class BibleFragment extends BaseFragment implements OnFABMenuSelectedList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Menu 1");
+        getActivity().setTitle(R.string.bible);
+
+        mBooks = (Spinner) view.findViewById(R.id.books);
+        mChapters = (Spinner) view.findViewById(R.id.chapters);
+
+        final List<Book> books = BookUtil.getBooks();
+        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, books);
+        mBooks.setAdapter(adapterBooks);
+        mBooks.setSelection(0);
+        mBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mBookKey = position;
+
+                List<String> chapters = ChapterUtils.getChapters(books.get(position).key, books.get(position).parts, true);
+                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleFragment.this.getActivity(), android.R.layout.simple_spinner_item, chapters);
+                mChapters.setAdapter(adapterChapters);
+                mChapters.setSelection(0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        mChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position != 0) {
+                    Intent intentBible = new Intent(BibleFragment.this.getActivity(), BibleActivity.class);
+                    intentBible.putExtra(BIBLE_BOOK_ID, mBookKey);
+                    intentBible.putExtra(BIBLE_CHAPTER_ID, position);
+                    startActivity(intentBible);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
-}*/
+}
