@@ -9,6 +9,7 @@
 
     <string name="log_in">Вход</string>
     <string name="registration">Регистрация</string>
+    <string name="bible">Библия</string>
     <string name="sermons">Проповеди</string>
     <string name="dictionaries">Словари</string>
     <string name="synopsis">Синопсис</string>
@@ -106,4 +107,12 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <string name="information_demo_three">This fragment shows dynamic configuration of FabRevealMenu with dynamic menu item creation.
+        \n\nUse below checkboxes to change different settings</string>
+    <string name="show_title">Show Title</string>
+    <string name="show_double">Show Double Items</string>
+    <string name="show_overlay">Show Overlay</string>
+    <string name="change_direction">Change Direction :</string>
+    <string name="direction_hint">(To use  \'RIGHT\' and \'DOWN\' directions, you are recommended to place your FAB at proper place on screen)</string>
 </resources>

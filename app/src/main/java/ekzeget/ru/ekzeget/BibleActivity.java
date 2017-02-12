@@ -32,7 +32,7 @@ import ekzeget.ru.ekzeget.model.gson.GsonChapter;
 import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
 import ekzeget.ru.ekzeget.util.FileUtils;
 
-public class InterpretingActivity extends AppCompatActivity {
+public class BibleActivity extends AppCompatActivity {
 
     GsonBooks gsonBooks = new GsonBooks();
     List<Book> books = new ArrayList<>();
@@ -138,7 +138,7 @@ public class InterpretingActivity extends AppCompatActivity {
                     }
                 }
 
-                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(InterpretingActivity.this, android.R.layout.simple_spinner_item, chapters);
+                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, chapters);
                 sChapters.setAdapter(adapterChapters);
                 sChapters.setSelection(0);
             }
