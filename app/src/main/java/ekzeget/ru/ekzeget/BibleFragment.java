@@ -137,9 +137,11 @@ public class BibleFragment extends BaseFragment {
     public static final String BIBLE_BOOK_ID = "bible.book.id";
     public static final String BIBLE_CHAPTER_ID = "bible.chapter.id";
 
-    Spinner mBooks;
-    Spinner mChapters;
+    Spinner mBooksSpinner;
+    Spinner mChaptersSpinner;
 
+    private List<Book> mBooks;
+    private List<String> mChapters;
     private int mBookKey;
 
     @Nullable
@@ -153,22 +155,22 @@ public class BibleFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.bible);
 
-        mBooks = (Spinner) view.findViewById(R.id.books);
-        mChapters = (Spinner) view.findViewById(R.id.chapters);
+        mBooksSpinner = (Spinner) view.findViewById(R.id.books);
+        mChaptersSpinner = (Spinner) view.findViewById(R.id.chapters);
 
-        final List<Book> books = BookUtil.getBooks();
-        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, books);
-        mBooks.setAdapter(adapterBooks);
-        mBooks.setSelection(0);
-        mBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mBooks = BookUtil.getBooks();
+        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, mBooks);
+        mBooksSpinner.setAdapter(adapterBooks);
+        mBooksSpinner.setSelection(0);
+        mBooksSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mBookKey = position;
 
-                List<String> chapters = ChapterUtils.getChapters(books.get(position).key, books.get(position).parts, true);
-                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleFragment.this.getActivity(), android.R.layout.simple_spinner_item, chapters);
-                mChapters.setAdapter(adapterChapters);
-                mChapters.setSelection(0);
+                mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
+                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleFragment.this.getActivity(), android.R.layout.simple_spinner_item, mChapters);
+                mChaptersSpinner.setAdapter(adapterChapters);
+                mChaptersSpinner.setSelection(0);
             }
 
             @Override
@@ -176,7 +178,7 @@ public class BibleFragment extends BaseFragment {
             }
         });
 
-        mChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mChaptersSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position != 0) {

@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <Spinner
-            android:id="@+id/books"
+            android:id="@+id/content_books"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:spinnerMode="dialog" />
 
         <Spinner
-            android:id="@+id/chapters"
+            android:id="@+id/content_chapters"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:spinnerMode="dialog" />
 
         <TextView
-            android:id="@+id/interpreting_text"
+            android:id="@+id/content_interpreting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp" />

@@ -1,13 +1,10 @@
 package ekzeget.ru.ekzeget;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,30 +22,22 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.fabrevealmenu.view.FABRevealMenu;
 import ekzeget.ru.ekzeget.model.Book;
-import ekzeget.ru.ekzeget.model.Interpreting;
-import ekzeget.ru.ekzeget.model.gson.GsonBooks;
 import ekzeget.ru.ekzeget.model.gson.GsonChapter;
-import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
 import ekzeget.ru.ekzeget.util.BookUtil;
 import ekzeget.ru.ekzeget.util.ChapterUtils;
 import ekzeget.ru.ekzeget.util.FileUtils;
 
 public class BibleActivity extends AppCompatActivity {
 
-    GsonBooks gsonBooks = new GsonBooks();
-    List<Book> books = new ArrayList<>();
-    List<String> chapters = new ArrayList<>();
-
-    List<GsonInterpreting> gsonInterpreting = new ArrayList<>();
-    List<Interpreting> interpretings = new ArrayList<>();
-
-    List<GsonChapter> gsonChapter = new ArrayList<>();
+    private List<Book> mBooks;
+    private List<String> mChapters;
+    private List<GsonChapter> mGsonChapter;
 
     FABRevealMenu fabMenu;
 
-    Spinner mBooks;
-    Spinner mChapters;
-    Spinner mInterpreting;
+    Spinner mBooksSpinner;
+    Spinner mChaptersSpinner;
+    Spinner mInterpretingSpinner;
     TextView mInterpretingText;
 
     int book_id;
@@ -76,12 +65,9 @@ public class BibleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mInterpreting = (Spinner) findViewById(R.id.interpreting);
-
-        mBooks = (Spinner) findViewById(R.id.books);
-        mChapters = (Spinner) findViewById(R.id.chapters);
-
-        mInterpretingText = (TextView) findViewById(R.id.interpreting_text);
+        mBooksSpinner = (Spinner) findViewById(R.id.content_books);
+        mChaptersSpinner = (Spinner) findViewById(R.id.content_chapters);
+        mInterpretingText = (TextView) findViewById(R.id.content_interpreting);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fabMenu = (FABRevealMenu) findViewById(R.id.fabMenu);
@@ -90,7 +76,7 @@ public class BibleActivity extends AppCompatActivity {
             if (fab != null && fabMenu != null) {
 
                 View customView = View.inflate(this, R.layout.layout_custom_menu, null);
-                setupCustomFilterView(customView);
+                //setupCustomFilterView(customView);
                 fabMenu.setCustomView(customView);
                 fabMenu.bindAncherView(fab);
 //                setupCustomFilterView(fabMenu.getCustomView());
@@ -99,17 +85,17 @@ public class BibleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final List<Book> books = BookUtil.getBooks();
-        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
-        mBooks.setAdapter(adapterBooks);
-        mBooks.setSelection(book_id);
-        mBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mBooks = BookUtil.getBooks();
+        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
+        mBooksSpinner.setAdapter(adapterBooks);
+        mBooksSpinner.setSelection(book_id);
+        mBooksSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<String> chapters = ChapterUtils.getChapters(books.get(position).key, books.get(position).parts, true);
-                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, chapters);
-                mChapters.setAdapter(adapterChapters);
-                mChapters.setSelection(chapter_id);
+                mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
+                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
+                mChaptersSpinner.setAdapter(adapterChapters);
+                mChaptersSpinner.setSelection(chapter_id);
             }
 
             @Override
@@ -117,7 +103,7 @@ public class BibleActivity extends AppCompatActivity {
             }
         });
 
-        mChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mChaptersSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position != 0) {
@@ -132,30 +118,54 @@ public class BibleActivity extends AppCompatActivity {
         });
 
         if (book_id > 0) {
-            mBooks.setVisibility(View.GONE);
-            mChapters.setVisibility(View.GONE);
+            mBooksSpinner.setVisibility(View.GONE);
+            mChaptersSpinner.setVisibility(View.GONE);
 
             // chapters
             InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
             String readChapter = FileUtils.readTextFile(inputChapter);
             Gson gson = new Gson();
-            gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
+            mGsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
             //
 
             StringBuilder sb = new StringBuilder();
-            for (GsonChapter item  :gsonChapter) {
+            for (GsonChapter item  : mGsonChapter) {
                 sb.append(item.st_no + " " + item.st_text + " ");
             }
 
             SpannableString ss = new SpannableString(sb.toString());
 
             mInterpretingText.setText(ss);
+
+            setupCustomFilterView(fabMenu.getCustomView());
         }
     }
 
     private void setupCustomFilterView(View customView) {
-        if (customView != null) {
-            Button btnApply = (Button) customView.findViewById(R.id.btnApply);
+        if (customView != null && mBooks != null) {
+            Spinner mBooksMenu = (Spinner) findViewById(R.id.menu_books);
+            final Spinner mChaptersMenu = (Spinner) findViewById(R.id.menu_chapters);
+            Spinner mInterpretingMenu = (Spinner) findViewById(R.id.menu_interpreting);
+            Button mApplyMenu = (Button) customView.findViewById(R.id.menu_apply);
+
+            ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
+            mBooksMenu.setAdapter(adapterBooks);
+            mBooksMenu.setSelection(book_id);
+            mBooksMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
+                    ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
+                    mChaptersMenu.setAdapter(adapterChapters);
+                    mChaptersMenu.setSelection(chapter_id);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            });
+
+
 //            CheckBox cb1 = (CheckBox) customView.findViewById(R.id.cb1);
 //            CheckBox cb2 = (CheckBox) customView.findViewById(R.id.cb2);
 //            CheckBox cb3 = (CheckBox) customView.findViewById(R.id.cb3);
