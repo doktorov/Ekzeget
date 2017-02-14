@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -98,8 +99,6 @@ public class BibleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
         final List<Book> books = BookUtil.getBooks();
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
         mBooks.setAdapter(adapterBooks);
@@ -135,9 +134,23 @@ public class BibleActivity extends AppCompatActivity {
         if (book_id > 0) {
             mBooks.setVisibility(View.GONE);
             mChapters.setVisibility(View.GONE);
-        }
 
-        mInterpretingText.setText("123");
+            // chapters
+            InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
+            String readChapter = FileUtils.readTextFile(inputChapter);
+            Gson gson = new Gson();
+            gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
+            //
+
+            StringBuilder sb = new StringBuilder();
+            for (GsonChapter item  :gsonChapter) {
+                sb.append(item.st_no + " " + item.st_text + " ");
+            }
+
+            SpannableString ss = new SpannableString(sb.toString());
+
+            mInterpretingText.setText(ss);
+        }
     }
 
     private void setupCustomFilterView(View customView) {
