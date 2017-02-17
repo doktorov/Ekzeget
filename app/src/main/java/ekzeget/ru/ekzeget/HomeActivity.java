@@ -87,8 +87,7 @@ public class HomeActivity extends AppCompatActivity
 
                 break;
             case R.id.bible:
-                Intent intentBible = new Intent(HomeActivity.this, BibleActivity.class);
-                startActivity(intentBible);
+
                 break;
             case R.id.registration:
 
@@ -103,7 +102,8 @@ public class HomeActivity extends AppCompatActivity
 
                 break;
             case R.id.exegetes:
-
+                Intent intentBible = new Intent(HomeActivity.this, BibleActivity.class);
+                startActivity(intentBible);
                 break;
             case R.id.links_generator:
 
@@ -112,8 +112,8 @@ public class HomeActivity extends AppCompatActivity
 
                 break;
             default:
-                fragment = new BibleFragment();
-                mCurrentFragment = (BaseFragment) fragment;
+                //fragment = new BibleFragment();
+                //mCurrentFragment = (BaseFragment) fragment;
                 break;
         }
 
