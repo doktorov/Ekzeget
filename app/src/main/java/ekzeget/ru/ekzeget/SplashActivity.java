@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showMain() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainCheesesActivity.class);
         startActivity(intent);
         finish();
     }

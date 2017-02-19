@@ -31,6 +31,15 @@
             android:name=".BibleActivity"
             android:label="@string/title_activity_interpreting"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".MainCheesesActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

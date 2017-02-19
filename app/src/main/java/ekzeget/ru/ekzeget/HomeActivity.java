@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -113,7 +114,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             default:
                 //fragment = new BibleFragment();
-                //mCurrentFragment = (BaseFragment) fragment;
+
+                fragment = new BibleListFragment();
+                mCurrentFragment = (BaseFragment) fragment;
                 break;
         }
 

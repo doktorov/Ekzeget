@@ -116,4 +116,19 @@
     <string name="change_direction">Change Direction :</string>
     <string name="direction_hint">(To use  \'RIGHT\' and \'DOWN\' directions, you are recommended to place your FAB at proper place on screen)</string>
     <string name="choice_book_chapter">Выберите книгу Библии (Кн.) и главу (Гл.)</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
+    cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
+    bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
+    cheese caerphilly cheddar cheesecake cream cheese manchego lancashire. Roquefort squirty cheese
+    the big cheese.</string>
+
+    <string name="checkin">Checkin</string>
+
+    <string name="menu_night_mode">Night mode</string>
+    <string name="menu_night_mode_system">Follow system</string>
+    <string name="menu_night_mode_day">Day (always)</string>
+    <string name="menu_night_mode_night">Night (always)</string>
+    <string name="menu_night_mode_auto">Auto</string>
 </resources>
