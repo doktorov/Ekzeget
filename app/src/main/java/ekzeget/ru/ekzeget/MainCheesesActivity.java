@@ -87,7 +87,7 @@ public class MainCheesesActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new CheeseListFragment(), "Новый завет");
-        adapter.addFragment(new CheeseListFragment(), "Ветхий завет");
+        adapter.addFragment(new Cheese2ListFragment(), "Ветхий завет");
         viewPager.setAdapter(adapter);
     }
 

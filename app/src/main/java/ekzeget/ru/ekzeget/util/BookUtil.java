@@ -37,4 +37,28 @@ public class BookUtil {
 
         return books;
     }
+
+    public static List<String> getFullNamesBooks(String book) {
+        List<String> books = new ArrayList<>();
+
+        InputStream inputBooks = getAppResources().openRawResource(R.raw.books);
+        String readBooks = FileUtils.readTextFile(inputBooks);
+        Gson gson = new Gson();
+        GsonBooks gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
+
+        switch (book) {
+            case "nz":
+                for (GsonBooks.Book item : gsonBooks.nz) {
+                    books.add(item.name);
+                }
+                break;
+            case "vz":
+                for (GsonBooks.Book item : gsonBooks.vz) {
+                    books.add(item.name);
+                }
+                break;
+        }
+
+        return books;
+    }
 }

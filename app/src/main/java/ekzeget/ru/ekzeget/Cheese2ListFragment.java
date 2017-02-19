@@ -18,7 +18,7 @@ import java.util.Random;
 
 import ekzeget.ru.ekzeget.util.BookUtil;
 
-public class CheeseListFragment extends Fragment {
+public class Cheese2ListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class CheeseListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BookUtil.getFullNamesBooks("nz")));
+                BookUtil.getFullNamesBooks("vz")));
 
 
 //        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
