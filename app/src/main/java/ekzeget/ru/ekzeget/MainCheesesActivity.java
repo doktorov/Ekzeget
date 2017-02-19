@@ -1,7 +1,8 @@
 package ekzeget.ru.ekzeget;
 
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ public class MainCheesesActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
+    private BaseFragment mCurrentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,11 @@ public class MainCheesesActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (viewPager != null) {
+            setupViewPager(viewPager);
+        }
 
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -43,11 +51,6 @@ public class MainCheesesActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
-        }
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        if (viewPager != null) {
-            setupViewPager(viewPager);
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -92,12 +95,62 @@ public class MainCheesesActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                displaySelectedScreen(menuItem.getItemId());
+
                 mDrawerLayout.closeDrawers();
                 return true;
             }
         });
+    }
+
+    private void displaySelectedScreen(int itemId) {
+        Fragment fragment = null;
+        mCurrentFragment = null;
+
+        switch (itemId) {
+            case R.id.log_in:
+
+                break;
+            case R.id.bible:
+
+                break;
+            case R.id.registration:
+
+                break;
+            case R.id.sermons:
+
+                break;
+            case R.id.dictionaries:
+
+                break;
+            case R.id.synopsis:
+
+                break;
+            case R.id.exegetes:
+                Intent intentBible = new Intent(MainCheesesActivity.this, BibleActivity.class);
+                startActivity(intentBible);
+                break;
+            case R.id.links_generator:
+
+                break;
+            case R.id.guest_book:
+
+                break;
+            default:
+                //fragment = new BibleFragment();
+
+                fragment = new BibleListFragment();
+                mCurrentFragment = (BaseFragment) fragment;
+                break;
+        }
+
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mCurrentFragment).commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     private static class Adapter extends FragmentPagerAdapter {
