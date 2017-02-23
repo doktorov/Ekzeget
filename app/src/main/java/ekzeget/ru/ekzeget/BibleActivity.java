@@ -28,10 +28,10 @@ import ekzeget.ru.ekzeget.util.ChapterUtils;
 import ekzeget.ru.ekzeget.util.FileUtils;
 
 public class BibleActivity extends AppCompatActivity {
-
     private List<Book> mBooks;
     private List<String> mChapters;
     private List<GsonChapter> mGsonChapter;
+    private ArrayAdapter<Book> mAdapterBooks;
 
     FABRevealMenu fabMenu;
 
@@ -39,6 +39,11 @@ public class BibleActivity extends AppCompatActivity {
     Spinner mChaptersSpinner;
     Spinner mInterpretingSpinner;
     TextView mInterpretingText;
+
+    Spinner mBooksMenu;
+    Spinner mChaptersMenu;
+    Spinner mInterpretingMenu;
+    Button mApplyMenu;
 
     int book_id;
     int chapter_id;
@@ -74,28 +79,37 @@ public class BibleActivity extends AppCompatActivity {
 
         try {
             if (fab != null && fabMenu != null) {
-
                 View customView = View.inflate(this, R.layout.layout_custom_menu, null);
-                //setupCustomFilterView(customView);
                 fabMenu.setCustomView(customView);
                 fabMenu.bindAncherView(fab);
-//                setupCustomFilterView(fabMenu.getCustomView());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        mBooksMenu = (Spinner) findViewById(R.id.menu_books);
+        mChaptersMenu = (Spinner) findViewById(R.id.menu_chapters);
+        mInterpretingMenu = (Spinner) findViewById(R.id.menu_interpreting);
+        mApplyMenu = (Button) findViewById(R.id.menu_apply);
+
         mBooks = BookUtil.getBooks();
-        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
-        mBooksSpinner.setAdapter(adapterBooks);
+
+        mAdapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
+        mBooksSpinner.setAdapter(mAdapterBooks);
         mBooksSpinner.setSelection(book_id);
         mBooksSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
-                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
-                mChaptersSpinner.setAdapter(adapterChapters);
-                mChaptersSpinner.setSelection(chapter_id);
+                if (position != 0) {
+                    book_id = position;
+
+                    mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
+                    ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
+                    mChaptersSpinner.setAdapter(adapterChapters);
+                    mChaptersSpinner.setSelection(chapter_id);
+
+                    setupCustomFilterView();
+                }
             }
 
             @Override
@@ -107,7 +121,7 @@ public class BibleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position != 0) {
-
+                    selectItem(book_id, position);
                 }
             }
 
@@ -117,75 +131,54 @@ public class BibleActivity extends AppCompatActivity {
             }
         });
 
-        if (book_id > 0) {
-            mBooksSpinner.setVisibility(View.GONE);
-            mChaptersSpinner.setVisibility(View.GONE);
-
-            // chapters
-            InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
-            String readChapter = FileUtils.readTextFile(inputChapter);
-            Gson gson = new Gson();
-            mGsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
-            //
-
-            StringBuilder sb = new StringBuilder();
-            for (GsonChapter item  : mGsonChapter) {
-                sb.append(item.st_no + " " + item.st_text + " ");
-            }
-
-            SpannableString ss = new SpannableString(sb.toString());
-
-            mInterpretingText.setText(ss);
-
-            setupCustomFilterView(fabMenu.getCustomView());
-        }
+        setupCustomFilterView();
     }
 
-    private void setupCustomFilterView(View customView) {
-        if (customView != null && mBooks != null) {
-            Spinner mBooksMenu = (Spinner) findViewById(R.id.menu_books);
-            final Spinner mChaptersMenu = (Spinner) findViewById(R.id.menu_chapters);
-            Spinner mInterpretingMenu = (Spinner) findViewById(R.id.menu_interpreting);
-            Button mApplyMenu = (Button) customView.findViewById(R.id.menu_apply);
+    private void selectItem(int bookId, int chapterId) {
+        mBooksSpinner.setVisibility(View.GONE);
+        mChaptersSpinner.setVisibility(View.GONE);
 
-            ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
-            mBooksMenu.setAdapter(adapterBooks);
+        // chapters
+        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
+        String readChapter = FileUtils.readTextFile(inputChapter);
+        Gson gson = new Gson();
+        mGsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
+        //
+
+        StringBuilder sb = new StringBuilder();
+        for (GsonChapter item  : mGsonChapter) {
+            sb.append(item.st_no + " " + item.st_text + " ");
+        }
+
+        SpannableString ss = new SpannableString(sb.toString());
+
+        mInterpretingText.setText(ss);
+
+        book_id = bookId;
+        chapter_id = chapterId;
+
+        setupCustomFilterView();
+    }
+
+    private void setupCustomFilterView() {
+        if (mBooks != null) {
+            mBooksMenu.setAdapter(mAdapterBooks);
             mBooksMenu.setSelection(book_id);
             mBooksMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
-                    ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
-                    mChaptersMenu.setAdapter(adapterChapters);
-                    mChaptersMenu.setSelection(chapter_id);
+                    if (position != 0) {
+                        mChapters = ChapterUtils.getChapters(mBooks.get(position).key, mBooks.get(position).parts, true);
+                        ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(BibleActivity.this, android.R.layout.simple_spinner_item, mChapters);
+                        mChaptersMenu.setAdapter(adapterChapters);
+                        mChaptersMenu.setSelection(chapter_id);
+                    }
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             });
-
-
-//            CheckBox cb1 = (CheckBox) customView.findViewById(R.id.cb1);
-//            CheckBox cb2 = (CheckBox) customView.findViewById(R.id.cb2);
-//            CheckBox cb3 = (CheckBox) customView.findViewById(R.id.cb3);
-//            CheckBox cb4 = (CheckBox) customView.findViewById(R.id.cb4);
-//
-//            final CheckBox[] filters = new CheckBox[]{cb1, cb2, cb3, cb4};
-//
-//            btnApply.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    fabMenu.closeMenu();
-//                    StringBuilder builder = new StringBuilder("Selected:");
-//                    for (CheckBox filter : filters) {
-//                        if (filter.isChecked()) {
-//                            builder.append("\n").append(filter.getText().toString());
-//                        }
-//                    }
-//                    Toast.makeText(InterpretingActivity.this, builder.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
         }
     }
 
