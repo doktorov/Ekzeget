@@ -12,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import ekzeget.ru.ekzeget.util.BookUtil;
 
@@ -32,19 +30,6 @@ public class CheeseListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
                 BookUtil.getFullNamesBooks("nz")));
-
-
-//        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-//                getRandomSublist(Cheeses.sCheeseStrings, 30)));
-    }
-
-    private List<String> getRandomSublist(String[] array, int amount) {
-        ArrayList<String> list = new ArrayList<>(amount);
-        Random random = new Random();
-        while (list.size() < amount) {
-            list.add(array[random.nextInt(array.length)]);
-        }
-        return list;
     }
 
     public static class SimpleStringRecyclerViewAdapter

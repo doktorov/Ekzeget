@@ -7,11 +7,11 @@ public class BooksTable implements BaseColumns {
 
     private static final String IDENTIFIER = "identifier";
     private static final String ZAV = "zav";
-    private static final String KN = "kn";
+    public static final String KN = "kn";
     public static final String TITLE = "title";
     private static final String SOKR = "sokr";
-    private static final String MENU = "menu";
-    private static final String PARTS = "parts";
+    public static final String MENU = "menu";
+    public static final String PARTS = "parts";
 
     public static final String WHERE_ZAV = ZAV + "=?";
 
