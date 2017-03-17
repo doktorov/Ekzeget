@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 
-import ekzeget.ru.ekzeget.db.DatabaseHelper;
+import ekzeget.ru.ekzeget.db.DbHelper;
 
 public class App extends Application {
 
@@ -26,11 +26,11 @@ public class App extends Application {
         return sContext;
     }
 
-    public static SQLiteDatabase getWritableDatabase() {
-        return new DatabaseHelper(sContext).getWritableDatabase();
-    }
-
-    public static SQLiteDatabase getReadableDatabase() {
-        return new DatabaseHelper(sContext).getReadableDatabase();
-    }
+//    public static SQLiteDatabase getWritableDatabase() {
+//        return new DbHelper(sContext).getWritableDatabase();
+//    }
+//
+//    public static SQLiteDatabase getReadableDatabase() {
+//        return new DbHelper(sContext).getReadableDatabase();
+//    }
 }

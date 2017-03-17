@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         final Spinner sInterpreting = (Spinner) findViewById(R.id.interpreting);
 
         // Books
-        InputStream inputBooks = getResources().openRawResource(R.raw.books);
-        String readBooks = FileUtils.readTextFile(inputBooks);
-        Gson gson = new Gson();
-        gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
+//        InputStream inputBooks = getResources().openRawResource(R.raw.books);
+//        String readBooks = FileUtils.readTextFile(inputBooks);
+//        Gson gson = new Gson();
+//        gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
 
         Book bookTitle = new Book();
         bookTitle.short_name = "Кн.";
@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         //
 
         // interpreting
-        InputStream inputInterpreting = getResources().openRawResource(R.raw.interpreting);
-        String readInterpreting = FileUtils.readTextFile(inputInterpreting);
-        gson = new Gson();
-        gsonInterpreting = gson.fromJson(readInterpreting,  new TypeToken<ArrayList<GsonInterpreting>>() {}.getType());
+//        InputStream inputInterpreting = getResources().openRawResource(R.raw.interpreting);
+//        String readInterpreting = FileUtils.readTextFile(inputInterpreting);
+//        gson = new Gson();
+//        gsonInterpreting = gson.fromJson(readInterpreting,  new TypeToken<ArrayList<GsonInterpreting>>() {}.getType());
 
         for (GsonInterpreting item : gsonInterpreting) {
             Interpreting interpreting = new Interpreting();
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         //
 
         // chapters
-        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
-        String readChapter = FileUtils.readTextFile(inputChapter);
-        gson = new Gson();
-        gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
+//        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
+//        String readChapter = FileUtils.readTextFile(inputChapter);
+//        gson = new Gson();
+//        gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
         //
 
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);

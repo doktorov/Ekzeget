@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
+import ekzeget.ru.ekzeget.GC;
 import ekzeget.ru.ekzeget.db.table.BooksTable;
 import ekzeget.ru.ekzeget.model.Book;
 
@@ -13,7 +14,7 @@ public class BookUtil {
     public static List<Book> getBooks() {
         List<Book> books = new ArrayList<>();
 
-        Book bookTitle = new Book();
+        /*Book bookTitle = new Book();
         bookTitle.short_name = "Кн.";
         bookTitle.name = "Книга";
         bookTitle.key = "null";
@@ -23,7 +24,7 @@ public class BookUtil {
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{ "nz" },
+                new String[]{ GC.NZ },
                 null,
                 null,
                 null);
@@ -55,7 +56,7 @@ public class BookUtil {
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{ "vz" },
+                new String[]{ GC.VZ },
                 null,
                 null,
                 null);
@@ -72,7 +73,7 @@ public class BookUtil {
             cursor.moveToNext();
         }
 
-        cursor.close();
+        cursor.close();*/
 
         return books;
     }
@@ -80,7 +81,7 @@ public class BookUtil {
     public static List<String> getFullNamesBooks(String book) {
         List<String> books = new ArrayList<>();
 
-        Cursor cursor = App.getReadableDatabase().query(
+       /* Cursor cursor = App.getReadableDatabase().query(
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
@@ -98,7 +99,7 @@ public class BookUtil {
             cursor.moveToNext();
         }
 
-        cursor.close();
+        cursor.close();*/
 
         return books;
     }
