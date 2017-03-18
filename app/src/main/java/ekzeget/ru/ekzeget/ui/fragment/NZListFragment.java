@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,9 +14,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 
-public class CheeseListFragment extends Fragment {
+public class NZListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

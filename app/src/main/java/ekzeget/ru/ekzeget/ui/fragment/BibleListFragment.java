@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ekzeget.ru.ekzeget.R;
 
 public class BibleListFragment extends Fragment {
 

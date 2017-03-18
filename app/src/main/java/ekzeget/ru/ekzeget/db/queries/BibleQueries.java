@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
-import ekzeget.ru.ekzeget.GC;
+import ekzeget.ru.ekzeget.constant.GC;
 import ekzeget.ru.ekzeget.db.table.BooksTable;
 import ekzeget.ru.ekzeget.model.Book;
 
@@ -24,7 +24,7 @@ public class BibleQueries {
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{ GC.NZ },
+                new String[]{GC.NZ},
                 null,
                 null,
                 null);
@@ -56,7 +56,7 @@ public class BibleQueries {
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{ GC.VZ },
+                new String[]{GC.VZ},
                 null,
                 null,
                 null);
@@ -81,11 +81,11 @@ public class BibleQueries {
     public static List<String> getFullNamesBooks(String book) {
         List<String> books = new ArrayList<>();
 
-       /* Cursor cursor = App.getReadableDatabase().query(
+        Cursor cursor = App.getReadableDatabase().query(
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{ book },
+                new String[]{book},
                 null,
                 null,
                 null);
@@ -99,7 +99,7 @@ public class BibleQueries {
             cursor.moveToNext();
         }
 
-        cursor.close();*/
+        cursor.close();
 
         return books;
     }

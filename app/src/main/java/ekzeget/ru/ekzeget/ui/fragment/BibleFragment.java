@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,10 @@ import android.widget.Spinner;
 
 import java.util.List;
 
+import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.ui.activity.BibleActivity;
 import ekzeget.ru.ekzeget.util.ChapterUtils;
 
 /*public class BibleFragment extends BaseFragment implements OnFABMenuSelectedListener {

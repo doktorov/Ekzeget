@@ -1,7 +1,6 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -22,7 +21,11 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import ekzeget.ru.ekzeget.db.table.BibleTable;
+import ekzeget.ru.ekzeget.ui.fragment.BaseFragment;
+import ekzeget.ru.ekzeget.ui.fragment.BibleListFragment;
+import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
+import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.ui.fragment.VZListFragment;
 
 public class MainCheesesActivity extends AppCompatActivity {
 
@@ -58,22 +61,6 @@ public class MainCheesesActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        Cursor cursor = App.getReadableDatabase().query(
-                BibleTable.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            String s = cursor.getString(2);
-
-            cursor.moveToNext();
-        }
     }
 
     @Override
@@ -105,8 +92,8 @@ public class MainCheesesActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new CheeseListFragment(), "Новый завет");
-        adapter.addFragment(new Cheese2ListFragment(), "Ветхий завет");
+        adapter.addFragment(new NZListFragment(), "Новый завет");
+        adapter.addFragment(new VZListFragment(), "Ветхий завет");
         viewPager.setAdapter(adapter);
     }
 

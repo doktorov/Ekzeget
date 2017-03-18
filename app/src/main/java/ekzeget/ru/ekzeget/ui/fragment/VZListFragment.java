@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 
-public class Cheese2ListFragment extends Fragment {
+public class VZListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,10 +33,6 @@ public class Cheese2ListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
                 BibleQueries.getFullNamesBooks("vz")));
-
-
-//        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-//                getRandomSublist(Cheeses.sCheeseStrings, 30)));
     }
 
     private List<String> getRandomSublist(String[] array, int amount) {

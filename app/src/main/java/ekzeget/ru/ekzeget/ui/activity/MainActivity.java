@@ -1,35 +1,25 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.model.Interpreting;
 import ekzeget.ru.ekzeget.model.gson.GsonBooks;
 import ekzeget.ru.ekzeget.model.gson.GsonChapter;
 import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
-import ekzeget.ru.ekzeget.util.FileUtils;
 
 public class MainActivity extends AppCompatActivity {
     GsonBooks gsonBooks = new GsonBooks();

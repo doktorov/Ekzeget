@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.constant;
 
 public class GC {
     public static final String NZ = "nz";

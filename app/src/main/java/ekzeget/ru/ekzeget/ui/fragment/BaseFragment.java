@@ -1,4 +1,4 @@
-package ekzeget.ru.ekzeget;
+package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.support.v4.app.Fragment;
 
