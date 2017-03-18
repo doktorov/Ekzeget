@@ -1,30 +1,19 @@
 package ekzeget.ru.ekzeget;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ekzeget.ru.ekzeget.fabrevealmenu.enums.Direction;
-import ekzeget.ru.ekzeget.fabrevealmenu.listeners.OnFABMenuSelectedListener;
-import ekzeget.ru.ekzeget.fabrevealmenu.model.FABMenuItem;
-import ekzeget.ru.ekzeget.fabrevealmenu.view.FABRevealMenu;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Book;
-import ekzeget.ru.ekzeget.util.BookUtil;
 import ekzeget.ru.ekzeget.util.ChapterUtils;
 
 /*public class BibleFragment extends BaseFragment implements OnFABMenuSelectedListener {
@@ -158,7 +147,7 @@ public class BibleFragment extends BaseFragment {
         mBooksSpinner = (Spinner) view.findViewById(R.id.books);
         mChaptersSpinner = (Spinner) view.findViewById(R.id.chapters);
 
-        mBooks = BookUtil.getBooks();
+        mBooks = BibleQueries.getBooks();
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, mBooks);
         mBooksSpinner.setAdapter(adapterBooks);
         mBooksSpinner.setSelection(0);

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import ekzeget.ru.ekzeget.util.BookUtil;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 
 public class Cheese2ListFragment extends Fragment {
     @Nullable
@@ -31,7 +31,7 @@ public class Cheese2ListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BookUtil.getFullNamesBooks("vz")));
+                BibleQueries.getFullNamesBooks("vz")));
 
 
 //        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),

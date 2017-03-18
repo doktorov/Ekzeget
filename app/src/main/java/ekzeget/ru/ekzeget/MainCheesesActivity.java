@@ -22,12 +22,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import ekzeget.ru.ekzeget.db.DbProvider;
-import ekzeget.ru.ekzeget.db.DbQuery;
 import ekzeget.ru.ekzeget.db.table.BibleTable;
-import ekzeget.ru.ekzeget.db.table.BooksTable;
-import ekzeget.ru.ekzeget.model.Book;
-import ekzeget.ru.ekzeget.util.BookUtil;
 
 public class MainCheesesActivity extends AppCompatActivity {
 

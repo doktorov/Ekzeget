@@ -20,11 +20,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import ekzeget.ru.ekzeget.db.DbQuery;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.fabrevealmenu.view.FABRevealMenu;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.model.gson.GsonChapter;
-import ekzeget.ru.ekzeget.util.BookUtil;
 import ekzeget.ru.ekzeget.util.ChapterUtils;
 import ekzeget.ru.ekzeget.util.FileUtils;
 
@@ -93,7 +92,7 @@ public class BibleActivity extends AppCompatActivity {
         mInterpretingMenu = (Spinner) findViewById(R.id.menu_interpreting);
         mApplyMenu = (Button) findViewById(R.id.menu_apply);
 
-        mBooks = BookUtil.getBooks();
+        mBooks = BibleQueries.getBooks();
 
         mAdapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mBooks);
         mBooksSpinner.setAdapter(mAdapterBooks);

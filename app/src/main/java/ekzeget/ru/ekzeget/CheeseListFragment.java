@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ekzeget.ru.ekzeget.util.BookUtil;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 
 public class CheeseListFragment extends Fragment {
     @Nullable
@@ -29,7 +29,7 @@ public class CheeseListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BookUtil.getFullNamesBooks("nz")));
+                BibleQueries.getFullNamesBooks("nz")));
     }
 
     public static class SimpleStringRecyclerViewAdapter
