@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import ekzeget.ru.ekzeget.App;
+
 public class DbProvider extends ContentProvider {
 
     private static final boolean COPY_FROM_ASSETS = true;
@@ -16,7 +18,7 @@ public class DbProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        this.dbHelper = new DbHelper(getContext(), COPY_FROM_ASSETS);
+        //this.dbHelper = new DbHelper(getContext(), COPY_FROM_ASSETS);
         if (this.db == null) {
             return false;
         }
@@ -25,8 +27,14 @@ public class DbProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        this.db = this.dbHelper.getReadableDatabase();
+        Cursor c;
+
+        c = this.db.query(DbHelper.BIBLE_TABLE, null, null, null, null, null, null);
+        c.setNotificationUri(App.getContext().getContentResolver(), uri);
+
+        return c;
     }
 
     @Nullable

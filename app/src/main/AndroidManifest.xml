@@ -21,9 +21,9 @@
             </intent-filter>
         </activity>
 
-        <provider android:name=".db.DbProvider"
+<!--        <provider android:name=".db.DbProvider"
             android:authorities="ekzeget.ru.ekzeget.db">
-        </provider>
+        </provider>-->
 
         <activity
             android:name=".MainActivity"
