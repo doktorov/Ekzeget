@@ -7,6 +7,7 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.constant.GC;
+import ekzeget.ru.ekzeget.db.table.BibleTable;
 import ekzeget.ru.ekzeget.db.table.BooksTable;
 import ekzeget.ru.ekzeget.model.Book;
 
@@ -95,6 +96,33 @@ public class BibleQueries {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             books.add(cursor.getString(TITLE_INDEX));
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return books;
+    }
+
+    public static List<String> getFullChapter(String book_kn) {
+        List<String> books = new ArrayList<>();
+
+        Cursor cursor = App.getReadableDatabase().query(
+                BibleTable.TABLE_NAME,
+                null,
+                BibleTable.WHERE_KN,
+                new String[]{book_kn},
+                null,
+                null,
+                null);
+
+        final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
+        final int ST_TEXT_INDEX = cursor.getColumnIndex(BibleTable.ST_TEXT);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            books.add(cursor.getString(ST_NO_INDEX) + " " + cursor.getString(ST_TEXT_INDEX));
 
             cursor.moveToNext();
         }

@@ -140,16 +140,24 @@ public class BibleActivity extends AppCompatActivity {
         mBooksSpinner.setVisibility(View.GONE);
         mChaptersSpinner.setVisibility(View.GONE);
 
-        // chapters
+        String key = mBooks.get(bookId).key;
+
+        List<String> chapters = BibleQueries.getFullChapter(key + String.valueOf(chapterId));
+
+/*        // chapters
         InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
         String readChapter = FileUtils.readTextFile(inputChapter);
         Gson gson = new Gson();
         mGsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
         //
-
+*/
         StringBuilder sb = new StringBuilder();
-        for (GsonChapter item  : mGsonChapter) {
+       /* for (GsonChapter item  : mGsonChapter) {
             sb.append(item.st_no + " " + item.st_text + " ");
+        }*/
+
+        for (String item : chapters) {
+            sb.append(item + " ");
         }
 
         SpannableString ss = new SpannableString(sb.toString());
