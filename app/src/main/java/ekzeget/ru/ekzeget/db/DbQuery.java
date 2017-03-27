@@ -17,10 +17,6 @@ public class DbQuery {
     }
 
     public DbQuery createDatabase() throws SQLException {
-        try {
-            dbHelper.createDataBase();
-        } catch (IOException ignored) {
-        }
         return this;
     }
 
