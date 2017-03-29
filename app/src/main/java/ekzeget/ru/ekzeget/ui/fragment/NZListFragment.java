@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.ui.activity.Book2Activity;
+import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class NZListFragment extends Fragment {
     @Nullable
@@ -86,13 +89,10 @@ public class NZListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String s = mValues.get(position).key;
-
-                    s = "";
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, CheeseDetailActivity.class);
-//                    intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
-//
-//                    context.startActivity(intent);
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BookActivity.class);
+                    //intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
+                    context.startActivity(intent);
                 }
             });
         }

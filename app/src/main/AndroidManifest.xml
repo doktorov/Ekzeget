@@ -21,28 +21,29 @@
             </intent-filter>
         </activity>
 
-<!--        <provider android:name=".db.DbProvider"
+        <!--
+            <provider android:name=".db.DbProvider"
             android:authorities="ekzeget.ru.ekzeget.db">
-        </provider>-->
+        </provider>
+        -->
 
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize" />
-
         <activity
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activity.BibleActivity"
             android:label="@string/title_activity_interpreting"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activity.MainCheesesActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.BookActivity" />
     </application>
 
 </manifest>
