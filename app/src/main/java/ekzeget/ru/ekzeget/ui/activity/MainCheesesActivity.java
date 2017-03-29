@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.ui.fragment.BaseFragment;
 import ekzeget.ru.ekzeget.ui.fragment.BibleListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
@@ -92,8 +93,8 @@ public class MainCheesesActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new NZListFragment(), "Новый завет");
-        adapter.addFragment(new VZListFragment(), "Ветхий завет");
+        adapter.addFragment(new NZListFragment(), App.getAppResources().getString(R.string.nz));
+        adapter.addFragment(new VZListFragment(), App.getAppResources().getString(R.string.vz));
         viewPager.setAdapter(adapter);
     }
 

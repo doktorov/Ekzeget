@@ -18,6 +18,7 @@ import java.util.Random;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.model.Book;
 
 public class VZListFragment extends Fragment {
     @Nullable
@@ -49,7 +50,7 @@ public class VZListFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<String> mValues;
+        private List<Book> mValues;
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public String mBoundString;
@@ -69,11 +70,11 @@ public class VZListFragment extends Fragment {
             }
         }
 
-        public String getValueAt(int position) {
+        public Book getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+        public SimpleStringRecyclerViewAdapter(Context context, List<Book> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -89,8 +90,8 @@ public class VZListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mBoundString = mValues.get(position);
-            holder.mTextView.setText(mValues.get(position));
+            holder.mBoundString = mValues.get(position).name;
+            holder.mTextView.setText(mValues.get(position).name);
 
 //            holder.mView.setOnClickListener(new View.OnClickListener() {
 //                @Override

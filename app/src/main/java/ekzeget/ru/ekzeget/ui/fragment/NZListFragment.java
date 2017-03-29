@@ -16,6 +16,7 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.model.Book;
 
 public class NZListFragment extends Fragment {
     @Nullable
@@ -33,20 +34,20 @@ public class NZListFragment extends Fragment {
                 BibleQueries.getFullNamesBooks("nz")));
     }
 
-    public static class SimpleStringRecyclerViewAdapter
+    private static class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<String> mValues;
+        private List<Book> mValues;
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            public String mBoundString;
+        static class ViewHolder extends RecyclerView.ViewHolder {
+            private String mBoundString;
 
-            public final View mView;
-            public final TextView mTextView;
+            private final View mView;
+            private final TextView mTextView;
 
-            public ViewHolder(View view) {
+            private ViewHolder(View view) {
                 super(view);
                 mView = view;
                 mTextView = (TextView) view.findViewById(android.R.id.text1);
@@ -58,11 +59,11 @@ public class NZListFragment extends Fragment {
             }
         }
 
-        public String getValueAt(int position) {
+        public Book getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<Book> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -77,20 +78,23 @@ public class NZListFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mBoundString = mValues.get(position);
-            holder.mTextView.setText(mValues.get(position));
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+            holder.mBoundString = mValues.get(position).name;
+            holder.mTextView.setText(mValues.get(position).name);
 
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String s = mValues.get(position).key;
+
+                    s = "";
 //                    Context context = v.getContext();
 //                    Intent intent = new Intent(context, CheeseDetailActivity.class);
 //                    intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
 //
 //                    context.startActivity(intent);
-//                }
-//            });
+                }
+            });
         }
 
         @Override

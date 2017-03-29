@@ -79,23 +79,28 @@ public class BibleQueries {
         return books;
     }
 
-    public static List<String> getFullNamesBooks(String book) {
-        List<String> books = new ArrayList<>();
+    public static List<Book> getFullNamesBooks(String kn) {
+        List<Book> books = new ArrayList<>();
 
         Cursor cursor = App.getReadableDatabase().query(
                 BooksTable.TABLE_NAME,
                 null,
                 BooksTable.WHERE_ZAV,
-                new String[]{book},
+                new String[]{kn},
                 null,
                 null,
                 null);
 
         final int TITLE_INDEX = cursor.getColumnIndex(BooksTable.TITLE);
+        final int KN_INDEX = cursor.getColumnIndex(BooksTable.KN);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            books.add(cursor.getString(TITLE_INDEX));
+            Book book = new Book();
+            book.name = cursor.getString(TITLE_INDEX);
+            book.key = cursor.getString(KN_INDEX);
+
+            books.add(book);
 
             cursor.moveToNext();
         }

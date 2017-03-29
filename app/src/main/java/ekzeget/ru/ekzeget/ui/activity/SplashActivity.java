@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -28,6 +30,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         if (!checkDataBase()) {
+            LinearLayout progress = (LinearLayout) findViewById(R.id.progressBarView);
+            progress.setVisibility(View.VISIBLE);
+
             final Observable<String> operationObservable = Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
@@ -69,8 +74,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean checkDataBase() {
-        File DbFile = new File(DbHelper.DATABASE_PATH + DbHelper.DATABASE_NAME);
-        return DbFile.exists();
+        File db_path = getDatabasePath(DbHelper.DATABASE_NAME);
+        return db_path.exists();
     }
 
     public String onUnzipZip() {
