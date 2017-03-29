@@ -18,7 +18,6 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Book;
-import ekzeget.ru.ekzeget.ui.activity.Book2Activity;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class NZListFragment extends Fragment {
