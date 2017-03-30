@@ -17,23 +17,43 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.db.queries.BooksQueries;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class BookContentListFragment extends Fragment {
+    private static String mBookKey;
+
+    public static BookContentListFragment newInstance(String bookKey) {
+        BookContentListFragment f = new BookContentListFragment();
+
+        Bundle args = new Bundle();
+        args.putString("bookKey", bookKey);
+        f.setArguments(args);
+
+        return f;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         RecyclerView rv = (RecyclerView) inflater.inflate(
                 R.layout.fragment_cheese_list, container, false);
+
+        mBookKey = getArguments().getString("bookKey");
+
         setupRecyclerView(rv);
+
         return rv;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        BibleQueries.getListContents(mBookKey);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getFullNamesBooks("nz")));
+                BooksQueries.getFullNamesBooks("nz")));
     }
 
     private static class SimpleStringRecyclerViewAdapter

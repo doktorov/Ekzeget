@@ -21,8 +21,10 @@ import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 
 public class BookActivity extends AppCompatActivity {
     public static final String BOOK_KEY = "book_key";
+    public static final String BOOK_NAME = "book_name";
 
-    private String mBookKey;
+    private static String mBookKey;
+    private String mBookName;
 
     private DrawerLayout mDrawerLayout;
 
@@ -44,6 +46,7 @@ public class BookActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mBookKey = getIntent().getStringExtra(BOOK_KEY);
+        mBookName = getIntent().getStringExtra(BOOK_NAME);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
@@ -58,32 +61,39 @@ public class BookActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new BookContentListFragment(), App.getAppResources().getString(R.string.content));
-        adapter.addFragment(new BookInfoListFragment(), App.getAppResources().getString(R.string.book_info));
+        adapter.addFragment(App.getAppResources().getString(R.string.content));
+        adapter.addFragment(App.getAppResources().getString(R.string.book_info));
         viewPager.setAdapter(adapter);
     }
 
     private static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
+        private static int NUM_ITEMS = 2;
+
         private final List<String> mFragmentTitles = new ArrayList<>();
 
         Adapter(FragmentManager fm) {
             super(fm);
         }
 
-        void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
+        void addFragment(String title) {
             mFragmentTitles.add(title);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mFragments.get(position);
+            switch (position) {
+                case 0:
+                    return BookContentListFragment.newInstance(mBookKey);
+                case 1:
+                    return BookInfoListFragment.newInstance(mBookKey);
+            }
+
+            return null;
         }
 
         @Override
         public int getCount() {
-            return mFragments.size();
+            return NUM_ITEMS;
         }
 
         @Override

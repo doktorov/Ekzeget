@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.db.queries.BooksQueries;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
@@ -33,7 +33,7 @@ public class NZListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getFullNamesBooks("nz")));
+                BooksQueries.getFullNamesBooks("nz")));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -90,6 +90,7 @@ public class NZListFragment extends Fragment {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, BookActivity.class);
                     intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
+                    intent.putExtra(BookActivity.BOOK_NAME, mValues.get(position).name);
                     context.startActivity(intent);
                 }
             });

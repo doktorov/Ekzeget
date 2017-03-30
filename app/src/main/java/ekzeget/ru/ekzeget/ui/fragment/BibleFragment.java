@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.db.queries.BooksQueries;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.ui.activity.BibleActivity;
 import ekzeget.ru.ekzeget.util.ChapterUtils;
@@ -149,7 +149,7 @@ public class BibleFragment extends BaseFragment {
         mBooksSpinner = (Spinner) view.findViewById(R.id.books);
         mChaptersSpinner = (Spinner) view.findViewById(R.id.chapters);
 
-        mBooks = BibleQueries.getBooks();
+        mBooks = BooksQueries.getBooks();
         ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, mBooks);
         mBooksSpinner.setAdapter(adapterBooks);
         mBooksSpinner.setSelection(0);

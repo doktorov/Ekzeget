@@ -6,10 +6,11 @@ public class BibleTable implements BaseColumns {
     public static final String TABLE_NAME = "bible";
 
     public static final String ST_NO = "st_no";
-    private static final String KN = "kn";
+    public static final String KN = "kn";
     public static final String ST_TEXT = "st_text";
 
     public static final String WHERE_KN = KN + "=?";
+    public static final String WHERE_KN_LIKE = KN + " like ?";
 
     /*CREATE TABLE `bible` ( `st_no` INTEGER,
     `kn` TEXT,

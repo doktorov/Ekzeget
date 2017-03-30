@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.db.queries.BooksQueries;
 import ekzeget.ru.ekzeget.model.Book;
 
 public class VZListFragment extends Fragment {
@@ -33,7 +33,7 @@ public class VZListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getFullNamesBooks("vz")));
+                BooksQueries.getFullNamesBooks("vz")));
     }
 
     private List<String> getRandomSublist(String[] array, int amount) {
