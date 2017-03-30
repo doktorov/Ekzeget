@@ -17,6 +17,9 @@
     <string name="nz">Новый завет</string>
     <string name="vz">Ветхий завет</string>
 
+    <string name="content">Содержание</string>
+    <string name="book_info">Сведения о книге</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

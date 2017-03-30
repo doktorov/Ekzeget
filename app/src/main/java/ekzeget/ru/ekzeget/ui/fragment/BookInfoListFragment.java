@@ -20,7 +20,7 @@ import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
-public class NZListFragment extends Fragment {
+public class BookInfoListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,15 +72,15 @@ public class NZListFragment extends Fragment {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public SimpleStringRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item, parent, false);
             view.setBackgroundResource(mBackground);
-            return new ViewHolder(view);
+            return new SimpleStringRecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, final int position) {
+        public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
             holder.mBoundString = mValues.get(position).name;
             holder.mTextView.setText(mValues.get(position).name);
 

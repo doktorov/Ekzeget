@@ -32,8 +32,6 @@ public class MainCheesesActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
-    private BaseFragment mCurrentFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +111,7 @@ public class MainCheesesActivity extends AppCompatActivity {
 
     private void displaySelectedScreen(int itemId) {
         Fragment fragment = null;
-        mCurrentFragment = null;
+        BaseFragment mCurrentFragment = null;
 
         switch (itemId) {
             case R.id.log_in:
