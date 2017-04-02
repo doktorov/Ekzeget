@@ -24,7 +24,7 @@ public class BookActivity extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
 
     private static String mBookKey;
-    private String mBookName;
+    private static String mBookName;
 
     private DrawerLayout mDrawerLayout;
 
@@ -83,7 +83,7 @@ public class BookActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return BookContentListFragment.newInstance(mBookKey);
+                    return BookContentListFragment.newInstance(mBookKey, mBookName);
                 case 1:
                     return BookInfoListFragment.newInstance(mBookKey);
             }

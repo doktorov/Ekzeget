@@ -1,7 +1,6 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,18 +16,19 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.db.queries.BooksQueries;
-import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class BookContentListFragment extends Fragment {
     private static String mBookKey;
+    private static String mBookName;
 
-    public static BookContentListFragment newInstance(String bookKey) {
+    public static BookContentListFragment newInstance(String bookKey, String bookName) {
         BookContentListFragment f = new BookContentListFragment();
 
         Bundle args = new Bundle();
-        args.putString("bookKey", bookKey);
+        args.putString(BookActivity.BOOK_KEY, bookKey);
+        args.putString(BookActivity.BOOK_NAME, bookName);
         f.setArguments(args);
 
         return f;
@@ -41,7 +41,8 @@ public class BookContentListFragment extends Fragment {
         RecyclerView rv = (RecyclerView) inflater.inflate(
                 R.layout.fragment_cheese_list, container, false);
 
-        mBookKey = getArguments().getString("bookKey");
+        mBookKey = getArguments().getString(BookActivity.BOOK_KEY);
+        mBookName = getArguments().getString(BookActivity.BOOK_NAME);
 
         setupRecyclerView(rv);
 
@@ -49,11 +50,9 @@ public class BookContentListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        BibleQueries.getListContents(mBookKey);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BooksQueries.getFullNamesBooks("nz")));
+                BibleQueries.getListContents(mBookKey), mBookName, mBookKey));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -61,7 +60,9 @@ public class BookContentListFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<Book> mValues;
+        private List<Bible> mValues;
+        private String mBookName;
+        private String mBookKey;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
@@ -81,14 +82,17 @@ public class BookContentListFragment extends Fragment {
             }
         }
 
-        public Book getValueAt(int position) {
+        public Bible getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<Book> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<Bible> items,
+                                                String bookName, String bookKey) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
+            mBookName = bookName;
+            mBookKey = bookKey;
         }
 
         @Override
@@ -101,18 +105,21 @@ public class BookContentListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mBoundString = mValues.get(position).name;
-            holder.mTextView.setText(mValues.get(position).name);
+            holder.mBoundString = mValues.get(position).chapter;
+            //От Матфея. Глава 1 (25 стихов)
+            holder.mTextView.setText(mBookName + ". Глава " +
+                    mValues.get(position).chapter.replace(mBookKey, "") +
+                    " (" + mValues.get(position).parts + " стихов)");
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookActivity.class);
-                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-                    context.startActivity(intent);
-                }
-            });
+//            holder.mView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Context context = v.getContext();
+//                    Intent intent = new Intent(context, BookActivity.class);
+//                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
+//                    context.startActivity(intent);
+//                }
+//            });
         }
 
         @Override

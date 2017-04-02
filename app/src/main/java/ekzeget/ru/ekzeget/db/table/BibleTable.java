@@ -8,6 +8,7 @@ public class BibleTable implements BaseColumns {
     public static final String ST_NO = "st_no";
     public static final String KN = "kn";
     public static final String ST_TEXT = "st_text";
+    public static final String CNT = "cnt";
 
     public static final String WHERE_KN = KN + "=?";
     public static final String WHERE_KN_LIKE = KN + " like ?";
