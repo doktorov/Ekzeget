@@ -28,13 +28,15 @@ import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 public class BookContentListFragment extends Fragment {
     private static String mBookKey;
     private static String mBookName;
+    private static int mBookParts;
 
-    public static BookContentListFragment newInstance(String bookKey, String bookName) {
+    public static BookContentListFragment newInstance(String bookKey, String bookName, int bookParts) {
         BookContentListFragment f = new BookContentListFragment();
 
         Bundle args = new Bundle();
         args.putString(BookActivity.BOOK_KEY, bookKey);
         args.putString(BookActivity.BOOK_NAME, bookName);
+        args.putInt(BookActivity.BOOK_PARTS, bookParts);
         f.setArguments(args);
 
         return f;
@@ -49,6 +51,7 @@ public class BookContentListFragment extends Fragment {
 
         mBookKey = getArguments().getString(BookActivity.BOOK_KEY);
         mBookName = getArguments().getString(BookActivity.BOOK_NAME);
+        mBookParts = getArguments().getInt(BookActivity.BOOK_PARTS);
 
         setupRecyclerView(rv);
 
@@ -56,7 +59,9 @@ public class BookContentListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        Map<Integer, Integer> lst =  BibleQueries.getListContents2(mBookKey);
+        List<Bible> lstTmp = BibleQueries.getListContents(mBookKey);
+
+        Map<Integer, Integer> lst =  BibleQueries.getListContents2(mBookKey, mBookParts);
         Map<Integer, Integer> sortedMap = new TreeMap<>(lst);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

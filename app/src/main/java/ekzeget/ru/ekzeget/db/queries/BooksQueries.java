@@ -93,12 +93,14 @@ public class BooksQueries {
 
         final int TITLE_INDEX = cursor.getColumnIndex(BooksTable.TITLE);
         final int KN_INDEX = cursor.getColumnIndex(BooksTable.KN);
+        final int PARTS_INDEX = cursor.getColumnIndex(BooksTable.PARTS);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Book book = new Book();
             book.name = cursor.getString(TITLE_INDEX);
             book.key = cursor.getString(KN_INDEX);
+            book.parts = cursor.getInt(PARTS_INDEX);
 
             books.add(book);
 

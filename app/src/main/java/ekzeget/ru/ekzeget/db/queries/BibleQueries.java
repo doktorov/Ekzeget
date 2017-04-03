@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.db.queries;
 
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +24,8 @@ public class BibleQueries {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            int chapter = Integer.parseInt(cursor.getString(KN_INDEX).replace(book_kn, ""));
-
             Bible bible = new Bible();
-            bible.chapter = String.valueOf(chapter);
+            bible.chapter = cursor.getString(KN_INDEX);
             bible.parts = cursor.getInt(CNT_INDEX);
             bibleList.add(bible);
 
@@ -38,25 +37,30 @@ public class BibleQueries {
         return bibleList;
     }
 
-    public static Map<Integer, Integer> getListContents2(String book_kn) {
+    public static Map<Integer, Integer> getListContents2(String book_kn, int book_parts) {
         Map<Integer, Integer> bibleList = new HashMap<>();
 
-        String sql = "SELECT " + BibleTable.KN + ", count(kn) cnt FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN_LIKE + " group by " + BibleTable.KN ;
-        Cursor cursor= App.getReadableDatabase().rawQuery(sql, new String[] { String.valueOf(book_kn + "%") });
+        for (int i = 1; i < book_parts + 1; i++) {
+            String sql = "SELECT " + BibleTable.KN + ", count(kn) cnt FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " group by " + BibleTable.KN;
+            Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn + i)});
 
-        final int KN_INDEX = cursor.getColumnIndex(BibleTable.KN);
-        final int CNT_INDEX = cursor.getColumnIndex(BibleTable.CNT);
+            final int KN_INDEX = cursor.getColumnIndex(BibleTable.KN);
+            final int CNT_INDEX = cursor.getColumnIndex(BibleTable.CNT);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            int chapter = Integer.parseInt(cursor.getString(KN_INDEX).replace(book_kn, ""));
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String kn = cursor.getString(KN_INDEX);
+                if (!TextUtils.isEmpty(kn)) {
+                    int chapter = Integer.parseInt(kn.replace(book_kn, ""));
 
-            bibleList.put(chapter, cursor.getInt(CNT_INDEX));
+                    bibleList.put(chapter, cursor.getInt(CNT_INDEX));
+                }
 
-            cursor.moveToNext();
+                cursor.moveToNext();
+            }
+
+            cursor.close();
         }
-
-        cursor.close();
 
         return bibleList;
     }

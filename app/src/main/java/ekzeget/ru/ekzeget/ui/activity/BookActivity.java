@@ -22,9 +22,11 @@ import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 public class BookActivity extends AppCompatActivity {
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_NAME = "book_name";
+    public static final String BOOK_PARTS = "book_parts";
 
     private static String mBookKey;
     private static String mBookName;
+    private static int mBookParts;
 
     private DrawerLayout mDrawerLayout;
 
@@ -47,6 +49,7 @@ public class BookActivity extends AppCompatActivity {
 
         mBookKey = getIntent().getStringExtra(BOOK_KEY);
         mBookName = getIntent().getStringExtra(BOOK_NAME);
+        mBookParts = getIntent().getIntExtra(BOOK_PARTS, 0);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
@@ -83,7 +86,7 @@ public class BookActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return BookContentListFragment.newInstance(mBookKey, mBookName);
+                    return BookContentListFragment.newInstance(mBookKey, mBookName, mBookParts);
                 case 1:
                     return BookInfoListFragment.newInstance(mBookKey);
             }
