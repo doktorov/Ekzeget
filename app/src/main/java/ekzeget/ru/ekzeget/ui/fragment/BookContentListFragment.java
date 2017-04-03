@@ -12,7 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
@@ -50,9 +56,12 @@ public class BookContentListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        Map<Integer, Integer> lst =  BibleQueries.getListContents2(mBookKey);
+        Map<Integer, Integer> sortedMap = new TreeMap<>(lst);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getListContents(mBookKey), mBookName, mBookKey));
+                sortedMap, mBookName, mBookKey));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -60,7 +69,7 @@ public class BookContentListFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<Bible> mValues;
+        private Map<Integer, Integer> mValues;
         private String mBookName;
         private String mBookKey;
 
@@ -82,11 +91,11 @@ public class BookContentListFragment extends Fragment {
             }
         }
 
-        public Bible getValueAt(int position) {
+        public Integer getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<Bible> items,
+        private SimpleStringRecyclerViewAdapter(Context context, Map<Integer, Integer> items,
                                                 String bookName, String bookKey) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
@@ -105,11 +114,9 @@ public class BookContentListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mBoundString = mValues.get(position).chapter;
-            //От Матфея. Глава 1 (25 стихов)
-            holder.mTextView.setText(mBookName + ". Глава " +
-                    mValues.get(position).chapter.replace(mBookKey, "") +
-                    " (" + mValues.get(position).parts + " стихов)");
+            holder.mBoundString = mValues.get(position + 1).toString();
+            holder.mTextView.setText(mBookName + ". Глава " +  (position + 1) +
+                    " (" + mValues.get(position + 1) + " стихов)");
 
 //            holder.mView.setOnClickListener(new View.OnClickListener() {
 //                @Override
