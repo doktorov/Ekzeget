@@ -12,17 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class BookContentListFragment extends Fragment {
@@ -41,6 +34,7 @@ public class BookContentListFragment extends Fragment {
 
         return f;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,14 +53,9 @@ public class BookContentListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        List<Bible> lstTmp = BibleQueries.getListContents(mBookKey);
-
-        Map<Integer, Integer> lst =  BibleQueries.getListContents2(mBookKey, mBookParts);
-        Map<Integer, Integer> sortedMap = new TreeMap<>(lst);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                sortedMap, mBookName, mBookKey));
+                BibleQueries.getListContentsSorted(mBookKey, mBookParts), mBookName, mBookKey));
     }
 
     private static class SimpleStringRecyclerViewAdapter

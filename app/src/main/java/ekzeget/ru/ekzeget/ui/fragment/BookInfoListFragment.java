@@ -1,7 +1,6 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,28 +15,30 @@ import android.widget.TextView;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.BooksQueries;
-import ekzeget.ru.ekzeget.model.Book;
+import ekzeget.ru.ekzeget.db.queries.CommonQueries;
+import ekzeget.ru.ekzeget.model.Common;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class BookInfoListFragment extends Fragment {
     private static String mBookKey;
 
-    public static BookContentListFragment newInstance(String bookKey) {
-        BookContentListFragment f = new BookContentListFragment();
+    public static BookInfoListFragment newInstance(String bookKey) {
+        BookInfoListFragment f = new BookInfoListFragment();
 
         Bundle args = new Bundle();
-        args.putString("bookKey", bookKey);
+        args.putString(BookActivity.BOOK_KEY, bookKey);
         f.setArguments(args);
+
         return f;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(
                 R.layout.fragment_cheese_list, container, false);
 
-        mBookKey = getArguments().getString("bookKey");
+        mBookKey = getArguments().getString(BookActivity.BOOK_KEY);
 
         setupRecyclerView(rv);
 
@@ -47,7 +48,7 @@ public class BookInfoListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BooksQueries.getFullNamesBooks("nz")));
+                CommonQueries.getListContents(mBookKey)));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -55,7 +56,7 @@ public class BookInfoListFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<Book> mValues;
+        private List<Common> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
@@ -75,11 +76,11 @@ public class BookInfoListFragment extends Fragment {
             }
         }
 
-        public Book getValueAt(int position) {
+        public Common getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<Book> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<Common> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -101,10 +102,10 @@ public class BookInfoListFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookActivity.class);
-                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-                    context.startActivity(intent);
+//                    Context context = v.getContext();
+//                    Intent intent = new Intent(context, BookActivity.class);
+//                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
+//                    context.startActivity(intent);
                 }
             });
         }

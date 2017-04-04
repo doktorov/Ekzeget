@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.db.table.BibleTable;
@@ -37,7 +38,7 @@ public class BibleQueries {
         return bibleList;
     }
 
-    public static Map<Integer, Integer> getListContents2(String book_kn, int book_parts) {
+    public static Map<Integer, Integer> getListContentsSorted(String book_kn, int book_parts) {
         Map<Integer, Integer> bibleList = new HashMap<>();
 
         for (int i = 1; i < book_parts + 1; i++) {
@@ -62,6 +63,6 @@ public class BibleQueries {
             cursor.close();
         }
 
-        return bibleList;
+        return new TreeMap<>(bibleList);
     }
 }
