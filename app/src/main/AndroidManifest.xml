@@ -40,6 +40,10 @@
             android:name=".ui.activity.BookActivity"
             android:label="@string/content"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.BookInfoActivity"
+            android:label="@string/content"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

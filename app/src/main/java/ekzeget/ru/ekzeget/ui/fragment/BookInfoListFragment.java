@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.CommonQueries;
 import ekzeget.ru.ekzeget.model.Common;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
+import ekzeget.ru.ekzeget.ui.activity.BookInfoActivity;
 
 public class BookInfoListFragment extends Fragment {
     private static String mBookKey;
@@ -102,10 +104,11 @@ public class BookInfoListFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, BookActivity.class);
-//                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-//                    context.startActivity(intent);
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BookInfoActivity.class);
+                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
+                    intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
+                    context.startActivity(intent);
                 }
             });
         }
