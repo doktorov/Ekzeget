@@ -20,6 +20,10 @@
     <string name="content">Содержание</string>
     <string name="book_info">Сведения о книге</string>
 
+    <string name="text">Текст</string>
+    <string name="interpretations">Толкования</string>
+    <string name="parallel_poems">Параллельные стихи</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

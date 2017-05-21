@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import java.util.Map;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
+import ekzeget.ru.ekzeget.ui.activity.BookContentActivity;
 
 public class BookContentListFragment extends Fragment {
     private static String mBookKey;
@@ -68,7 +70,8 @@ public class BookContentListFragment extends Fragment {
         private String mBookKey;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
-            private String mBoundString;
+            private String mBookChapter;
+            private String mBookKey;
 
             private final View mView;
             private final TextView mTextView;
@@ -108,19 +111,21 @@ public class BookContentListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mBoundString = mValues.get(position + 1).toString();
+            holder.mBookChapter = String.valueOf(position + 1);
+            holder.mBookKey = mBookKey;
             holder.mTextView.setText(mBookName + ". Глава " +  (position + 1) +
                     " (" + mValues.get(position + 1) + " стихов)");
 
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, BookActivity.class);
-//                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-//                    context.startActivity(intent);
-//                }
-//            });
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BookContentActivity.class);
+                    intent.putExtra(BookContentActivity.BOOK_KEY, holder.mBookKey);
+                    intent.putExtra(BookContentActivity.BOOK_CHAPTER, holder.mBookChapter);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override

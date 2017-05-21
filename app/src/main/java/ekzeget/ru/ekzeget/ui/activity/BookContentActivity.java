@@ -61,9 +61,9 @@ public class BookContentActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-//        adapter.addFragment(App.getAppResources().getString(R.string.text));
-//        adapter.addFragment(App.getAppResources().getString(R.string.interpretations));
-//        adapter.addFragment(App.getAppResources().getString(R.string.parallel_poems));
+        adapter.addFragment(App.getAppResources().getString(R.string.text));
+        adapter.addFragment(App.getAppResources().getString(R.string.interpretations));
+        adapter.addFragment(App.getAppResources().getString(R.string.parallel_poems));
         viewPager.setAdapter(adapter);
     }
 
