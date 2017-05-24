@@ -3,6 +3,7 @@ package ekzeget.ru.ekzeget.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
@@ -24,7 +22,7 @@ public class ContentTextFragment extends Fragment {
     private static String mBookKey;
     private static String mBookChapter;
 
-    private Unbinder unbinder;
+    //private Unbinder unbinder;
 
     //@BindView(R.id.context_text)
     TextView mContextText;
@@ -45,22 +43,23 @@ public class ContentTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_context_text, container, false);
+        NestedScrollView rv = (NestedScrollView) inflater.inflate(
+                R.layout.fragment_context_text, container, false);
 
         //unbinder = ButterKnife.bind(this, view);
 
         mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
 
-        mContextText = (TextView) view.findViewById(R.id.context_text);
+        mContextText = (TextView) rv.findViewById(R.id.context_text);
 
-        return view;
+        return rv;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
     @Override
@@ -75,6 +74,8 @@ public class ContentTextFragment extends Fragment {
             stringBuilder.append(bible.st_no + " ");
             stringBuilder.append(bible.st_text + " ");
         }
+
+        stringBuilder.append("\n\n");
 
         mContextText.setText(stringBuilder.toString());
     }
