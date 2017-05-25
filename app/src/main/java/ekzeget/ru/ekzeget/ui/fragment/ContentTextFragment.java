@@ -1,19 +1,27 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.ContentString;
 
 public class ContentTextFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -68,15 +76,40 @@ public class ContentTextFragment extends Fragment {
 
         List<Bible> bibles = BibleQueries.getChapterContent(mBookKey + mBookChapter);
 
+        List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-
         for (Bible bible : bibles) {
-            stringBuilder.append(bible.st_no + " ");
-            stringBuilder.append(bible.st_text + " ");
+            String res = String.format("%s %s ", bible.st_no, bible.st_text);
+
+            contentStrings.add(new ContentString(
+                    bible.st_no,
+                    stringBuilder.toString().length(),
+                    stringBuilder.toString().length() + res.length() - 1));
+
+            stringBuilder.append(res);
         }
 
         stringBuilder.append("\n\n");
 
-        mContextText.setText(stringBuilder.toString());
+        SpannableString ss = new SpannableString(stringBuilder.toString());
+        for (final ContentString contentString : contentStrings) {
+            ss.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    String s = String.valueOf(contentString.getStNo());
+                    s = "";
+                }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                }
+            }, contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        mContextText.setText(ss);
+        mContextText.setMovementMethod(LinkMovementMethod.getInstance());
+        mContextText.setHighlightColor(Color.TRANSPARENT);
     }
 }

@@ -10,6 +10,9 @@
         android:id="@+id/context_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" />
+        android:layout_margin="@dimen/text_margin"
+        android:clickable="true"
+        android:textColor="@color/colorBlack"
+        android:textColorLink="@color/colorBlack"/>
 
 </android.support.v4.widget.NestedScrollView>
