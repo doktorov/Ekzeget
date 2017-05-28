@@ -1,5 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +25,7 @@ import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.model.ContentString;
 import ekzeget.ru.ekzeget.ui.activity.BookContentActivity;
+import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
 
 public class ContentTextFragment extends Fragment {
     public static final String BOOK_NAME = "book_name";
@@ -97,8 +100,16 @@ public class ContentTextFragment extends Fragment {
             ss.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
-                    String s = String.valueOf(contentString.getStNo());
-                    s = "";
+//                    String s = String.valueOf(contentString.getStNo());
+//                    s = "";
+
+                    Context context = getActivity();
+                    Intent intent = new Intent(context, BookContentPoemActivity.class);
+                    intent.putExtra(BookContentPoemActivity.BOOK_NAME, mBookName);
+                    intent.putExtra(BookContentPoemActivity.BOOK_KEY, mBookKey);
+                    intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, mBookChapter);
+                    intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
+                    context.startActivity(intent);
                 }
 
                 @Override
