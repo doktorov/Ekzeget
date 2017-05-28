@@ -100,9 +100,6 @@ public class ContentTextFragment extends Fragment {
             ss.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
-//                    String s = String.valueOf(contentString.getStNo());
-//                    s = "";
-
                     Context context = getActivity();
                     Intent intent = new Intent(context, BookContentPoemActivity.class);
                     intent.putExtra(BookContentPoemActivity.BOOK_NAME, mBookName);
