@@ -1,11 +1,9 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -14,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.CommonQueries;
-import ekzeget.ru.ekzeget.db.queries.TalksQueries;
-import ekzeget.ru.ekzeget.model.Common;
-import ekzeget.ru.ekzeget.model.Talks;
 
 public class ContentPoemTextFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -72,10 +67,21 @@ public class ContentPoemTextFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
-        List<Talks> talksList = TalksQueries.getListTalksPoem(mBookKey + mBookChapter, mBookStNo);
+        List<String> translate = new ArrayList<>();
+        translate.add("Синодальный перевод");
+        translate.add("Радостная весть");
+        translate.add("Перевод епископа Кассиана (Безобразова)");
+        translate.add("Подстрочный перевод А. Винокурова");
+        translate.add("Церковно-славянский перевод (транслит)");
+        translate.add("Перевод С.С. Аверинцева");
+        translate.add("Греческий текст");
+        translate.add("Церковно-славянский перевод");
+        translate.add("Латинский перевод «Вульгата»");
+        translate.add("Украинский перевод И.И. Огиенко");
+        translate.add("Английский перевод New King James Version");
 
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                CommonQueries.getListContents(mBookKey)));
+                translate));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -83,7 +89,7 @@ public class ContentPoemTextFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<Common> mValues;
+        private List<String> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
@@ -103,11 +109,11 @@ public class ContentPoemTextFragment extends Fragment {
             }
         }
 
-        public Common getValueAt(int position) {
+        public String getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<Common> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -123,19 +129,7 @@ public class ContentPoemTextFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mBoundString = mValues.get(position).name;
-            holder.mTextView.setText(mValues.get(position).name);
-
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, BookInfoActivity.class);
-//                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
-//                    intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
-//                    context.startActivity(intent);
-//                }
-//            });
+            holder.mTextView.setText(mValues.get(position));
         }
 
         @Override
