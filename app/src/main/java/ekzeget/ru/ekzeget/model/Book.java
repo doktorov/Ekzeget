@@ -4,6 +4,7 @@ public class Book {
     public String key;
     public String name;
     public String short_name;
+    public String menu;
     public int parts;
 
     public String toString()

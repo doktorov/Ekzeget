@@ -20,13 +20,17 @@ import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentTextFragment;
 
 public class BookContentActivity extends AppCompatActivity {
+    public static final String BOOK_NAME = "book_name";
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
 
+    private static String mBookName;
     private static String mBookKey;
     private static String mBookChapter;
 
     private DrawerLayout mDrawerLayout;
+
+    private Toolbar mToolbar;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -40,11 +44,12 @@ public class BookContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_content);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mBookName = getIntent().getStringExtra(BOOK_NAME);
         mBookKey = getIntent().getStringExtra(BOOK_KEY);
         mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
 
@@ -84,7 +89,7 @@ public class BookContentActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ContentTextFragment.newInstance(mBookKey, mBookChapter);
+                    return ContentTextFragment.newInstance(mBookName, mBookKey, mBookChapter);
                 case 1:
                     return BookInfoListFragment.newInstance(mBookKey);
                 case 2:
@@ -103,5 +108,9 @@ public class BookContentActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
         }
+    }
+
+    public void setActionBarTitle(String title){
+        mToolbar.setTitle(title);
     }
 }

@@ -90,7 +90,7 @@ public class NZListFragment extends Fragment {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, BookActivity.class);
                     intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-                    intent.putExtra(BookActivity.BOOK_NAME, mValues.get(position).name);
+                    intent.putExtra(BookActivity.BOOK_NAME, mValues.get(position).menu);
                     intent.putExtra(BookActivity.BOOK_PARTS, mValues.get(position).parts);
                     context.startActivity(intent);
                 }

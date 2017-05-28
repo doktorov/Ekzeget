@@ -70,8 +70,9 @@ public class BookContentListFragment extends Fragment {
         private String mBookKey;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
-            private String mBookChapter;
+            private String mBookName;
             private String mBookKey;
+            private String mBookChapter;
 
             private final View mView;
             private final TextView mTextView;
@@ -111,16 +112,18 @@ public class BookContentListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
+            holder.mBookName = mBookName;
             holder.mBookChapter = String.valueOf(position + 1);
             holder.mBookKey = mBookKey;
-            holder.mTextView.setText(mBookName + ". Глава " +  (position + 1) +
-                    " (" + mValues.get(position + 1) + " стихов)");
+            holder.mTextView.setText(String.format("%s. Глава %s (%s стихов)",
+                    mBookName, (position + 1), mValues.get(position + 1)));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, BookContentActivity.class);
+                    intent.putExtra(BookContentActivity.BOOK_NAME, holder.mBookName);
                     intent.putExtra(BookContentActivity.BOOK_KEY, holder.mBookKey);
                     intent.putExtra(BookContentActivity.BOOK_CHAPTER, holder.mBookChapter);
                     context.startActivity(intent);

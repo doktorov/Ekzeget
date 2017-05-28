@@ -22,23 +22,24 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.model.ContentString;
+import ekzeget.ru.ekzeget.ui.activity.BookContentActivity;
 
 public class ContentTextFragment extends Fragment {
+    public static final String BOOK_NAME = "book_name";
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
 
+    private static String mBookName;
     private static String mBookKey;
     private static String mBookChapter;
 
-    //private Unbinder unbinder;
+    private TextView mContextText;
 
-    //@BindView(R.id.context_text)
-    TextView mContextText;
-
-    public static ContentTextFragment newInstance(String bookKey, String bookChapter) {
+    public static ContentTextFragment newInstance(String bookName, String bookKey, String bookChapter) {
         ContentTextFragment f = new ContentTextFragment();
 
         Bundle args = new Bundle();
+        args.putString(BOOK_NAME, bookName);
         args.putString(BOOK_KEY, bookKey);
         args.putString(BOOK_CHAPTER, bookChapter);
         f.setArguments(args);
@@ -54,10 +55,11 @@ public class ContentTextFragment extends Fragment {
         NestedScrollView rv = (NestedScrollView) inflater.inflate(
                 R.layout.fragment_context_text, container, false);
 
-        //unbinder = ButterKnife.bind(this, view);
-
+        mBookName = getArguments().getString(BOOK_NAME);
         mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
+
+        ((BookContentActivity) getActivity()).setActionBarTitle(String.format("%s, Глава %s", mBookName, mBookChapter));
 
         mContextText = (TextView) rv.findViewById(R.id.context_text);
 
@@ -67,7 +69,6 @@ public class ContentTextFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
     }
 
     @Override
