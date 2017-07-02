@@ -1,157 +1,182 @@
 package ekzeget.ru.ekzeget.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.model.Book;
-import ekzeget.ru.ekzeget.model.Interpreting;
-import ekzeget.ru.ekzeget.model.gson.GsonBooks;
-import ekzeget.ru.ekzeget.model.gson.GsonChapter;
-import ekzeget.ru.ekzeget.model.gson.GsonInterpreting;
+import ekzeget.ru.ekzeget.ui.fragment.BaseFragment;
+import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
+import ekzeget.ru.ekzeget.ui.fragment.VZListFragment;
 
 public class MainActivity extends AppCompatActivity {
-    GsonBooks gsonBooks = new GsonBooks();
-    List<Book> books = new ArrayList<>();
-    List<String> chapters = new ArrayList<>();
 
-    List<GsonInterpreting> gsonInterpreting = new ArrayList<>();
-    List<Interpreting> interpretings = new ArrayList<>();
-
-    List<GsonChapter> gsonChapter = new ArrayList<>();
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cheese);
 
-        final Spinner sBooks = (Spinner) findViewById(R.id.books);
-        final Spinner sChapters = (Spinner) findViewById(R.id.chapters);
-        final Spinner sInterpreting = (Spinner) findViewById(R.id.interpreting);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // Books
-//        InputStream inputBooks = getResources().openRawResource(R.raw.books);
-//        String readBooks = FileUtils.readTextFile(inputBooks);
-//        Gson gson = new Gson();
-//        gsonBooks = gson.fromJson(readBooks, GsonBooks.class);
-
-        Book bookTitle = new Book();
-        bookTitle.short_name = "Кн.";
-        bookTitle.key = "null";
-        books.add(bookTitle);
-        for (GsonBooks.Book item : gsonBooks.nz) {
-            Book book = new Book();
-            book.short_name = item.short_name;
-            book.key = item.key;
-            book.parts = item.parts;
-            books.add(book);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (viewPager != null) {
+            setupViewPager(viewPager);
         }
-        //
 
-        // interpreting
-//        InputStream inputInterpreting = getResources().openRawResource(R.raw.interpreting);
-//        String readInterpreting = FileUtils.readTextFile(inputInterpreting);
-//        gson = new Gson();
-//        gsonInterpreting = gson.fromJson(readInterpreting,  new TypeToken<ArrayList<GsonInterpreting>>() {}.getType());
-
-        for (GsonInterpreting item : gsonInterpreting) {
-            Interpreting interpreting = new Interpreting();
-            interpreting.name = item.t_name;
-            interpretings.add(interpreting);
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
         }
-        //
 
-        // chapters
-//        InputStream inputChapter = getResources().openRawResource(R.raw.chapter);
-//        String readChapter = FileUtils.readTextFile(inputChapter);
-//        gson = new Gson();
-//        gsonChapter = gson.fromJson(readChapter,  new TypeToken<ArrayList<GsonChapter>>() {}.getType());
-        //
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        ArrayAdapter<Book> adapterBooks = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, books);
-        sBooks.setAdapter(adapterBooks);
-        sBooks.setSelection(0);
-        sBooks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.sample_actions, menu);
+        menu.findItem(R.id.action_night).setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (AppCompatDelegate.getDefaultNightMode()) {
+            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+                menu.findItem(R.id.menu_night_mode_system).setChecked(true);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new NZListFragment(), App.getAppResources().getString(R.string.nz));
+        adapter.addFragment(new VZListFragment(), App.getAppResources().getString(R.string.vz));
+        viewPager.setAdapter(adapter);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                chapters = new ArrayList<>();
-                chapters.add("Гл.");
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                displaySelectedScreen(menuItem.getItemId());
 
-                if (books.get(position).key != "null") {
-                    chapters.add("О книге");
-                    for (int i = 0; i < books.get(position).parts; i++) {
-                        chapters.add(String.valueOf(i + 1));
-                    }
-                }
-
-                ArrayAdapter<String> adapterChapters = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, chapters);
-                sChapters.setAdapter(adapterChapters);
-                sChapters.setSelection(0);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
+                mDrawerLayout.closeDrawers();
+                return true;
             }
         });
+    }
 
-        ArrayAdapter<Interpreting> adapterInterpretings = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, interpretings);
-        sInterpreting.setAdapter(adapterInterpretings);
-        sInterpreting.setSelection(0);
+    private void displaySelectedScreen(int itemId) {
+        Fragment fragment = null;
+        BaseFragment mCurrentFragment = null;
 
+        switch (itemId) {
+            case R.id.log_in:
 
+                break;
+            case R.id.bible:
 
-        /*TextView TV = (TextView)findViewById(R.id.textData);
-        Spannable wordtoSpan = new SpannableString("I know just how to whisper, And I know just how to cry,I know just where to find the answers");
+                break;
+            case R.id.registration:
 
-        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case R.id.sermons:
 
-        TV.setText(wordtoSpan);*/
+                break;
+            case R.id.dictionaries:
 
-        StringBuilder sb = new StringBuilder();
-        for (GsonChapter item  :gsonChapter) {
-            sb.append(item.st_no + " " + item.st_text + " ");
+                break;
+            case R.id.synopsis:
 
-            ClickableSpan span = new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    String s = "";
-                }
-            };
+                break;
+            case R.id.exegetes:
+
+                break;
+            case R.id.links_generator:
+
+                break;
+            case R.id.guest_book:
+
+                break;
+            default:
+                break;
         }
 
-        /*ClickableSpan span1 = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                String s = "";
-            }
-        };
-        ClickableSpan span2 = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                String s = "";
-            }
-        };*/
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mCurrentFragment).commit();
+        }
 
-        SpannableString ss = new SpannableString(sb.toString());
-        //ss.setSpan(span1, 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //ss.setSpan(span2, 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
-        TextView textView = (TextView)findViewById(R.id.textData);
-        textView.setText(ss);
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    private static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
     }
 }
-
-
-
