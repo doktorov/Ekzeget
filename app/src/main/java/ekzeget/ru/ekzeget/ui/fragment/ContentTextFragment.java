@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.text.SpannableString;
@@ -12,6 +13,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class ContentTextFragment extends Fragment {
     private static String mBookChapter;
 
     private TextView mContextText;
+    private View mProgressView;
 
     public static ContentTextFragment newInstance(String bookName, String bookKey, String bookChapter) {
         ContentTextFragment f = new ContentTextFragment();
@@ -55,7 +58,7 @@ public class ContentTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NestedScrollView rv = (NestedScrollView) inflater.inflate(
+        CoordinatorLayout rv = (CoordinatorLayout) inflater.inflate(
                 R.layout.fragment_context_text, container, false);
 
         mBookName = getArguments().getString(BOOK_NAME);
@@ -65,6 +68,7 @@ public class ContentTextFragment extends Fragment {
         ((BookContentActivity) getActivity()).setActionBarTitle(String.format("%s, Глава %s", mBookName, mBookChapter));
 
         mContextText = (TextView) rv.findViewById(R.id.context_text);
+        mProgressView = rv.findViewById(R.id.progress);
 
         return rv;
     }
@@ -100,6 +104,9 @@ public class ContentTextFragment extends Fragment {
             ss.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
+                    mContextText.setVisibility(View.GONE);
+                    mProgressView.setVisibility(View.VISIBLE);
+
                     Context context = getActivity();
                     Intent intent = new Intent(context, BookContentPoemActivity.class);
                     intent.putExtra(BookContentPoemActivity.BOOK_NAME, mBookName);
@@ -115,6 +122,8 @@ public class ContentTextFragment extends Fragment {
                     ds.setUnderlineText(false);
                 }
             }, contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         mContextText.setText(ss);
