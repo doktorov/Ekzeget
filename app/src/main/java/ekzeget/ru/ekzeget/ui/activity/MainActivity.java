@@ -22,7 +22,6 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.ui.fragment.BaseFragment;
 import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.VZListFragment;
 
@@ -99,56 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                displaySelectedScreen(menuItem.getItemId());
 
                 mDrawerLayout.closeDrawers();
                 return true;
             }
         });
-    }
-
-    private void displaySelectedScreen(int itemId) {
-        Fragment fragment = null;
-        BaseFragment mCurrentFragment = null;
-
-        switch (itemId) {
-            case R.id.log_in:
-
-                break;
-            case R.id.bible:
-
-                break;
-            case R.id.registration:
-
-                break;
-            case R.id.sermons:
-
-                break;
-            case R.id.dictionaries:
-
-                break;
-            case R.id.synopsis:
-
-                break;
-            case R.id.exegetes:
-
-                break;
-            case R.id.links_generator:
-
-                break;
-            case R.id.guest_book:
-
-                break;
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mCurrentFragment).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
     }
 
     private static class Adapter extends FragmentPagerAdapter {
