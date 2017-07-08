@@ -14,6 +14,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -93,7 +94,7 @@ public class ContentTextFragment extends Fragment {
 
             contentStrings.add(new ContentString(
                     bible.st_no,
-                    stringBuilder.toString().length() + String.valueOf(bible.st_no).length() + 1,
+                    stringBuilder.toString().length(),
                     stringBuilder.toString().length() + res.length() - 1));
 
             stringBuilder.append(res);
@@ -116,8 +117,6 @@ public class ContentTextFragment extends Fragment {
                     intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, mBookChapter);
                     intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
                     //context.startActivity(intent);
-
-
                     startActivityForResult(intent, 1111);
                 }
 
@@ -128,8 +127,20 @@ public class ContentTextFragment extends Fragment {
                 }
             }, contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            ss.setSpan(new AbsoluteSizeSpan(20, true), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new AbsoluteSizeSpan(14, true),
+                    contentString.getStart(),
+                    contentString.getStart() + String.valueOf(contentString.getStNo()).length() + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            ss.setSpan(new ForegroundColorSpan(Color.GRAY), contentString.getStart(),
+                    contentString.getStart() + String.valueOf(contentString.getStNo()).length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+            ss.setSpan(new AbsoluteSizeSpan(20, true),
+                    contentString.getStart() + String.valueOf(contentString.getStNo()).length() + 1,
+                    contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         mContextText.setText(ss);
