@@ -137,7 +137,7 @@ public class ContentTextFragment extends Fragment {
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
-            ss.setSpan(new AbsoluteSizeSpan(20, true),
+            ss.setSpan(new AbsoluteSizeSpan(16, true),
                     contentString.getStart() + String.valueOf(contentString.getStNo()).length() + 1,
                     contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             //ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
