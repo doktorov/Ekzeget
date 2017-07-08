@@ -18,8 +18,7 @@
             android:layout_margin="@dimen/text_margin"
             android:clickable="true"
             android:textColor="@color/colorBlack"
-            android:textColorLink="@color/colorBlack"
-            android:textSize="20sp"/>
+            android:textColorLink="@color/colorBlack" />
 
     </android.support.v4.widget.NestedScrollView>
 

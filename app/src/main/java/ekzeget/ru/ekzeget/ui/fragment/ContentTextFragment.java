@@ -12,7 +12,9 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,11 +89,11 @@ public class ContentTextFragment extends Fragment {
         List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         for (Bible bible : bibles) {
-            String res = String.format("%s %s ", bible.st_no, bible.st_text);
+            String res = String.format("%s %s \n", bible.st_no, bible.st_text);
 
             contentStrings.add(new ContentString(
                     bible.st_no,
-                    stringBuilder.toString().length(),
+                    stringBuilder.toString().length() + String.valueOf(bible.st_no).length() + 1,
                     stringBuilder.toString().length() + res.length() - 1));
 
             stringBuilder.append(res);
@@ -113,7 +115,10 @@ public class ContentTextFragment extends Fragment {
                     intent.putExtra(BookContentPoemActivity.BOOK_KEY, mBookKey);
                     intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, mBookChapter);
                     intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
-                    context.startActivity(intent);
+                    //context.startActivity(intent);
+
+
+                    startActivityForResult(intent, 1111);
                 }
 
                 @Override
@@ -123,11 +128,34 @@ public class ContentTextFragment extends Fragment {
                 }
             }, contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+            ss.setSpan(new AbsoluteSizeSpan(20, true), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         mContextText.setText(ss);
         mContextText.setMovementMethod(LinkMovementMethod.getInstance());
         mContextText.setHighlightColor(Color.TRANSPARENT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mContextText.setVisibility(View.VISIBLE);
+        mProgressView.setVisibility(View.GONE);
+
+//        if (requestCode == 1111 && resultCode == RESULT_OK && null != data)
+//        {
+//            Uri selectedImg = data.getData();
+//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//            Cursor cursor = getContentResolver().query(selectedImg,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            imgcover = (ImageView) findViewById(R.id.newcover_img);
+//            imgcover .setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//            cursor.close();
+//        }
     }
 }
