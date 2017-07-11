@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/include_list_viewpager"/>
+    <include layout="@layout/book_poem_content_list_viewpager"/>
 
 </android.support.v4.widget.DrawerLayout>

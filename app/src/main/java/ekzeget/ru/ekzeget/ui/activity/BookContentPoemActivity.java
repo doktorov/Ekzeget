@@ -24,11 +24,13 @@ public class BookContentPoemActivity extends AppCompatActivity {
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
     public static final String BOOK_ST_NO = "book_st_no";
+    public static final String BOOK_POEM = "book_poem";
 
     private static String mBookName;
     private static String mBookKey;
     private static String mBookChapter;
     private static String mBookStNo;
+    private static String mBookPoem;
 
     private Toolbar mToolbar;
 
@@ -53,6 +55,7 @@ public class BookContentPoemActivity extends AppCompatActivity {
         mBookKey = getIntent().getStringExtra(BOOK_KEY);
         mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
         mBookStNo = getIntent().getStringExtra(BOOK_ST_NO);
+        mBookPoem = getIntent().getStringExtra(BOOK_POEM);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
@@ -90,9 +93,9 @@ public class BookContentPoemActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ContentPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo);
+                    return ContentPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
                 case 1:
-                    return TalksPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo);
+                    return TalksPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
                 case 2:
                     return BookInfoListFragment.newInstance(mBookKey);
             }

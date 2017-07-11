@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,20 +23,25 @@ public class TalksPoemTextFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
     public static final String BOOK_ST_NO = "book_st_no";
+    public static final String BOOK_POEM = "book_poem";
 
     private static String mBookKey;
     private static String mBookChapter;
     private static String mBookStNo;
+    private static String mBookPoem;
 
     private TextView mContextText;
+    private TextView mTextPoem;
 
-    public static TalksPoemTextFragment newInstance(String bookKey, String bookChapter, String bookStNo) {
+    public static TalksPoemTextFragment newInstance(String bookKey, String bookChapter,
+                                                    String bookStNo, String bookPoem) {
         TalksPoemTextFragment f = new TalksPoemTextFragment();
 
         Bundle args = new Bundle();
         args.putString(BOOK_KEY, bookKey);
         args.putString(BOOK_CHAPTER, bookChapter);
         args.putString(BOOK_ST_NO, bookStNo);
+        args.putString(BOOK_POEM, bookPoem);
         f.setArguments(args);
 
         return f;
@@ -46,18 +52,24 @@ public class TalksPoemTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecyclerView rv = (RecyclerView) inflater.inflate(
+        LinearLayout ll = (LinearLayout) inflater.inflate(
                 R.layout.fragment_content_poem_text_list, container, false);
 
         mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
         mBookStNo = getArguments().getString(BOOK_ST_NO);
+        mBookPoem = getArguments().getString(BOOK_POEM);
 
-        mContextText = (TextView) rv.findViewById(R.id.context_text);
+        mContextText = (TextView) ll.findViewById(R.id.context_text);
+
+        mTextPoem = (TextView) ll.findViewById(R.id.text_poem);
+        mTextPoem.setText(mBookPoem);
+
+        RecyclerView rv = (RecyclerView) ll.findViewById(R.id.recyclerview);
 
         setupRecyclerView(rv);
 
-        return rv;
+        return ll;
     }
 
     @Override

@@ -4,11 +4,13 @@ public class ContentString {
     private int mStNo;
     private int mStart;
     private int mEnd;
+    private String mText;
 
-    public ContentString(int stNo, int start, int end) {
+    public ContentString(int stNo, int start, int end, String text) {
         this.mStNo = stNo;
         this.mStart = start;
         this.mEnd = end;
+        this.mText = text;
     }
 
     public int getStNo() {
@@ -21,5 +23,9 @@ public class ContentString {
 
     public int getEnd() {
         return mEnd;
+    }
+
+    public String getText() {
+        return mText;
     }
 }

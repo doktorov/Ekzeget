@@ -95,7 +95,8 @@ public class ContentTextFragment extends Fragment {
             contentStrings.add(new ContentString(
                     bible.st_no,
                     stringBuilder.toString().length(),
-                    stringBuilder.toString().length() + res.length() - 1));
+                            stringBuilder.toString().length() + res.length() - 1,
+                    res));
 
             stringBuilder.append(res);
         }
@@ -116,6 +117,7 @@ public class ContentTextFragment extends Fragment {
                     intent.putExtra(BookContentPoemActivity.BOOK_KEY, mBookKey);
                     intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, mBookChapter);
                     intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
+                    intent.putExtra(BookContentPoemActivity.BOOK_POEM, contentString.getText());
                     //context.startActivity(intent);
                     startActivityForResult(intent, 1111);
                 }
@@ -140,7 +142,6 @@ public class ContentTextFragment extends Fragment {
             ss.setSpan(new AbsoluteSizeSpan(16, true),
                     contentString.getStart() + String.valueOf(contentString.getStNo()).length() + 1,
                     contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            //ss.setSpan(new UnderlineSpan(), contentString.getStart(), contentString.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         mContextText.setText(ss);
