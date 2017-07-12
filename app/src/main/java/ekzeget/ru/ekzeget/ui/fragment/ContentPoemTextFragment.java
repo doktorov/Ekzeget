@@ -30,7 +30,6 @@ public class ContentPoemTextFragment extends Fragment {
     private static String mBookPoem;
 
     private TextView mContextText;
-    private TextView mTextPoem;
 
     public static ContentPoemTextFragment newInstance(String bookKey, String bookChapter,
                                                       String bookStNo, String bookPoem) {
@@ -60,9 +59,6 @@ public class ContentPoemTextFragment extends Fragment {
         mBookPoem = getArguments().getString(BOOK_POEM);
 
         mContextText = (TextView) ll.findViewById(R.id.context_text);
-
-        mTextPoem = (TextView) ll.findViewById(R.id.text_poem);
-        mTextPoem.setText(mBookPoem);
 
         RecyclerView rv = (RecyclerView) ll.findViewById(R.id.recyclerview);
 
