@@ -18,6 +18,7 @@ import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentTextFragment;
+import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkFragment;
 
 public class BookContentActivity extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
@@ -91,7 +92,7 @@ public class BookContentActivity extends AppCompatActivity {
                 case 0:
                     return ContentTextFragment.newInstance(mBookName, mBookKey, mBookChapter);
                 case 1:
-                    return BookInfoListFragment.newInstance(mBookKey);
+                    return GlavaTalkFragment.newInstance(mBookKey);
                 case 2:
                     return BookInfoListFragment.newInstance(mBookKey);
             }
