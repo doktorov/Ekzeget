@@ -92,7 +92,7 @@ public class BookContentActivity extends AppCompatActivity {
                 case 0:
                     return ContentTextFragment.newInstance(mBookName, mBookKey, mBookChapter);
                 case 1:
-                    return GlavaTalkFragment.newInstance(mBookKey);
+                    return GlavaTalkFragment.newInstance(mBookKey, mBookChapter);
                 case 2:
                     return BookInfoListFragment.newInstance(mBookKey);
             }
