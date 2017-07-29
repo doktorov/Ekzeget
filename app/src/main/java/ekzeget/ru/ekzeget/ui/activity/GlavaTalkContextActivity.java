@@ -14,18 +14,32 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkContextFragment;
 
 public class GlavaTalkContextActivity extends AppCompatActivity {
+    public static final String BOOK_KEY_CHAPTER = "book_key_chapter";
+    public static final String CHAPTER_AUTHOR = "chapter_author";
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
+
+    private Toolbar mToolbar;
+
+    private static String mBookKeyChapter;
+    private static String mChapterAuthor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glava_talk_context);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("123");
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mBookKeyChapter = getIntent().getStringExtra(BOOK_KEY_CHAPTER);
+        mChapterAuthor = getIntent().getStringExtra(CHAPTER_AUTHOR);
+
+        mToolbar.setTitle(mChapterAuthor);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -43,8 +57,11 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case  android.R.id.home:
+                finish();
         }
 
         return super.onOptionsItemSelected(item);
