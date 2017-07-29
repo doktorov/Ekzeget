@@ -117,6 +117,8 @@ public class GlavaTalkFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String s = "";
+
 //                    Context context = v.getContext();
 //                    Intent intent = new Intent(context, BookInfoActivity.class);
 //                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
