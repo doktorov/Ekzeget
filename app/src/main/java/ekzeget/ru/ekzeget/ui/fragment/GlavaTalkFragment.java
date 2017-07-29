@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
 import ekzeget.ru.ekzeget.model.Talks;
+import ekzeget.ru.ekzeget.ui.activity.GlavaTalkContextActivity;
 
 public class GlavaTalkFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -119,11 +121,11 @@ public class GlavaTalkFragment extends Fragment {
                 public void onClick(View v) {
                     String s = "";
 
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, BookInfoActivity.class);
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, GlavaTalkContextActivity.class);
 //                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
 //                    intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
-//                    context.startActivity(intent);
+                    context.startActivity(intent);
                 }
             });
         }
