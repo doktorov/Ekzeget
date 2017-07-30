@@ -10,7 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.db.queries.TalksQueries;
+import ekzeget.ru.ekzeget.model.Talks;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkContextFragment;
 
 public class GlavaTalkContextActivity extends AppCompatActivity {
@@ -41,7 +45,8 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
 
         mToolbar.setTitle(mChapterAuthor);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+                TalksQueries.getListTalksText(mBookKeyChapter, mChapterAuthor));
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -68,19 +73,23 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private List<Talks> mValues;
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public SectionsPagerAdapter(FragmentManager fm, List<Talks> talks) {
             super(fm);
+
+            mValues = talks;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return GlavaTalkContextFragment.newInstance(position + 1);
+            return GlavaTalkContextFragment.newInstance(mValues.get(position).stNo,
+                    mValues.get(position).stText, mValues.get(position).comments);
         }
 
         @Override
         public int getCount() {
-            return 10;
+            return mValues.size();
         }
     }
 }

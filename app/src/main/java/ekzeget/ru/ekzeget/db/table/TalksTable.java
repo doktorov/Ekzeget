@@ -13,5 +13,6 @@ public class TalksTable {
     public static final String ISSLED = "issled";
 
     public static final String WHERE_KN = KN + "=?";
+    public static final String WHERE_T_NAME = T_NAME + "=?";
     public static final String WHERE_ST_NO = ST_NO + "=?";
 }
