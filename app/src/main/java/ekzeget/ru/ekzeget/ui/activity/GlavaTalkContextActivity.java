@@ -84,7 +84,8 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             return GlavaTalkContextFragment.newInstance(mValues.get(position).stNo,
-                    mValues.get(position).stText, mValues.get(position).comments);
+                    mValues.get(position).stText, mValues.get(position).comments,
+                    mValues.size(), position + 1);
         }
 
         @Override
