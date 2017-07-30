@@ -31,9 +31,8 @@ public class GlavaTalkContextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.glava_talk_context_fragment, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        //textView.setText(getString(R.string.section_format, getArguments().getInt(ST_NO)));
+        View rootView = inflater.inflate(R.layout.fragment_glava_talk_context, container, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.comments);
         textView.setText(getArguments().getInt(ST_NO) + " " +
                 getArguments().getString(ST_TEXT) + " " + getArguments().getString(COMMENTS));
         return rootView;
