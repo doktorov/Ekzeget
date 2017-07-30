@@ -32,9 +32,11 @@ public class GlavaTalkContextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_glava_talk_context, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.comments);
-        textView.setText(getArguments().getInt(ST_NO) + " " +
-                getArguments().getString(ST_TEXT) + " " + getArguments().getString(COMMENTS));
+        TextView textView = (TextView) rootView.findViewById(R.id.st_text);
+        textView.setText(getArguments().getInt(ST_NO) + " " + getArguments().getString(ST_TEXT));
+
+        TextView textView1 = (TextView) rootView.findViewById(R.id.comments);
+        textView1.setText(getArguments().getString(COMMENTS));
         return rootView;
     }
 }
