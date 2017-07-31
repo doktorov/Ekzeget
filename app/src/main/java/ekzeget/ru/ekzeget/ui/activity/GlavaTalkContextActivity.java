@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
+import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.model.Talks;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkContextFragment;
 
@@ -46,6 +48,7 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
         mToolbar.setTitle(mChapterAuthor);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+                BibleQueries.getChapterContent(mBookKeyChapter),
                 TalksQueries.getListTalksText(mBookKeyChapter, mChapterAuthor));
 
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -73,24 +76,34 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private List<Talks> mValues;
+        private List<Bible> mBible;
 
-        public SectionsPagerAdapter(FragmentManager fm, List<Talks> talks) {
+        public SectionsPagerAdapter(FragmentManager fm, List<Bible> bible, List<Talks> talks) {
             super(fm);
 
-            mValues = talks;
+            mBible = bible;
+
+            if (talks.size() != 0) {
+                for (Talks talk : talks) {
+                    for (Bible chp : bible) {
+                        if (talk.stNo == chp.stNo) {
+                            chp.comments = talk.comments;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            return GlavaTalkContextFragment.newInstance(mValues.get(position).stNo,
-                    mValues.get(position).stText, mValues.get(position).comments,
-                    mValues.size(), position + 1);
+            return GlavaTalkContextFragment.newInstance(mBible.get(position).stNo,
+                    mBible.get(position).stText, mBible.get(position).comments);
         }
 
         @Override
         public int getCount() {
-            return mValues.size();
+            return mBible.size();
         }
     }
 }

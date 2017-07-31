@@ -90,10 +90,10 @@ public class ContentTextFragment extends Fragment {
         List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         for (Bible bible : bibles) {
-            String res = String.format("%s %s \n", bible.st_no, bible.st_text);
+            String res = String.format("%s %s \n", bible.stNo, bible.stText);
 
             contentStrings.add(new ContentString(
-                    bible.st_no,
+                    bible.stNo,
                     stringBuilder.toString().length(),
                             stringBuilder.toString().length() + res.length() - 1,
                     res));

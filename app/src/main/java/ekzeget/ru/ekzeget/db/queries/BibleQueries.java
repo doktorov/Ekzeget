@@ -79,8 +79,8 @@ public class BibleQueries {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Bible bible = new Bible();
-            bible.st_no = cursor.getInt(ST_NO_INDEX);
-            bible.st_text = cursor.getString(ST_TEXT_INDEX);
+            bible.stNo = cursor.getInt(ST_NO_INDEX);
+            bible.stText = cursor.getString(ST_TEXT_INDEX);
             bibleList.add(bible);
 
             cursor.moveToNext();

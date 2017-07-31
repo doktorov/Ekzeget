@@ -13,22 +13,17 @@ public class GlavaTalkContextFragment extends Fragment {
     private static final String ST_NO = "st_no";
     private static final String ST_TEXT = "st_text";
     private static final String COMMENTS = "comments";
-    private static final String SIZE = "size";
-    private static final String POSITION = "position";
 
     public GlavaTalkContextFragment() {
     }
 
     public static GlavaTalkContextFragment newInstance(int sectionNumber,
-                                                       String stText, String comments,
-                                                       int size, int position) {
+                                                       String stText, String comments) {
         GlavaTalkContextFragment fragment = new GlavaTalkContextFragment();
         Bundle args = new Bundle();
         args.putInt(ST_NO, sectionNumber);
         args.putString(ST_TEXT, stText);
         args.putString(COMMENTS, comments);
-        args.putInt(SIZE, size);
-        args.putInt(POSITION, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,9 +32,6 @@ public class GlavaTalkContextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_glava_talk_context, container, false);
-
-        TextView textView2 = (TextView) rootView.findViewById(R.id.position);
-        textView2.setText(getArguments().getInt(SIZE) + " из " + getArguments().getInt(POSITION));
 
         TextView textView = (TextView) rootView.findViewById(R.id.st_text);
         textView.setText(getArguments().getInt(ST_NO) + " " + getArguments().getString(ST_TEXT));
