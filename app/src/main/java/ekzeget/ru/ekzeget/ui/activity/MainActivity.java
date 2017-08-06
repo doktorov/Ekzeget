@@ -61,18 +61,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sample_actions, menu);
-        menu.findItem(R.id.action_night).setVisible(false);
+//        getMenuInflater().inflate(R.menu.sample_actions, menu);
+//        menu.findItem(R.id.action_night).setVisible(false);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        switch (AppCompatDelegate.getDefaultNightMode()) {
-            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
-                menu.findItem(R.id.menu_night_mode_system).setChecked(true);
-                break;
-        }
+//        switch (AppCompatDelegate.getDefaultNightMode()) {
+//            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+//                menu.findItem(R.id.menu_night_mode_system).setChecked(true);
+//                break;
+//        }
         return true;
     }
 

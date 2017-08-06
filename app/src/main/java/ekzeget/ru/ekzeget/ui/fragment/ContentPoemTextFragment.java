@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.model.BibleTranslate;
 
 public class ContentPoemTextFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -75,21 +77,8 @@ public class ContentPoemTextFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
-        List<String> translate = new ArrayList<>();
-        translate.add("Синодальный перевод");
-        translate.add("Радостная весть");
-        translate.add("Перевод епископа Кассиана (Безобразова)");
-        translate.add("Подстрочный перевод А. Винокурова");
-        translate.add("Церковно-славянский перевод (транслит)");
-        translate.add("Перевод С.С. Аверинцева");
-        translate.add("Греческий текст");
-        translate.add("Церковно-славянский перевод");
-        translate.add("Латинский перевод «Вульгата»");
-        translate.add("Украинский перевод И.И. Огиенко");
-        translate.add("Английский перевод New King James Version");
-
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                translate));
+                BibleQueries.getTranslates(mBookKey + mBookChapter, Integer.parseInt(mBookStNo))));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -97,18 +86,20 @@ public class ContentPoemTextFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<String> mValues;
+        private List<BibleTranslate> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
 
             private final View mView;
             private final TextView mTextView;
+            private final TextView mTranslateView;
 
             private ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(android.R.id.text1);
+                mTranslateView = (TextView) view.findViewById(R.id.translate);
+                mTextView = (TextView) view.findViewById(R.id.translate_text);
             }
 
             @Override
@@ -117,11 +108,11 @@ public class ContentPoemTextFragment extends Fragment {
             }
         }
 
-        public String getValueAt(int position) {
+        public BibleTranslate getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<BibleTranslate> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -130,14 +121,15 @@ public class ContentPoemTextFragment extends Fragment {
         @Override
         public SimpleStringRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item, parent, false);
+                    .inflate(R.layout.translate_list_item, parent, false);
             view.setBackgroundResource(mBackground);
             return new SimpleStringRecyclerViewAdapter.ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mTextView.setText(mValues.get(position));
+            holder.mTranslateView.setText(mValues.get(position).translate);
+            holder.mTextView.setText(mValues.get(position).text);
         }
 
         @Override
