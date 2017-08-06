@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
 import ekzeget.ru.ekzeget.model.Talks;
+import ekzeget.ru.ekzeget.ui.activity.PoemTalkActivity;
 
 public class TalksPoemTextFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -126,6 +128,18 @@ public class TalksPoemTextFragment extends Fragment {
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
             holder.mTextView.setText(mValues.get(position).tName);
+
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, PoemTalkActivity.class);
+                    intent.putExtra(PoemTalkActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
+                    intent.putExtra(PoemTalkActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
+                    intent.putExtra(PoemTalkActivity.COMMENT, mValues.get(position).comments);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override

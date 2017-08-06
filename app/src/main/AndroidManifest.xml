@@ -45,6 +45,10 @@
             android:name=".ui.activity.GlavaTalkContextActivity"
             android:label="@string/content"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.PoemTalkActivity"
+            android:label="@string/content"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
