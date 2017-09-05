@@ -29,17 +29,33 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="bible_translate_parallel">Синодальный перевод</string>
-    <string name="bible_translate_new_text">Радостная весть</string>
-    <string name="bible_translate_kassian">Перевод епископа Кассиана (Безобразова)</string>
-    <string name="bible_translate_podstr">Подстрочный перевод А. Винокурова</string>
-    <string name="bible_translate_csya">Церковно-славянский перевод (транслит)</string>
-    <string name="bible_translate_averincev">Перевод С.С. Аверинцева</string>
-    <string name="bible_translate_ungerov">bible_translate_ungerov</string>
-    <string name="bible_translate_grek">Греческий текст</string>
+    <!--<string name="bible_translate_parallel">Синодальный перевод</string>-->
+    <!--<string name="bible_translate_new_text">Радостная весть</string>-->
+    <!--<string name="bible_translate_kassian">Перевод епископа Кассиана (Безобразова)</string>-->
+    <!--<string name="bible_translate_podstr">Подстрочный перевод А. Винокурова</string>-->
+    <!--<string name="bible_translate_csya">Церковно-славянский перевод (транслит)</string>-->
+    <!--<string name="bible_translate_averincev">Перевод С.С. Аверинцева</string>-->
+    <!--<string name="bible_translate_ungerov">bible_translate_ungerov</string>-->
+    <!--<string name="bible_translate_grek">Греческий текст</string>-->
+    <!--<string name="bible_translate_csya_old">Церковно-славянский перевод</string>-->
+    <!--<string name="bible_translate_sovr_rbo">bible_translate_sovr_rbo</string>-->
+    <!--<string name="bible_translate_latin">Латинский перевод «Вульгата»</string>-->
+    <!--<string name="bible_translate_ukr">Украинский перевод И.И. Огиенко</string>-->
+    <!--<string name="bible_translate_nkjv">Английский перевод New King James Version</string>-->
+
+
+    <string name="bible_translate_st_text">Синодальный перевод</string>
     <string name="bible_translate_csya_old">Церковно-славянский перевод</string>
-    <string name="bible_translate_sovr_rbo">bible_translate_sovr_rbo</string>
-    <string name="bible_translate_latin">Латинский перевод «Вульгата»</string>
-    <string name="bible_translate_ukr">Украинский перевод И.И. Огиенко</string>
-    <string name="bible_translate_nkjv">Английский перевод New King James Version</string>
+    <string name="bible_translate_csya">Церковно-славянский перевод (транслит)</string>
+    <string name="bible_translate_new_text">Современный перевод «Радостная весть» 2004 г.</string>
+    <string name="bible_translate_averincev">Перевод С.С. Аверинцева</string>
+    <string name="bible_translate_kassian">Перевод епископа Кассиана (Безобразова)</string>
+    <string name="bible_translate_ungerov">Перевод проф. П.А. Юнгерова</string>
+    <string name="bible_translate_grek">Ελληνικά</string>
+    <string name="bible_translate_podstr">Подстрочный перевод с греческого А. Винокурова</string>
+    <string name="bible_translate_latin">Latina Vulgata</string>
+    <string name="bible_translate_ukr">Український переклад І. Огієнка</string>
+    <string name="bible_translate_sovr_rbo">Современный перевод "Российского Библейского общества" 2011 г.</string>
+    <string name="bible_translate_nkjv">English version New King James Version</string>
+    <string name="bible_translate_desnitsky">Перевод А.С. Десницкого</string>
 </resources>

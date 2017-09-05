@@ -127,7 +127,7 @@ public class BibleQueries {
         while (!cursor.isAfterLast()) {
             if (!TextUtils.isEmpty(cursor.getString(ST_TEXT_INDEX))) {
                 BibleTranslate translate = new BibleTranslate();
-                translate.translate = App.getAppResources().getString(R.string.bible_translate_parallel);
+                translate.translate = App.getAppResources().getString(R.string.bible_translate_st_text);
                 translate.text = cursor.getString(ST_TEXT_INDEX);
                 bibleTranslates.add(translate);
             }
