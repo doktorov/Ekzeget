@@ -19,6 +19,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
 import ekzeget.ru.ekzeget.model.Talks;
+import ekzeget.ru.ekzeget.ui.activity.GlavaTalkContextActivity;
 import ekzeget.ru.ekzeget.ui.activity.PoemTalkActivity;
 
 public class TalksPoemTextFragment extends Fragment {
@@ -132,11 +133,17 @@ public class TalksPoemTextFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    Context context = v.getContext();
+//                    Intent intent = new Intent(context, PoemTalkActivity.class);
+//                    intent.putExtra(PoemTalkActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
+//                    intent.putExtra(PoemTalkActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
+//                    intent.putExtra(PoemTalkActivity.COMMENT, mValues.get(position).comments);
+//                    context.startActivity(intent);
+
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, PoemTalkActivity.class);
-                    intent.putExtra(PoemTalkActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
-                    intent.putExtra(PoemTalkActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
-                    intent.putExtra(PoemTalkActivity.COMMENT, mValues.get(position).comments);
+                    Intent intent = new Intent(context, GlavaTalkContextActivity.class);
+                    intent.putExtra(GlavaTalkContextActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
+                    intent.putExtra(GlavaTalkContextActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
                     context.startActivity(intent);
                 }
             });
