@@ -37,7 +37,7 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glava_talk_context);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,7 +51,7 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
                 BibleQueries.getChapterContent(mBookKeyChapter),
                 TalksQueries.getListTalksText(mBookKeyChapter, mChapterAuthor));
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
@@ -78,7 +78,7 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         private List<Bible> mBible;
 
-        public SectionsPagerAdapter(FragmentManager fm, List<Bible> bible, List<Talks> talks) {
+        private SectionsPagerAdapter(FragmentManager fm, List<Bible> bible, List<Talks> talks) {
             super(fm);
 
             mBible = bible;
