@@ -84,7 +84,7 @@ public class GlavaTalkFragment extends Fragment {
             private ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(android.R.id.text1);
+                mTextView = view.findViewById(android.R.id.text1);
             }
 
             @Override

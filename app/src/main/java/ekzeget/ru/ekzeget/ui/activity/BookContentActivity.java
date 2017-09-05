@@ -68,13 +68,13 @@ public class BookContentActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(App.getAppResources().getString(R.string.text));
-        //adapter.addFragment(App.getAppResources().getString(R.string.interpretations));
+        adapter.addFragment(App.getAppResources().getString(R.string.interpretations));//Close
         adapter.addFragment(App.getAppResources().getString(R.string.parallel_poems));
         viewPager.setAdapter(adapter);
     }
 
     private static class Adapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 2;
+        private static int NUM_ITEMS = 3;
 
         private final List<String> mFragmentTitles = new ArrayList<>();
 
@@ -91,9 +91,9 @@ public class BookContentActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return ContentTextFragment.newInstance(mBookName, mBookKey, mBookChapter);
-//                case 1:
-//                    return GlavaTalkFragment.newInstance(mBookKey, mBookChapter);
                 case 1:
+                    return GlavaTalkFragment.newInstance(mBookKey, mBookChapter);//Close
+                case 2:
                     return BookInfoListFragment.newInstance(mBookKey);
             }
 
