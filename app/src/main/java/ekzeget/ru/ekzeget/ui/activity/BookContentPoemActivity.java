@@ -46,7 +46,7 @@ public class BookContentPoemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_poem_content);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,12 +57,12 @@ public class BookContentPoemActivity extends AppCompatActivity {
         mBookStNo = getIntent().getStringExtra(BOOK_ST_NO);
         mBookPoem = getIntent().getStringExtra(BOOK_POEM);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         setTitle(String.format("%s %s:%s", mBookName, mBookChapter, mBookStNo));
