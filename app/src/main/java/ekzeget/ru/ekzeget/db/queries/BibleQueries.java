@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
@@ -224,6 +226,9 @@ public class BibleQueries {
         return bibleTranslates;
     }
 
+//    (?:\{{3})(\d?\s?[а-яА-Я]{2,})\.\s(\d{1,3})\:(\d{1,3})(?:\}{3}) один стих
+//    (?:\{{3})(\d?\s?[а-яА-Я]{2,})\.\s(\d{1,3})\:(\d{1,3}[^}]*)(?:\}{3}) группа стихов
+//    (?:\{{3})(\d?\s?[а-яА-Я]{2,})\.\s(\d{1,3})(?:\}{3}) глава
     public static List<String> getListParallels(String book_kn) {
         List<String> parallels = new ArrayList<>();
 
@@ -235,8 +240,29 @@ public class BibleQueries {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            if (!TextUtils.isEmpty(cursor.getString(PARALLEL_INDEX))) {
-                parallels.add(cursor.getString(PARALLEL_INDEX));
+            String parallel = cursor.getString(PARALLEL_INDEX);
+            if (!TextUtils.isEmpty(parallel)) {
+                //parallel = "{{{" + parallel + "}}}";
+
+//                Pattern patternPoem = Pattern.compile("(?:\\{{3})(\\d?\\s?[а-яА-Я]{2,})\\.\\s(\\d{1,3})\\:(\\d{1,3})(?:\\}{3})");
+//                Matcher matcherPoem = patternPoem.matcher(parallel);
+//                if (matcherPoem.find()) {
+//                    String s = "";
+//                }
+//
+//                Pattern patternGroup = Pattern.compile("(?:\\{{3})(\\d?\\s?[а-яА-Я]{2,})\\.\\s(\\d{1,3})\\:(\\d{1,3}[^}]*)(?:\\}{3})");
+//                Matcher matcherGroup = patternGroup.matcher(parallel);
+//                if (matcherGroup.find()) {
+//                    String s = "";
+//                }
+
+                Pattern patternParallel = Pattern.compile("(\\d?\\s?[а-яА-Я]{2,}\\.\\s\\d{1,3}\\:\\d{1,3})\\s?");
+                Matcher matcherParallel = patternParallel.matcher(parallel);
+                if (matcherParallel.find()) {
+                    parallels.add(matcherParallel.group(0));
+                }
+
+                //parallels.add(parallel);
             }
 
             cursor.moveToNext();
@@ -258,8 +284,13 @@ public class BibleQueries {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            if (!TextUtils.isEmpty(cursor.getString(PARALLEL_INDEX))) {
-                parallels.add(cursor.getString(PARALLEL_INDEX));
+            String parallel = cursor.getString(PARALLEL_INDEX);
+            if (!TextUtils.isEmpty(parallel)) {
+                Pattern patternParallel = Pattern.compile("(\\d?\\s?[а-яА-Я]{2,}\\.\\s\\d{1,3}\\:\\d{1,3})\\s?");
+                Matcher matcherParallel = patternParallel.matcher(parallel);
+                if (matcherParallel.find()) {
+                    parallels.add(matcherParallel.group(0));
+                }
             }
 
             cursor.moveToNext();
