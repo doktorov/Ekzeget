@@ -19,6 +19,7 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentTextFragment;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkFragment;
+import ekzeget.ru.ekzeget.ui.fragment.ParallelsListFragment;
 
 public class BookContentActivity extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
@@ -94,7 +95,9 @@ public class BookContentActivity extends AppCompatActivity {
                 //case 1:
                 //    return GlavaTalkFragment.newInstance(mBookKey, mBookChapter);//Close
                 case 1:
-                    return BookInfoListFragment.newInstance(mBookKey);
+                    //SELECT st_no, st_text, parallel FROM bible WHERE kn='mf1' ORDER BY st_no
+                    //return BookInfoListFragment.newInstance(mBookKey);
+                    return ParallelsListFragment.newInstance(mBookKey, mBookChapter);
             }
 
             return null;

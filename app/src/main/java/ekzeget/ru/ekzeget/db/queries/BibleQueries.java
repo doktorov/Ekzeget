@@ -19,8 +19,8 @@ public class BibleQueries {
     public static List<Bible> getListContents(String book_kn) {
         List<Bible> bibleList = new ArrayList<>();
 
-        String sql = "SELECT " + BibleTable.KN + ", count(kn) cnt FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN_LIKE + " group by " + BibleTable.KN ;
-        Cursor cursor= App.getReadableDatabase().rawQuery(sql, new String[] { String.valueOf(book_kn + "%") });
+        String sql = "SELECT " + BibleTable.KN + ", count(kn) cnt FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN_LIKE + " group by " + BibleTable.KN;
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn + "%")});
 
         final int KN_INDEX = cursor.getColumnIndex(BibleTable.KN);
         final int CNT_INDEX = cursor.getColumnIndex(BibleTable.CNT);
@@ -73,7 +73,7 @@ public class BibleQueries {
 
         String sql = "SELECT " + BibleTable.ST_NO + ", " + BibleTable.ST_TEXT + " FROM " +
                 BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " ORDER BY " + BibleTable.ST_NO;
-        Cursor cursor= App.getReadableDatabase().rawQuery(sql, new String[] { String.valueOf(book_kn) });
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn)});
 
         final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
         final int ST_TEXT_INDEX = cursor.getColumnIndex(BibleTable.ST_TEXT);
@@ -106,8 +106,8 @@ public class BibleQueries {
                 BibleTable.GREK + ", " + BibleTable.CSYA_OLD + ", " +
                 BibleTable.SOVR_RBO + ", " + BibleTable.LATIN + ", " +
                 BibleTable.UKR + ", " + BibleTable.NKJV +
-                " FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " AND " + BibleTable.WHERE_ST_NO ;
-        Cursor cursor= App.getReadableDatabase().rawQuery(sql, new String[] { book_kn, String.valueOf(st_no)});
+                " FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " AND " + BibleTable.WHERE_ST_NO;
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{book_kn, String.valueOf(st_no)});
 
         final int ST_TEXT_INDEX = cursor.getColumnIndex(BibleTable.ST_TEXT);
         final int NEW_TEXT_INDEX = cursor.getColumnIndex(BibleTable.NEW_TEXT);
@@ -117,7 +117,7 @@ public class BibleQueries {
         final int AVERINCEV_INDEX = cursor.getColumnIndex(BibleTable.AVERINCEV);
         final int UNGEROV_INDEX = cursor.getColumnIndex(BibleTable.UNGEROV);
         final int GREK_INDEX = cursor.getColumnIndex(BibleTable.GREK);
-        final int CSYA_OLD_INDEX = cursor.getColumnIndex( BibleTable.CSYA_OLD);
+        final int CSYA_OLD_INDEX = cursor.getColumnIndex(BibleTable.CSYA_OLD);
         final int SOVR_RBO_INDEX = cursor.getColumnIndex(BibleTable.SOVR_RBO);
         final int LATIN_INDEX = cursor.getColumnIndex(BibleTable.LATIN);
         final int UKR_INDEX = cursor.getColumnIndex(BibleTable.UKR);
@@ -222,5 +222,28 @@ public class BibleQueries {
         cursor.close();
 
         return bibleTranslates;
+    }
+
+    public static List<String> getListParallels(String book_kn) {
+        List<String> parallels = new ArrayList<>();
+
+        String sql = "SELECT " + BibleTable.PARALLEL +
+                " FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN;
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{book_kn});
+
+        final int PARALLEL_INDEX = cursor.getColumnIndex(BibleTable.PARALLEL);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            if (!TextUtils.isEmpty(cursor.getString(PARALLEL_INDEX))) {
+                parallels.add(cursor.getString(PARALLEL_INDEX));
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return parallels;
     }
 }

@@ -70,7 +70,7 @@ public class ContentTextFragment extends Fragment {
 
         ((BookContentActivity) getActivity()).setActionBarTitle(String.format("%s, Глава %s", mBookName, mBookChapter));
 
-        mContextText = (TextView) rv.findViewById(R.id.context_text);
+        mContextText = rv.findViewById(R.id.context_text);
         mProgressView = rv.findViewById(R.id.progress);
 
         return rv;

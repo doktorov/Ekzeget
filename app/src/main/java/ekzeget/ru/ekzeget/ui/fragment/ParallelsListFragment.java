@@ -1,7 +1,6 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,19 +15,22 @@ import android.widget.TextView;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.CommonQueries;
-import ekzeget.ru.ekzeget.model.Common;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
-import ekzeget.ru.ekzeget.ui.activity.BookInfoActivity;
 
-public class BookInfoListFragment extends Fragment {
+public class ParallelsListFragment extends Fragment {
+    public static final String BOOK_KEY = "book_key";
+    public static final String BOOK_CHAPTER = "book_chapter";
+
     private static String mBookKey;
+    private static String mBookChapter;
 
-    public static BookInfoListFragment newInstance(String bookKey) {
-        BookInfoListFragment f = new BookInfoListFragment();
+    public static ParallelsListFragment newInstance(String bookKey, String bookChapter) {
+        ParallelsListFragment f = new ParallelsListFragment();
 
         Bundle args = new Bundle();
-        args.putString(BookActivity.BOOK_KEY, bookKey);
+        args.putString(BOOK_KEY, bookKey);
+        args.putString(BOOK_CHAPTER, bookChapter);
         f.setArguments(args);
 
         return f;
@@ -43,6 +45,7 @@ public class BookInfoListFragment extends Fragment {
                 R.layout.fragment_cheese_list, container, false);
 
         mBookKey = getArguments().getString(BookActivity.BOOK_KEY);
+        mBookChapter = getArguments().getString(BOOK_CHAPTER);
 
         setupRecyclerView(rv);
 
@@ -52,7 +55,7 @@ public class BookInfoListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                CommonQueries.getListContents(mBookKey)));
+                BibleQueries.getListParallels(mBookKey + mBookChapter)));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -60,7 +63,7 @@ public class BookInfoListFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<Common> mValues;
+        private List<String> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
@@ -80,11 +83,11 @@ public class BookInfoListFragment extends Fragment {
             }
         }
 
-        public Common getValueAt(int position) {
+        public String getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<Common> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -100,19 +103,7 @@ public class BookInfoListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mBoundString = mValues.get(position).name;
-            holder.mTextView.setText(mValues.get(position).name);
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookInfoActivity.class);
-                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
-                    intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
-                    context.startActivity(intent);
-                }
-            });
+            holder.mTextView.setText(mValues.get(position));
         }
 
         @Override

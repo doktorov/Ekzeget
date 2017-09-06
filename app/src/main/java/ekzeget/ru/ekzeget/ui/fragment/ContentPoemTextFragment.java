@@ -60,9 +60,9 @@ public class ContentPoemTextFragment extends Fragment {
         mBookStNo = getArguments().getString(BOOK_ST_NO);
         mBookPoem = getArguments().getString(BOOK_POEM);
 
-        mContextText = (TextView) ll.findViewById(R.id.context_text);
+        mContextText = ll.findViewById(R.id.context_text);
 
-        RecyclerView rv = (RecyclerView) ll.findViewById(R.id.recyclerview);
+        RecyclerView rv = ll.findViewById(R.id.recyclerview);
 
         setupRecyclerView(rv);
 
@@ -98,8 +98,8 @@ public class ContentPoemTextFragment extends Fragment {
             private ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTranslateView = (TextView) view.findViewById(R.id.translate);
-                mTextView = (TextView) view.findViewById(R.id.translate_text);
+                mTranslateView = view.findViewById(R.id.translate);
+                mTextView = view.findViewById(R.id.translate_text);
             }
 
             @Override
