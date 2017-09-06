@@ -246,4 +246,27 @@ public class BibleQueries {
 
         return parallels;
     }
+
+    public static List<String> getListParallelsPoem(String book_kn, String st_no) {
+        List<String> parallels = new ArrayList<>();
+
+        String sql = "SELECT " + BibleTable.PARALLEL +
+                " FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " AND " + BibleTable.WHERE_ST_NO;
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{book_kn, st_no});
+
+        final int PARALLEL_INDEX = cursor.getColumnIndex(BibleTable.PARALLEL);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            if (!TextUtils.isEmpty(cursor.getString(PARALLEL_INDEX))) {
+                parallels.add(cursor.getString(PARALLEL_INDEX));
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return parallels;
+    }
 }

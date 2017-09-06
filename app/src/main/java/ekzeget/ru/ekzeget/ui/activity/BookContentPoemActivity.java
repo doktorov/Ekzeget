@@ -17,6 +17,7 @@ import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextFragment;
+import ekzeget.ru.ekzeget.ui.fragment.ParallelsListPoemFragment;
 import ekzeget.ru.ekzeget.ui.fragment.TalksPoemTextFragment;
 
 public class BookContentPoemActivity extends AppCompatActivity {
@@ -97,7 +98,8 @@ public class BookContentPoemActivity extends AppCompatActivity {
                 case 1:
                     return TalksPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
                 case 2:
-                    return BookInfoListFragment.newInstance(mBookKey);
+                    //return BookInfoListFragment.newInstance(mBookKey);
+                    return ParallelsListPoemFragment.newInstance(mBookKey, mBookChapter, mBookStNo);
             }
 
             return null;
