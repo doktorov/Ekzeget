@@ -17,6 +17,7 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.model.BibleTranslate;
 
 public class TranslatesGlavaFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -71,7 +72,7 @@ public class TranslatesGlavaFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<String> mValues;
+        private List<BibleTranslate> mValues;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBoundString;
@@ -91,11 +92,11 @@ public class TranslatesGlavaFragment extends Fragment {
             }
         }
 
-        public String getValueAt(int position) {
+        public BibleTranslate getValueAt(int position) {
             return mValues.get(position);
         }
 
-        private SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+        private SimpleStringRecyclerViewAdapter(Context context, List<BibleTranslate> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -111,7 +112,14 @@ public class TranslatesGlavaFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
-            holder.mTextView.setText(mValues.get(position));
+            holder.mTextView.setText(mValues.get(position).translate);
+
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                String s = "";
+                }
+            });
         }
 
         @Override

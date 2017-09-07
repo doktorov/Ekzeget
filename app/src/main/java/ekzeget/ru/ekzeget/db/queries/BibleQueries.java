@@ -298,22 +298,73 @@ public class BibleQueries {
         return parallels;
     }
 
-    public static List<String> getTranslatesList() {
-        List<String> bibleTranslates = new ArrayList<>();
+    public static List<BibleTranslate> getTranslatesList() {
+        List<BibleTranslate> bibleTranslates = new ArrayList<>();
 
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_st_text));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_new_text));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_kassian));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_podstr));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_csya));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_averincev));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_ungerov));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_grek));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_csya_old));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_sovr_rbo));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_latin));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_ukr));
-        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_nkjv));
+        BibleTranslate st_text = new BibleTranslate();
+        st_text.translate = App.getAppResources().getString(R.string.bible_translate_st_text);
+        st_text.text = "st_text";
+        bibleTranslates.add(st_text);
+
+        BibleTranslate new_text = new BibleTranslate();
+        new_text.translate = App.getAppResources().getString(R.string.bible_translate_new_text);
+        new_text.text = "new_text";
+        bibleTranslates.add(new_text);
+
+        BibleTranslate kassian = new BibleTranslate();
+        kassian.translate = App.getAppResources().getString(R.string.bible_translate_kassian);
+        kassian.text = "kassian";
+        bibleTranslates.add(kassian);
+
+        BibleTranslate podstr = new BibleTranslate();
+        podstr.translate = App.getAppResources().getString(R.string.bible_translate_podstr);
+        podstr.text = "podstr";
+        bibleTranslates.add(podstr);
+
+        BibleTranslate csya = new BibleTranslate();
+        csya.translate = App.getAppResources().getString(R.string.bible_translate_csya);
+        csya.text = "csya";
+        bibleTranslates.add(csya);
+
+        BibleTranslate averincev = new BibleTranslate();
+        averincev.translate = App.getAppResources().getString(R.string.bible_translate_averincev);
+        averincev.text = "averincev";
+        bibleTranslates.add(averincev);
+
+        BibleTranslate ungerov = new BibleTranslate();
+        ungerov.translate = App.getAppResources().getString(R.string.bible_translate_ungerov);
+        ungerov.text = "ungerov";
+        bibleTranslates.add(ungerov);
+
+        BibleTranslate grek = new BibleTranslate();
+        grek.translate = App.getAppResources().getString(R.string.bible_translate_grek);
+        grek.text = "grek";
+        bibleTranslates.add(grek);
+
+        BibleTranslate csya_old = new BibleTranslate();
+        csya_old.translate = App.getAppResources().getString(R.string.bible_translate_csya_old);
+        csya_old.text = "csya_old";
+        bibleTranslates.add(csya_old);
+
+        BibleTranslate sovr_rbo = new BibleTranslate();
+        sovr_rbo.translate = App.getAppResources().getString(R.string.bible_translate_sovr_rbo);
+        sovr_rbo.text = "sovr_rbo";
+        bibleTranslates.add(sovr_rbo);
+
+        BibleTranslate latin = new BibleTranslate();
+        latin.translate = App.getAppResources().getString(R.string.bible_translate_latin);
+        latin.text = "latin";
+        bibleTranslates.add(latin);
+
+        BibleTranslate ukr = new BibleTranslate();
+        ukr.translate = App.getAppResources().getString(R.string.bible_translate_ukr);
+        ukr.text = "ukr";
+        bibleTranslates.add(ukr);
+
+        BibleTranslate nkjv = new BibleTranslate();
+        nkjv.translate = App.getAppResources().getString(R.string.bible_translate_nkjv);
+        nkjv.text = "nkjv";
+        bibleTranslates.add(nkjv);
 
         return bibleTranslates;
     }
