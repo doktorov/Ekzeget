@@ -20,6 +20,7 @@ import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentTextFragment;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ParallelsListFragment;
+import ekzeget.ru.ekzeget.ui.fragment.TranslatesGlavaFragment;
 
 public class BookContentActivity extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
@@ -69,13 +70,13 @@ public class BookContentActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(App.getAppResources().getString(R.string.text));
-        //adapter.addFragment(App.getAppResources().getString(R.string.interpretations));//Close
+        adapter.addFragment(App.getAppResources().getString(R.string.translates));
         adapter.addFragment(App.getAppResources().getString(R.string.parallel_poems));
         viewPager.setAdapter(adapter);
     }
 
     private static class Adapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 2;
+        private static int NUM_ITEMS = 3;
 
         private final List<String> mFragmentTitles = new ArrayList<>();
 
@@ -95,8 +96,8 @@ public class BookContentActivity extends AppCompatActivity {
                 //case 1:
                 //    return GlavaTalkFragment.newInstance(mBookKey, mBookChapter);//Close
                 case 1:
-                    //SELECT st_no, st_text, parallel FROM bible WHERE kn='mf1' ORDER BY st_no
-                    //return BookInfoListFragment.newInstance(mBookKey);
+                    return TranslatesGlavaFragment.newInstance(mBookKey, mBookChapter);
+                case 2:
                     return ParallelsListFragment.newInstance(mBookKey, mBookChapter);
             }
 

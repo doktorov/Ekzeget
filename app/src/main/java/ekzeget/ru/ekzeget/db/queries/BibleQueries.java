@@ -96,9 +96,6 @@ public class BibleQueries {
     }
 
     public static List<BibleTranslate> getTranslates(String book_kn, int st_no) {
-        //select * from bible where kn='mf1' and st_no=1
-
-
         List<BibleTranslate> bibleTranslates = new ArrayList<>();
 
         String sql = "SELECT " + BibleTable.KN + ", " + BibleTable.ST_TEXT + ", " +
@@ -299,5 +296,25 @@ public class BibleQueries {
         cursor.close();
 
         return parallels;
+    }
+
+    public static List<String> getTranslatesList() {
+        List<String> bibleTranslates = new ArrayList<>();
+
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_st_text));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_new_text));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_kassian));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_podstr));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_csya));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_averincev));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_ungerov));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_grek));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_csya_old));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_sovr_rbo));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_latin));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_ukr));
+        bibleTranslates.add(App.getAppResources().getString(R.string.bible_translate_nkjv));
+
+        return bibleTranslates;
     }
 }

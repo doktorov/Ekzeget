@@ -10,23 +10,23 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
-public class ParallelsListFragment extends Fragment {
+public class TranslatesGlavaFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
 
     private static String mBookKey;
     private static String mBookChapter;
 
-    public static ParallelsListFragment newInstance(String bookKey, String bookChapter) {
-        ParallelsListFragment f = new ParallelsListFragment();
+    public static TranslatesGlavaFragment newInstance(String bookKey, String bookChapter) {
+        TranslatesGlavaFragment f = new TranslatesGlavaFragment();
 
         Bundle args = new Bundle();
         args.putString(BOOK_KEY, bookKey);
@@ -41,15 +41,17 @@ public class ParallelsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
+        LinearLayout ll = (LinearLayout) inflater.inflate(
+                R.layout.fragment_content_poem_text_list, container, false);
 
-        mBookKey = getArguments().getString(BookActivity.BOOK_KEY);
+        mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
+
+        RecyclerView rv = ll.findViewById(R.id.recyclerview);
 
         setupRecyclerView(rv);
 
-        return rv;
+        return ll;
     }
 
     @Override
@@ -59,8 +61,9 @@ public class ParallelsListFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getListParallels(mBookKey + mBookChapter)));
+                BibleQueries.getTranslatesList()));
     }
 
     private static class SimpleStringRecyclerViewAdapter
