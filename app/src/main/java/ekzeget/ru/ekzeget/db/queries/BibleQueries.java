@@ -368,4 +368,28 @@ public class BibleQueries {
 
         return bibleTranslates;
     }
+
+    public static List<String> getTranslatesGlava(String book_kn, String translate_field) {
+        List<String> translates = new ArrayList<>();
+
+        String sql = "SELECT " + BibleTable.ST_NO + ", " + translate_field +
+                " FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN;
+        Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{book_kn});
+
+        final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String translate = cursor.getString(1);
+            if (!TextUtils.isEmpty(translate)) {
+                translates.add(cursor.getString(ST_NO_INDEX) + "." + translate);
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return translates;
+    }
 }
