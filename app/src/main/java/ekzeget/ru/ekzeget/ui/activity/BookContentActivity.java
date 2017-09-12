@@ -16,9 +16,7 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.ui.fragment.BookInfoListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentTextFragment;
-import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ParallelsListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.TranslatesGlavaFragment;
 
@@ -45,16 +43,17 @@ public class BookContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_book_content);
+
+        mBookName = getIntent().getStringExtra(BOOK_NAME);
+        mBookKey = getIntent().getStringExtra(BOOK_KEY);
+        mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mBookName = getIntent().getStringExtra(BOOK_NAME);
-        mBookKey = getIntent().getStringExtra(BOOK_KEY);
-        mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         if (viewPager != null) {

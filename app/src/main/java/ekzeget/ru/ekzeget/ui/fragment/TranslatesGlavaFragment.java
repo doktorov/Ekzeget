@@ -1,6 +1,7 @@
 package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.BibleTranslate;
+import ekzeget.ru.ekzeget.ui.activity.BookTranslateGlavaActivity;
 
 public class TranslatesGlavaFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -114,11 +116,12 @@ public class TranslatesGlavaFragment extends Fragment {
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
             holder.mTextView.setText(mValues.get(position).translate);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                String s = "";
-                }
+            holder.mView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, BookTranslateGlavaActivity.class);
+                intent.putExtra(BookTranslateGlavaActivity.BOOK_KEY, mBookKey + mBookChapter);
+                intent.putExtra(BookTranslateGlavaActivity.BOOK_FIELD, mValues.get(position).text);
+                context.startActivity(intent);
             });
         }
 

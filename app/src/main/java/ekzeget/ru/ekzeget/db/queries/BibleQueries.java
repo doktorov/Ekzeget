@@ -382,7 +382,7 @@ public class BibleQueries {
         while (!cursor.isAfterLast()) {
             String translate = cursor.getString(1);
             if (!TextUtils.isEmpty(translate)) {
-                translates.add(cursor.getString(ST_NO_INDEX) + "." + translate);
+                translates.add(cursor.getString(ST_NO_INDEX) + ". " + translate);
             }
 
             cursor.moveToNext();

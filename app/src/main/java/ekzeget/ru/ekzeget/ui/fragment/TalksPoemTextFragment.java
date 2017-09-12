@@ -130,9 +130,7 @@ public class TalksPoemTextFragment extends Fragment {
         public void onBindViewHolder(final SimpleStringRecyclerViewAdapter.ViewHolder holder, final int position) {
             holder.mTextView.setText(mValues.get(position).tName);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.mView.setOnClickListener(v -> {
 //                    Context context = v.getContext();
 //                    Intent intent = new Intent(context, PoemTalkActivity.class);
 //                    intent.putExtra(PoemTalkActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
@@ -140,12 +138,11 @@ public class TalksPoemTextFragment extends Fragment {
 //                    intent.putExtra(PoemTalkActivity.COMMENT, mValues.get(position).comments);
 //                    context.startActivity(intent);
 
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, GlavaTalkContextActivity.class);
-                    intent.putExtra(GlavaTalkContextActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
-                    intent.putExtra(GlavaTalkContextActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
-                    context.startActivity(intent);
-                }
+                Context context = v.getContext();
+                Intent intent = new Intent(context, GlavaTalkContextActivity.class);
+                intent.putExtra(GlavaTalkContextActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
+                intent.putExtra(GlavaTalkContextActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
+                context.startActivity(intent);
             });
         }
 
