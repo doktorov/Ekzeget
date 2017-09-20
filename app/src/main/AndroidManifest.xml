@@ -53,5 +53,9 @@
             android:name=".ui.activity.BookTranslateGlavaActivity"
             android:label="@string/content"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.ContextTextActivity"
+            android:label="@string/content"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 </manifest>

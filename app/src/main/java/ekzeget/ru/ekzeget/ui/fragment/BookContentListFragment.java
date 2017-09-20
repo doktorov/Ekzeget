@@ -19,6 +19,7 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 import ekzeget.ru.ekzeget.ui.activity.BookContentActivity;
+import ekzeget.ru.ekzeget.ui.activity.ContextTextActivity;
 
 public class BookContentListFragment extends Fragment {
     private static String mBookKey;
@@ -73,6 +74,7 @@ public class BookContentListFragment extends Fragment {
             private String mBookName;
             private String mBookKey;
             private String mBookChapter;
+            private String mBookChapterAuthor;
 
             private final View mView;
             private final TextView mTextView;
@@ -80,7 +82,7 @@ public class BookContentListFragment extends Fragment {
             private ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(android.R.id.text1);
+                mTextView = view.findViewById(android.R.id.text1);
             }
 
             @Override
@@ -115,15 +117,18 @@ public class BookContentListFragment extends Fragment {
             holder.mBookName = mBookName;
             holder.mBookChapter = String.valueOf(position + 1);
             holder.mBookKey = mBookKey;
-            holder.mTextView.setText(String.format("%s. Глава %s (%s стихов)",
+            holder.mBookChapterAuthor = String.format("%s. Глава %s", mBookName, (position + 1));
+            holder.mTextView.setText( String.format("%s. Глава %s (%s стихов)",
                     mBookName, (position + 1), mValues.get(position + 1)));
 
             holder.mView.setOnClickListener(v -> {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, BookContentActivity.class);
-                intent.putExtra(BookContentActivity.BOOK_NAME, holder.mBookName);
-                intent.putExtra(BookContentActivity.BOOK_KEY, holder.mBookKey);
-                intent.putExtra(BookContentActivity.BOOK_CHAPTER, holder.mBookChapter);
+                //Intent intent = new Intent(context, BookContentActivity.class);
+                Intent intent = new Intent(context, ContextTextActivity.class);
+                intent.putExtra(ContextTextActivity.BOOK_NAME, holder.mBookName);
+                intent.putExtra(ContextTextActivity.BOOK_KEY, holder.mBookKey);
+                intent.putExtra(ContextTextActivity.BOOK_CHAPTER, holder.mBookChapter);
+                intent.putExtra(ContextTextActivity.BOOK_CHAPTER_AUTHOR, holder.mBookChapterAuthor);
                 context.startActivity(intent);
             });
         }

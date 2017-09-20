@@ -116,15 +116,12 @@ public class GlavaTalkFragment extends Fragment {
             holder.mBoundString = mValues.get(position).tName;
             holder.mTextView.setText(mValues.get(position).tName);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, GlavaTalkContextActivity.class);
-                    intent.putExtra(GlavaTalkContextActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
-                    intent.putExtra(GlavaTalkContextActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
-                    context.startActivity(intent);
-                }
+            holder.mView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, GlavaTalkContextActivity.class);
+                intent.putExtra(GlavaTalkContextActivity.BOOK_KEY_CHAPTER, mBookKey + mBookChapter);
+                intent.putExtra(GlavaTalkContextActivity.CHAPTER_AUTHOR, mValues.get(position).tName);
+                context.startActivity(intent);
             });
         }
 

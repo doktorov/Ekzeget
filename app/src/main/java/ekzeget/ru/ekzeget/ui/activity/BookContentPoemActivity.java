@@ -45,6 +45,7 @@ public class BookContentPoemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_book_poem_content);
 
         mToolbar = findViewById(R.id.toolbar);
