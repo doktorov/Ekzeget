@@ -53,8 +53,7 @@ public class ContextTextActivity  extends AppCompatActivity {
         mToolbar.setTitle(mBookChapterAuthor);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                BibleQueries.getChapterContent(mBookKey),
-                TalksQueries.getListTalksText(mBookKey, mBookChapterAuthor));
+                BibleQueries.getChapterContent(mBookKey  + mBookChapter));
 
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -83,21 +82,10 @@ public class ContextTextActivity  extends AppCompatActivity {
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         private List<Bible> mBible;
 
-        private SectionsPagerAdapter(FragmentManager fm, List<Bible> bible, List<Talks> talks) {
+        private SectionsPagerAdapter(FragmentManager fm, List<Bible> bible) {
             super(fm);
 
             mBible = bible;
-
-            if (talks.size() != 0) {
-                for (Talks talk : talks) {
-                    for (Bible chp : bible) {
-                        if (talk.stNo == chp.stNo) {
-                            chp.comments = talk.comments;
-                            break;
-                        }
-                    }
-                }
-            }
         }
 
         @Override
