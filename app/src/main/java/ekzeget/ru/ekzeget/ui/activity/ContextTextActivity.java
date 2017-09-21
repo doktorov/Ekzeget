@@ -11,22 +11,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.List;
+import java.util.Map;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.db.queries.TalksQueries;
 import ekzeget.ru.ekzeget.model.Bible;
-import ekzeget.ru.ekzeget.model.Talks;
-import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkContextFragment;
 
 public class ContextTextActivity  extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
     public static final String BOOK_KEY = "book_key";
+    public static final String BOOK_PARTS = "book_parts";
     public static final String BOOK_CHAPTER = "book_chapter";
     public static final String BOOK_CHAPTER_AUTHOR = "book_chapter_author";
 
     private static String mBookName;
     private static String mBookKey;
+    private static int mBookParts;
     private static String mBookChapter;
     private static String mBookChapterAuthor;
 
@@ -42,6 +42,7 @@ public class ContextTextActivity  extends AppCompatActivity {
 
         mBookName = getIntent().getStringExtra(BOOK_NAME);
         mBookKey = getIntent().getStringExtra(BOOK_KEY);
+        mBookParts = getIntent().getIntExtra(BOOK_PARTS, 0);
         mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
         mBookChapterAuthor = getIntent().getStringExtra(BOOK_CHAPTER_AUTHOR);
 
@@ -53,7 +54,7 @@ public class ContextTextActivity  extends AppCompatActivity {
         mToolbar.setTitle(mBookChapterAuthor);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                BibleQueries.getChapterContent(mBookKey  + mBookChapter));
+                BibleQueries.getListContextTextSorted(mBookKey, mBookParts));
 
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -80,18 +81,20 @@ public class ContextTextActivity  extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private List<Bible> mBible;
+        private Map<Integer, List<Bible>> mBible;
 
-        private SectionsPagerAdapter(FragmentManager fm, List<Bible> bible) {
+        private SectionsPagerAdapter(FragmentManager fm, Map<Integer, List<Bible>> chapters) {
             super(fm);
 
-            mBible = bible;
+            mBible = chapters;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return GlavaTalkContextFragment.newInstance(mBible.get(position).stNo,
-                    mBible.get(position).stText, mBible.get(position).comments);
+//            return GlavaTalkContextFragment.newInstance(mBible.get(position).stNo,
+//                    mBible.get(position).stText, mBible.get(position).comments);
+
+            return null;
         }
 
         @Override

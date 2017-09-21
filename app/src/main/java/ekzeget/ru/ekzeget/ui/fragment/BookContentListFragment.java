@@ -58,7 +58,8 @@ public class BookContentListFragment extends Fragment {
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                BibleQueries.getListContentsSorted(mBookKey, mBookParts), mBookName, mBookKey));
+                BibleQueries.getListContentsSorted(mBookKey, mBookParts), mBookName,
+                mBookKey, mBookParts));
     }
 
     private static class SimpleStringRecyclerViewAdapter
@@ -69,10 +70,12 @@ public class BookContentListFragment extends Fragment {
         private Map<Integer, Integer> mValues;
         private String mBookName;
         private String mBookKey;
+        private int mBookParts;
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             private String mBookName;
             private String mBookKey;
+            private int mBookParts;
             private String mBookChapter;
             private String mBookChapterAuthor;
 
@@ -96,12 +99,13 @@ public class BookContentListFragment extends Fragment {
         }
 
         private SimpleStringRecyclerViewAdapter(Context context, Map<Integer, Integer> items,
-                                                String bookName, String bookKey) {
+                                                String bookName, String bookKey, int bookParts) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
             mBookName = bookName;
             mBookKey = bookKey;
+            mBookParts = bookParts;
         }
 
         @Override
@@ -117,6 +121,7 @@ public class BookContentListFragment extends Fragment {
             holder.mBookName = mBookName;
             holder.mBookChapter = String.valueOf(position + 1);
             holder.mBookKey = mBookKey;
+            holder.mBookParts = mBookParts;
             holder.mBookChapterAuthor = String.format("%s. Глава %s", mBookName, (position + 1));
             holder.mTextView.setText( String.format("%s. Глава %s (%s стихов)",
                     mBookName, (position + 1), mValues.get(position + 1)));
@@ -127,6 +132,7 @@ public class BookContentListFragment extends Fragment {
                 Intent intent = new Intent(context, ContextTextActivity.class);
                 intent.putExtra(ContextTextActivity.BOOK_NAME, holder.mBookName);
                 intent.putExtra(ContextTextActivity.BOOK_KEY, holder.mBookKey);
+                intent.putExtra(ContextTextActivity.BOOK_PARTS, holder.mBookParts);
                 intent.putExtra(ContextTextActivity.BOOK_CHAPTER, holder.mBookChapter);
                 intent.putExtra(ContextTextActivity.BOOK_CHAPTER_AUTHOR, holder.mBookChapterAuthor);
                 context.startActivity(intent);

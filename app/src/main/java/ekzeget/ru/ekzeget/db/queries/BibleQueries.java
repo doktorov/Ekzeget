@@ -392,4 +392,35 @@ public class BibleQueries {
 
         return translates;
     }
+
+    public static Map<Integer, List<Bible>> getListContextTextSorted(String book_kn, int book_parts) {
+        Map<Integer, List<Bible>> bibleList = new HashMap<>();
+
+        for (int i = 1; i < book_parts + 1; i++) {
+            String sql = "SELECT " + BibleTable.ST_NO + ", " + BibleTable.ST_TEXT + " FROM " +
+                    BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " order by " + BibleTable.ST_NO;
+            Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn + i)});
+
+            final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
+            final int ST_TEXT_INDEX = cursor.getColumnIndex(BibleTable.ST_TEXT);
+
+            List<Bible> contextList = new ArrayList<>();
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Bible bible = new Bible();
+                bible.stNo = cursor.getInt(ST_NO_INDEX);
+                bible.stText = cursor.getString(ST_TEXT_INDEX);
+                contextList.add(bible);
+
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+
+            bibleList.put(i, contextList);
+        }
+
+        return new TreeMap<>(bibleList);
+    }
 }

@@ -6,4 +6,12 @@ public class Bible {
     public String chapter;
     public int parts;
     public String comments;
+
+    public int getStNo() {
+        return stNo;
+    }
+
+    public String getStText() {
+        return stText;
+    }
 }
