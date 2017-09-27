@@ -16,6 +16,7 @@ import java.util.Map;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.ui.fragment.ContextTextPagerFragment;
 
 public class ContextTextActivity  extends AppCompatActivity {
     public static final String BOOK_NAME = "book_name";
@@ -91,10 +92,14 @@ public class ContextTextActivity  extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-//            return GlavaTalkContextFragment.newInstance(mBible.get(position).stNo,
-//                    mBible.get(position).stText, mBible.get(position).comments);
+            List<Bible> bibleList = mBible.get(position + 1);
 
-            return null;
+            StringBuilder result = new StringBuilder();
+            for (Bible bible : bibleList) {
+                result.append(bible.getStText() + "\n");
+            }
+
+            return ContextTextPagerFragment.newInstance(result.toString());
         }
 
         @Override
