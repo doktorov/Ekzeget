@@ -7,17 +7,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.db.queries.BibleQueries;
+import ekzeget.ru.ekzeget.model.Bible;
 
 public class ContextTextPagerFragment extends Fragment {
-    private static final String ST_TEXT = "st_text";
+    public static final String BOOK_KEY = "book_key";
+    public static final String BOOK_PART = "book_part";
 
-    public static ContextTextPagerFragment newInstance(String stText) {
+    public static ContextTextPagerFragment newInstance(String bookKey, int part) {
         ContextTextPagerFragment fragment = new ContextTextPagerFragment();
         Bundle args = new Bundle();
-        args.putString(ST_TEXT, stText);
+        args.putString(BOOK_KEY, bookKey);
+        args.putInt(BOOK_PART, part);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public String getBookKey() {
+        return getArguments().getString(BOOK_KEY);
+    }
+
+    public int getBookPart() {
+        return getArguments().getInt(BOOK_PART);
     }
 
     @Override
@@ -26,7 +40,10 @@ public class ContextTextPagerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_glava_talk_context, container, false);
 
         TextView textView = rootView.findViewById(R.id.st_text);
-        textView.setText(getArguments().getString(ST_TEXT));
+
+        List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + getBookPart());
+
+        textView.setText(String.valueOf(getBookPart()) + bibles.get(0).getStText());
 
         return rootView;
     }

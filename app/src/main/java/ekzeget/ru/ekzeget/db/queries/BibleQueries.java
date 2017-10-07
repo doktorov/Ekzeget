@@ -423,4 +423,27 @@ public class BibleQueries {
 
         return new TreeMap<>(bibleList);
     }
+
+    public static List<Integer> getListContextStNoSorted(String book_kn, int book_parts) {
+        List<Integer> bibleList = new ArrayList<>();
+
+        for (int i = 1; i < book_parts + 1; i++) {
+            String sql = "SELECT " + BibleTable.ST_NO + " FROM " +
+                    BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " order by " + BibleTable.ST_NO;
+            Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn + i)});
+
+            final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                bibleList.add(cursor.getInt(ST_NO_INDEX));
+
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+        }
+
+        return bibleList;
+    }
 }

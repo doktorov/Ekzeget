@@ -10,12 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
-import java.util.Map;
-
 import ekzeget.ru.ekzeget.R;
-import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.ui.fragment.ContextTextPagerFragment;
 
 public class ContextTextActivity  extends AppCompatActivity {
@@ -55,7 +50,7 @@ public class ContextTextActivity  extends AppCompatActivity {
         mToolbar.setTitle(mBookChapterAuthor);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                BibleQueries.getListContextTextSorted(mBookKey, mBookParts));
+                mBookKey, mBookParts);
 
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -82,29 +77,24 @@ public class ContextTextActivity  extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private Map<Integer, List<Bible>> mBible;
+        private String mBookKey;
+        private int mBookParts;
 
-        private SectionsPagerAdapter(FragmentManager fm, Map<Integer, List<Bible>> chapters) {
+        private SectionsPagerAdapter(FragmentManager fm, String bookKey, int bookParts) {
             super(fm);
 
-            mBible = chapters;
+            mBookKey = bookKey;
+            mBookParts = bookParts;
         }
 
         @Override
         public Fragment getItem(int position) {
-            List<Bible> bibleList = mBible.get(position + 1);
-
-            StringBuilder result = new StringBuilder();
-            for (Bible bible : bibleList) {
-                result.append(bible.getStText() + "\n");
-            }
-
-            return ContextTextPagerFragment.newInstance(result.toString());
+            return ContextTextPagerFragment.newInstance(mBookKey, position + 1);
         }
 
         @Override
         public int getCount() {
-            return mBible.size();
+            return mBookParts;
         }
     }
 }
