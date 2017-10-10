@@ -27,7 +27,7 @@ public class BookInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,11 +35,11 @@ public class BookInfoActivity extends AppCompatActivity {
         mInfoName = getIntent().getStringExtra(INFO_NAME);
         mInfoText = getIntent().getStringExtra(INFO_TEXT);
 
-        TextView txtAuthor = (TextView) findViewById(R.id.author);
+        TextView txtAuthor = findViewById(R.id.author);
 
         txtAuthor.setText(mInfoName);
 
-        TextView txtInfo = (TextView) findViewById(R.id.info);
+        TextView txtInfo = findViewById(R.id.info);
 
         txtInfo.setText(mInfoText);
     }

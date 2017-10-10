@@ -47,13 +47,29 @@ public class ContextTextActivity  extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setTitle(mBookChapterAuthor);
+        mToolbar.setTitle(String.format("%s %s", mBookChapterAuthor, mBookChapter));
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
                 mBookKey, mBookParts);
 
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mToolbar.setTitle(String.format("%s %s", mBookChapterAuthor, String.valueOf(position + 1)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -89,7 +105,7 @@ public class ContextTextActivity  extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ContextTextPagerFragment.newInstance(mBookKey, position + 1);
+           return ContextTextPagerFragment.newInstance(mBookKey, position + 1);
         }
 
         @Override

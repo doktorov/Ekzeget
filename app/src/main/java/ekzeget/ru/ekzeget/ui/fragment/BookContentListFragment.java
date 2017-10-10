@@ -122,7 +122,7 @@ public class BookContentListFragment extends Fragment {
             holder.mBookChapter = String.valueOf(position + 1);
             holder.mBookKey = mBookKey;
             holder.mBookParts = mBookParts;
-            holder.mBookChapterAuthor = String.format("%s. Глава %s", mBookName, (position + 1));
+            holder.mBookChapterAuthor = String.format("%s. Глава", mBookName);
             holder.mTextView.setText( String.format("%s. Глава %s (%s стихов)",
                     mBookName, (position + 1), mValues.get(position + 1)));
 

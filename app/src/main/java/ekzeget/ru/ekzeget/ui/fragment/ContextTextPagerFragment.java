@@ -12,6 +12,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.ContentString;
 
 public class ContextTextPagerFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
@@ -43,7 +44,14 @@ public class ContextTextPagerFragment extends Fragment {
 
         List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + getBookPart());
 
-        textView.setText(String.valueOf(getBookPart()) + bibles.get(0).getStText());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Bible bible : bibles) {
+            String res = String.format("%s %s \n", bible.stNo, bible.stText);
+
+            stringBuilder.append(res);
+        }
+
+        textView.setText(stringBuilder.toString());
 
         return rootView;
     }
