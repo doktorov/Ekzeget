@@ -103,15 +103,12 @@ public class BookInfoListFragment extends Fragment {
             holder.mBoundString = mValues.get(position).name;
             holder.mTextView.setText(mValues.get(position).name);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookInfoActivity.class);
-                    intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
-                    intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
-                    context.startActivity(intent);
-                }
+            holder.mView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, BookInfoActivity.class);
+                intent.putExtra(BookInfoActivity.INFO_NAME, mValues.get(position).name);
+                intent.putExtra(BookInfoActivity.INFO_TEXT, mValues.get(position).text);
+                context.startActivity(intent);
             });
         }
 

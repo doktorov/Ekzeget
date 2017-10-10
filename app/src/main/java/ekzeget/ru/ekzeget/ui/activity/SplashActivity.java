@@ -30,15 +30,12 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         if (!checkDataBase()) {
-            LinearLayout progress = (LinearLayout) findViewById(R.id.progressBarView);
+            LinearLayout progress = findViewById(R.id.progressBarView);
             progress.setVisibility(View.VISIBLE);
 
-            final Observable<String> operationObservable = Observable.create(new Observable.OnSubscribe<String>() {
-                @Override
-                public void call(Subscriber<? super String> subscriber) {
-                    subscriber.onNext(onUnzipZip());
-                    subscriber.onCompleted();
-                }
+            final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
+                subscriber.onNext(onUnzipZip());
+                subscriber.onCompleted();
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
 
@@ -58,12 +55,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showMain();
-                }
-            }, 1000);
+            new Handler().postDelayed(() -> showMain(), 1000);
         }
     }
 
