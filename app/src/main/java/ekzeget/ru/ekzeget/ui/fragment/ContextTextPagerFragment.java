@@ -29,21 +29,30 @@ import ekzeget.ru.ekzeget.model.ContentString;
 import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
 
 public class ContextTextPagerFragment extends Fragment {
+    public static final String BOOK_NAME = "book_name";
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_PART = "book_part";
+    public static final String BOOK_CHAPTER = "book_chapter";
 
     private TextView mContextText;
     private View mProgressView;
 
-    public static ContextTextPagerFragment newInstance(String bookKey, int part) {
+    public static ContextTextPagerFragment newInstance(String bookKey, int part,
+                                                       String bookName, String bookChapter) {
         ContextTextPagerFragment fragment = new ContextTextPagerFragment();
 
         Bundle args = new Bundle();
+        args.putString(BOOK_NAME, bookName);
         args.putString(BOOK_KEY, bookKey);
         args.putInt(BOOK_PART, part);
+        args.putString(BOOK_CHAPTER, bookChapter);
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    public String getBookName() {
+        return getArguments().getString(BOOK_NAME);
     }
 
     public String getBookKey() {
@@ -52,6 +61,10 @@ public class ContextTextPagerFragment extends Fragment {
 
     public int getBookPart() {
         return getArguments().getInt(BOOK_PART);
+    }
+
+    public String getBookChapter() {
+        return getArguments().getString(BOOK_CHAPTER);
     }
 
     @Override
@@ -118,9 +131,9 @@ public class ContextTextPagerFragment extends Fragment {
 
                     Context context = getActivity();
                     Intent intent = new Intent(context, BookContentPoemActivity.class);
-//                    intent.putExtra(BookContentPoemActivity.BOOK_NAME, mBookName);
+                    intent.putExtra(BookContentPoemActivity.BOOK_NAME, getBookName());
                     intent.putExtra(BookContentPoemActivity.BOOK_KEY, getBookKey());
-                    intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, getBookPart());
+                    intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, getBookChapter());
                     intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
                     intent.putExtra(BookContentPoemActivity.BOOK_POEM, contentString.getText());
                     startActivityForResult(intent, 1111);
