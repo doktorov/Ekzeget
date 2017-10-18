@@ -166,4 +166,25 @@ public class ContextTextPagerFragment extends Fragment {
         mContextText.setHighlightColor(Color.TRANSPARENT);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mContextText.setVisibility(View.VISIBLE);
+        mProgressView.setVisibility(View.GONE);
+
+//        if (requestCode == 1111 && resultCode == RESULT_OK && null != data)
+//        {
+//            Uri selectedImg = data.getData();
+//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//            Cursor cursor = getContentResolver().query(selectedImg,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            imgcover = (ImageView) findViewById(R.id.newcover_img);
+//            imgcover .setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//            cursor.close();
+//        }
+    }
 }
