@@ -97,7 +97,6 @@ public class ContextTextActivity  extends AppCompatActivity {
         private String mBookName;
         private String mBookKey;
         private int mBookParts;
-        private String mBookChapter;
 
         private SectionsPagerAdapter(FragmentManager fm, String bookKey, int bookParts,
                                      String bookName, String bookChapter) {
@@ -111,8 +110,8 @@ public class ContextTextActivity  extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-           return ContextTextPagerFragment.newInstance(mBookKey, position + 1,
-                   mBookName, String.valueOf(position + 1));
+           return ContextTextPagerFragment.newInstance(mBookKey, mBookName,
+                   String.valueOf(position + 1));
         }
 
         @Override

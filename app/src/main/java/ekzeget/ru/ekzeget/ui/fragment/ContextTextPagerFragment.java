@@ -31,20 +31,17 @@ import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
 public class ContextTextPagerFragment extends Fragment {
     public static final String BOOK_NAME = "book_name";
     public static final String BOOK_KEY = "book_key";
-    public static final String BOOK_PART = "book_part";
     public static final String BOOK_CHAPTER = "book_chapter";
 
     private TextView mContextText;
     private View mProgressView;
 
-    public static ContextTextPagerFragment newInstance(String bookKey, int part,
-                                                       String bookName, String bookChapter) {
+    public static ContextTextPagerFragment newInstance(String bookKey, String bookName, String bookChapter) {
         ContextTextPagerFragment fragment = new ContextTextPagerFragment();
 
         Bundle args = new Bundle();
         args.putString(BOOK_NAME, bookName);
         args.putString(BOOK_KEY, bookKey);
-        args.putInt(BOOK_PART, part);
         args.putString(BOOK_CHAPTER, bookChapter);
         fragment.setArguments(args);
 
@@ -59,10 +56,6 @@ public class ContextTextPagerFragment extends Fragment {
         return getArguments().getString(BOOK_KEY);
     }
 
-    public int getBookPart() {
-        return getArguments().getInt(BOOK_PART);
-    }
-
     public String getBookChapter() {
         return getArguments().getString(BOOK_CHAPTER);
     }
@@ -70,21 +63,6 @@ public class ContextTextPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View rootView = inflater.inflate(R.layout.fragment_glava_talk_context, container, false);
-
-//        TextView textView = rootView.findViewById(R.id.st_text);
-//
-//        List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + getBookPart());
-//
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (Bible bible : bibles) {
-//            String res = String.format("%s %s \n", bible.stNo, bible.stText);
-//
-//            stringBuilder.append(res);
-//        }
-//
-//        textView.setText(stringBuilder.toString());
-
         CoordinatorLayout rv = (CoordinatorLayout) inflater.inflate(
                 R.layout.fragment_context_text_pager, container, false);
 
@@ -103,7 +81,7 @@ public class ContextTextPagerFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + String.valueOf(getBookPart()));
+        List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + String.valueOf(getBookChapter()));
 
         List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
