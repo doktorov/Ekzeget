@@ -112,7 +112,7 @@ public class ContextTextActivity  extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
            return ContextTextPagerFragment.newInstance(mBookKey, position + 1,
-                   mBookName, mBookChapter);
+                   mBookName, String.valueOf(position + 1));
         }
 
         @Override
