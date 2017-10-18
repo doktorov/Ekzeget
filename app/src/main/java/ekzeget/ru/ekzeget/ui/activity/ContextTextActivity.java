@@ -50,7 +50,7 @@ public class ContextTextActivity  extends AppCompatActivity {
         mToolbar.setTitle(String.format("%s %s", mBookChapterAuthor, mBookChapter));
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                mBookKey, mBookParts, mBookName, mBookChapter);
+                mBookKey, mBookParts, mBookName);
 
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -98,14 +98,13 @@ public class ContextTextActivity  extends AppCompatActivity {
         private String mBookKey;
         private int mBookParts;
 
-        private SectionsPagerAdapter(FragmentManager fm, String bookKey, int bookParts,
-                                     String bookName, String bookChapter) {
+        private SectionsPagerAdapter(FragmentManager fm, String bookKey,
+                                     int bookParts, String bookName) {
             super(fm);
 
             mBookName = bookName;
             mBookKey = bookKey;
             mBookParts = bookParts;
-            mBookChapter = bookChapter;
         }
 
         @Override
