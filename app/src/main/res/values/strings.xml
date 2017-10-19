@@ -43,4 +43,10 @@
     <string name="bible_translate_sovr_rbo">Современный перевод "Российского Библейского общества" 2011 г.</string>
     <string name="bible_translate_nkjv">English version New King James Version</string>
     <string name="bible_translate_desnitsky">Перевод А.С. Десницкого</string>
+    <string name="title_activity_text_interpretation_parallel_poems">
+        TextInterpretationParallelPoemsActivity
+    </string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

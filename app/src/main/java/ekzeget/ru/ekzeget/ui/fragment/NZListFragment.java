@@ -21,13 +21,21 @@ import ekzeget.ru.ekzeget.model.Book;
 import ekzeget.ru.ekzeget.ui.activity.BookActivity;
 
 public class NZListFragment extends Fragment {
+
+    private static RecyclerView mRecyclerView;
+    private static View mProgressView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
-        setupRecyclerView(rv);
-        return rv;
+        View view = inflater.inflate(R.layout.fragment_book_content_list, container, false);
+
+        mRecyclerView = view.findViewById(R.id.recyclerview);
+        mProgressView = view.findViewById(R.id.progress);
+
+        setupRecyclerView(mRecyclerView);
+
+        return view;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -52,7 +60,7 @@ public class NZListFragment extends Fragment {
             private ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(android.R.id.text1);
+                mTextView = view.findViewById(android.R.id.text1);
             }
 
             @Override
@@ -84,16 +92,16 @@ public class NZListFragment extends Fragment {
             holder.mBoundString = mValues.get(position).name;
             holder.mTextView.setText(mValues.get(position).name);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookActivity.class);
-                    intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
-                    intent.putExtra(BookActivity.BOOK_NAME, mValues.get(position).menu);
-                    intent.putExtra(BookActivity.BOOK_PARTS, mValues.get(position).parts);
-                    context.startActivity(intent);
-                }
+            holder.mView.setOnClickListener(v -> {
+                mRecyclerView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.VISIBLE);
+
+                Context context = v.getContext();
+                Intent intent = new Intent(context, BookActivity.class);
+                intent.putExtra(BookActivity.BOOK_KEY, mValues.get(position).key);
+                intent.putExtra(BookActivity.BOOK_NAME, mValues.get(position).menu);
+                intent.putExtra(BookActivity.BOOK_PARTS, mValues.get(position).parts);
+                context.startActivity(intent);
             });
         }
 

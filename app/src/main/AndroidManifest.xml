@@ -20,7 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_home"
@@ -28,34 +27,38 @@
         <activity
             android:name=".ui.activity.BookActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.BookInfoActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.BookContentActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.BookContentPoemActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.GlavaTalkContextActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.PoemTalkActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.BookTranslateGlavaActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.ContextTextActivity"
             android:label="@string/content"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.TextInterpretationParallelPoemsActivity"
+            android:label="@string/title_activity_text_interpretation_parallel_poems"></activity>
     </application>
+
 </manifest>

@@ -27,6 +27,7 @@ import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
 import ekzeget.ru.ekzeget.model.ContentString;
 import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
+import ekzeget.ru.ekzeget.ui.activity.TextInterpretationParallelPoemsActivity;
 
 public class ContextTextPagerFragment extends Fragment {
     public static final String BOOK_NAME = "book_name";
@@ -108,7 +109,8 @@ public class ContextTextPagerFragment extends Fragment {
                     mProgressView.setVisibility(View.VISIBLE);
 
                     Context context = getActivity();
-                    Intent intent = new Intent(context, BookContentPoemActivity.class);
+                    //Intent intent = new Intent(context, BookContentPoemActivity.class);
+                    Intent intent = new Intent(context, TextInterpretationParallelPoemsActivity.class);
                     intent.putExtra(BookContentPoemActivity.BOOK_NAME, getBookName());
                     intent.putExtra(BookContentPoemActivity.BOOK_KEY, getBookKey());
                     intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, getBookChapter());
