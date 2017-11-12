@@ -58,7 +58,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.TextInterpretationParallelPoemsActivity"
-            android:label="@string/title_activity_text_interpretation_parallel_poems"></activity>
+            android:label="@string/title_activity_text_interpretation_parallel_poems"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
