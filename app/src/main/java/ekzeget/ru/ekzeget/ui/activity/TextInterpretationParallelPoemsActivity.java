@@ -8,10 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 
 public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.message)
     TextView mTextMessage;
 
     private Toolbar mToolbar;
@@ -21,7 +25,7 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_interpretation_parallel_poems);
 
-        //ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -31,7 +35,6 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
     }
