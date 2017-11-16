@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.Bible;
@@ -34,8 +37,11 @@ public class ContextTextPagerFragment extends Fragment {
     public static final String BOOK_KEY = "book_key";
     public static final String BOOK_CHAPTER = "book_chapter";
 
-    private TextView mContextText;
-    private View mProgressView;
+    @BindView(R.id.context_text)
+    TextView mContextText;
+
+    @BindView(R.id.progress)
+    View mProgressView;
 
     public static ContextTextPagerFragment newInstance(String bookKey, String bookName, String bookChapter) {
         ContextTextPagerFragment fragment = new ContextTextPagerFragment();
@@ -67,9 +73,6 @@ public class ContextTextPagerFragment extends Fragment {
         CoordinatorLayout rv = (CoordinatorLayout) inflater.inflate(
                 R.layout.fragment_context_text_pager, container, false);
 
-        mContextText = rv.findViewById(R.id.context_text);
-        mProgressView = rv.findViewById(R.id.progress);
-
         return rv;
     }
 
@@ -81,6 +84,8 @@ public class ContextTextPagerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
 
         List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + String.valueOf(getBookChapter()));
 
@@ -111,11 +116,11 @@ public class ContextTextPagerFragment extends Fragment {
                     Context context = getActivity();
                     //Intent intent = new Intent(context, BookContentPoemActivity.class);
                     Intent intent = new Intent(context, TextInterpretationParallelPoemsActivity.class);
-                    intent.putExtra(BookContentPoemActivity.BOOK_NAME, getBookName());
-                    intent.putExtra(BookContentPoemActivity.BOOK_KEY, getBookKey());
-                    intent.putExtra(BookContentPoemActivity.BOOK_CHAPTER, getBookChapter());
-                    intent.putExtra(BookContentPoemActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
-                    intent.putExtra(BookContentPoemActivity.BOOK_POEM, contentString.getText());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_NAME, getBookName());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_KEY, getBookKey());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER, getBookChapter());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_POEM, contentString.getText());
                     startActivityForResult(intent, 1111);
                 }
 

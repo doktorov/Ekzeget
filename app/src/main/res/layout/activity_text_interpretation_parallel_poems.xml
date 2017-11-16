@@ -23,25 +23,35 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="60dp"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" >-->
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="60dp"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:text="@string/title_home" />
-    </ScrollView>
+        <!--<TextView-->
+            <!--android:id="@+id/message"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginTop="60dp"-->
+            <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+            <!--android:text="@string/title_home" />-->
+    <!--</ScrollView>-->
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="40dp"
+        android:layout_above="@+id/navigation"
+        android:animateLayoutChanges="true">
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"

@@ -3,31 +3,52 @@ package ekzeget.ru.ekzeget.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextFragment;
+import ekzeget.ru.ekzeget.ui.fragment.ParallelsListPoemFragment;
+import ekzeget.ru.ekzeget.ui.fragment.TalksPoemTextFragment;
 
 public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.message)
-    TextView mTextMessage;
+    public static final String BOOK_NAME = "book_name";
+    public static final String BOOK_KEY = "book_key";
+    public static final String BOOK_CHAPTER = "book_chapter";
+    public static final String BOOK_ST_NO = "book_st_no";
+    public static final String BOOK_POEM = "book_poem";
 
-    private Toolbar mToolbar;
+    private static String mBookName;
+    private static String mBookKey;
+    private static String mBookChapter;
+    private static String mBookStNo;
+    private static String mBookPoem;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_interpretation_parallel_poems);
 
+        mBookName = getIntent().getStringExtra(BOOK_NAME);
+        mBookKey = getIntent().getStringExtra(BOOK_KEY);
+        mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
+        mBookStNo = getIntent().getStringExtra(BOOK_ST_NO);
+        mBookPoem = getIntent().getStringExtra(BOOK_POEM);
+
         ButterKnife.bind(this);
 
-        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         if (getSupportActionBar() != null){
@@ -37,6 +58,16 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.frame_layout, ContentPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem))
+                .commit();
+
+        updateToolbarText(mBookName);
     }
 
     @Override
@@ -50,17 +81,33 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment selectedFragment = null;
+
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                mTextMessage.setText(R.string.title_home);
-                return true;
+                selectedFragment = ContentPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
+                break;
             case R.id.navigation_dashboard:
-                mTextMessage.setText(R.string.title_dashboard);
-                return true;
+                selectedFragment = TalksPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
+                break;
             case R.id.navigation_notifications:
-                mTextMessage.setText(R.string.title_notifications);
-                return true;
+                selectedFragment = ParallelsListPoemFragment.newInstance(mBookKey, mBookChapter, mBookStNo);
+                break;
         }
-        return false;
+
+        updateToolbarText(item.getTitle());
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, selectedFragment);
+        transaction.commit();
+
+        return true;
+    }
+
+    private void updateToolbarText(CharSequence text) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(text);
+        }
     }
 }
