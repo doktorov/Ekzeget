@@ -62,9 +62,9 @@ public class ContentPoemTextFragment extends Fragment {
 
         mContextText = ll.findViewById(R.id.context_text);
 
-        RecyclerView rv = ll.findViewById(R.id.recyclerview);
-
-        setupRecyclerView(rv);
+//        RecyclerView rv = ll.findViewById(R.id.recyclerview);
+//
+//        setupRecyclerView(rv);
 
         return ll;
     }

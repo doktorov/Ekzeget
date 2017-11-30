@@ -4,16 +4,6 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.1'
 
-//    defaultConfig {
-//        applicationId "ekzeget.ru.ekzeget"
-//        minSdkVersion 16
-//        targetSdkVersion 27
-//        versionCode 1
-//        versionName "1.0"
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        vectorDrawables.useSupportLibrary = true
-//    }
-
     defaultConfig {
         applicationId  "ekzeget.ru.ekzeget"
         minSdkVersion 16
@@ -21,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
