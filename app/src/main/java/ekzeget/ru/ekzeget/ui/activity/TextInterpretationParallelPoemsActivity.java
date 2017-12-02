@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.ui.adapter.ContentPoemTextPagerAdapter;
 import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextPageFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContextTextPagerFragment;
@@ -42,7 +43,7 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ContentPoemTextPagerAdapter mContentPoemTextPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -69,19 +70,11 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-//        final FragmentManager fragmentManager = getSupportFragmentManager();
-//        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        fragmentTransaction
-//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                .replace(R.id.frame_layout, ContentPoemTextPageFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem))
-//                .commit();
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
-
         mViewPager = findViewById(R.id.view_pager_container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mContentPoemTextPagerAdapter = new ContentPoemTextPagerAdapter(getSupportFragmentManager(),
+                mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
+        mViewPager.setAdapter(mContentPoemTextPagerAdapter);
         mViewPager.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -131,10 +124,6 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 
         updateToolbarText(item.getTitle());
 
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_layout, selectedFragment);
-//        transaction.commit();
-
         return true;
     }
 
@@ -142,36 +131,6 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(text);
-        }
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private String mBookName;
-        private String mBookKey;
-        private int mBookParts;
-        private String mBookPoem;
-        private String mBookChapter;
-
-        private SectionsPagerAdapter(FragmentManager fm, String bookKey, String bookChapter,
-                                     int bookParts, String bookName, String bookPoem) {
-            super(fm);
-
-            mBookName = bookName;
-            mBookKey = bookKey;
-            mBookChapter = bookChapter;
-            mBookParts = bookParts;
-            mBookPoem = bookPoem;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ContentPoemTextFragment.newInstance(mBookKey, mBookChapter,
-                    String.valueOf(position + 1), mBookPoem);
-        }
-
-        @Override
-        public int getCount() {
-            return mBookParts;
         }
     }
 }
