@@ -82,9 +82,25 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 
         mViewPager = findViewById(R.id.view_pager_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(Integer.parseInt(mBookChapter) - 1);
+        mViewPager.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        updateToolbarText(mBookName);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        updateToolbarText(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, mBookStNo));
     }
 
     @Override
