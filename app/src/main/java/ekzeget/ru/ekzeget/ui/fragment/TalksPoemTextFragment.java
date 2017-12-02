@@ -3,6 +3,7 @@ package ekzeget.ru.ekzeget.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
 import ekzeget.ru.ekzeget.model.Talks;
@@ -33,7 +36,10 @@ public class TalksPoemTextFragment extends Fragment {
     private static String mBookStNo;
     private static String mBookPoem;
 
-    private TextView mContextText;
+    //private TextView mContextText;
+
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerView;
 
     public static TalksPoemTextFragment newInstance(String bookKey, String bookChapter,
                                                     String bookStNo, String bookPoem) {
@@ -54,26 +60,35 @@ public class TalksPoemTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout ll = (LinearLayout) inflater.inflate(
-                R.layout.fragment_content_poem_text_list, container, false);
+//        LinearLayout ll = (LinearLayout) inflater.inflate(
+//                R.layout.fragment_content_poem_text_list, container, false);
 
         mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
         mBookStNo = getArguments().getString(BOOK_ST_NO);
         mBookPoem = getArguments().getString(BOOK_POEM);
 
-        mContextText = ll.findViewById(R.id.context_text);
+//        mContextText = ll.findViewById(R.id.context_text);
+//
+//        RecyclerView rv = ll.findViewById(R.id.recyclerview);
+//
+//        setupRecyclerView(rv);
 
-        RecyclerView rv = ll.findViewById(R.id.recyclerview);
-
-        setupRecyclerView(rv);
-
-        return ll;
+        return inflater.inflate(R.layout.fragment_content_poem_text_list, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
+
+        setupRecyclerView(mRecyclerView);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {

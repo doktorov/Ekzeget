@@ -3,25 +3,19 @@ package ekzeget.ru.ekzeget.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.ui.adapter.ContentPoemTextPagerAdapter;
-import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextFragment;
-import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextPageFragment;
-import ekzeget.ru.ekzeget.ui.fragment.ContextTextPagerFragment;
-import ekzeget.ru.ekzeget.ui.fragment.ParallelsListPoemFragment;
-import ekzeget.ru.ekzeget.ui.fragment.TalksPoemTextFragment;
+import ekzeget.ru.ekzeget.ui.adapter.ParallelsListPoemTextAdapter;
+import ekzeget.ru.ekzeget.ui.adapter.TalksPoemTextAdapter;
 
 public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -44,7 +38,17 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
     Toolbar mToolbar;
 
     private ContentPoemTextPagerAdapter mContentPoemTextPagerAdapter;
-    private ViewPager mViewPager;
+    private TalksPoemTextAdapter mTalksPoemTextAdapter;
+    private ParallelsListPoemTextAdapter mParallelsListPoemTextAdapter;
+
+    @BindView(R.id.view_pager_content_poem_text)
+    ViewPager mViewPagerContentPoemText;
+
+    @BindView(R.id.view_pager_talks_poem_text)
+    ViewPager mViewPagerTalksPoemText;
+
+    @BindView(R.id.view_pager_parallels_poem_text)
+    ViewPager mViewPagerParallelsListPoemText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +74,11 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        mViewPager = findViewById(R.id.view_pager_container);
-
         mContentPoemTextPagerAdapter = new ContentPoemTextPagerAdapter(getSupportFragmentManager(),
                 mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
-        mViewPager.setAdapter(mContentPoemTextPagerAdapter);
-        mViewPager.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPagerContentPoemText.setAdapter(mContentPoemTextPagerAdapter);
+        mViewPagerContentPoemText.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
+        mViewPagerContentPoemText.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -93,7 +95,60 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
             }
         });
 
+        mTalksPoemTextAdapter = new TalksPoemTextAdapter(getSupportFragmentManager(),
+                    mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
+        mViewPagerTalksPoemText.setAdapter(mTalksPoemTextAdapter);
+        mViewPagerTalksPoemText.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
+        mViewPagerTalksPoemText.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mParallelsListPoemTextAdapter = new ParallelsListPoemTextAdapter(getSupportFragmentManager(),
+                mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
+        mViewPagerParallelsListPoemText.setAdapter(mParallelsListPoemTextAdapter);
+        mViewPagerParallelsListPoemText.setCurrentItem(Integer.parseInt(mBookStNo) - 1);
+        mViewPagerParallelsListPoemText.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mViewPagerContentPoemText.setVisibility(View.VISIBLE);
+        mViewPagerTalksPoemText.setVisibility(View.GONE);
+        mViewPagerParallelsListPoemText.setVisibility(View.GONE);
+
         updateToolbarText(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, mBookStNo));
+    }
+
+    private void updateToolbarText(CharSequence text) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(text);
+        }
     }
 
     @Override
@@ -107,30 +162,26 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment selectedFragment = null;
-
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                //selectedFragment = ContentPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
-                selectedFragment = ContentPoemTextPageFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
+                mViewPagerContentPoemText.setVisibility(View.VISIBLE);
+                mViewPagerTalksPoemText.setVisibility(View.GONE);
+                mViewPagerParallelsListPoemText.setVisibility(View.GONE);
                 break;
             case R.id.navigation_dashboard:
-                selectedFragment = TalksPoemTextFragment.newInstance(mBookKey, mBookChapter, mBookStNo, mBookPoem);
+                mViewPagerContentPoemText.setVisibility(View.GONE);
+                mViewPagerTalksPoemText.setVisibility(View.VISIBLE);
+                mViewPagerParallelsListPoemText.setVisibility(View.GONE);
                 break;
             case R.id.navigation_notifications:
-                selectedFragment = ParallelsListPoemFragment.newInstance(mBookKey, mBookChapter, mBookStNo);
+                mViewPagerContentPoemText.setVisibility(View.GONE);
+                mViewPagerTalksPoemText.setVisibility(View.GONE);
+                mViewPagerParallelsListPoemText.setVisibility(View.VISIBLE);
                 break;
         }
 
-        updateToolbarText(item.getTitle());
+        updateToolbarText(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, mBookStNo));
 
         return true;
-    }
-
-    private void updateToolbarText(CharSequence text) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(text);
-        }
     }
 }

@@ -50,7 +50,23 @@
     <!--</FrameLayout>-->
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_container"
+        android:id="@+id/view_pager_content_poem_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_talks_poem_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_parallels_poem_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
