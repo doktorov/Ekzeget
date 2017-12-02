@@ -33,8 +33,8 @@ public class ContentPoemTextFragment extends Fragment {
     private static String mBookStNo;
     private static String mBookPoem;
 
-    @BindView(R.id.context_text)
-    TextView mContextText;
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerView;
 
     public static ContentPoemTextFragment newInstance(String bookKey, String bookChapter,
                                                       String bookStNo, String bookPoem) {
@@ -60,12 +60,6 @@ public class ContentPoemTextFragment extends Fragment {
         mBookStNo = getArguments().getString(BOOK_ST_NO);
         mBookPoem = getArguments().getString(BOOK_POEM);
 
-        //mContextText = ll.findViewById(R.id.context_text);
-
-//        RecyclerView rv = ll.findViewById(R.id.recyclerview);
-//
-//        setupRecyclerView(rv);
-
         return inflater.inflate(R.layout.fragment_content_poem_text_list, container, false);
     }
 
@@ -80,16 +74,7 @@ public class ContentPoemTextFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        List<BibleTranslate> bibleTranslates = BibleQueries.getTranslates(mBookKey + mBookChapter, Integer.parseInt(mBookStNo));
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (BibleTranslate bibleTranslate : bibleTranslates) {
-            stringBuilder.append(bibleTranslate.text).append("\n");
-            stringBuilder.append(bibleTranslate.translate).append("\n");
-        }
-
-        mContextText.setText(stringBuilder.toString());
+        setupRecyclerView(mRecyclerView);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
