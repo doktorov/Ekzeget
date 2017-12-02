@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContentPoemTextPageFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ContextTextPagerFragment;
 import ekzeget.ru.ekzeget.ui.fragment.ParallelsListPoemFragment;
@@ -74,7 +75,7 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 //                .commit();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                mBookKey, 10, mBookName);
+                mBookKey, 10, mBookName, mBookPoem);
 
         mViewPager = findViewById(R.id.view_pager_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -129,20 +130,22 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         private String mBookName;
         private String mBookKey;
         private int mBookParts;
+        private String mBookPoem;
 
         private SectionsPagerAdapter(FragmentManager fm, String bookKey,
-                                     int bookParts, String bookName) {
+                                     int bookParts, String bookName, String bookPoem) {
             super(fm);
 
             mBookName = bookName;
             mBookKey = bookKey;
             mBookParts = bookParts;
+            mBookPoem = bookPoem;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ContextTextPagerFragment.newInstance(mBookKey, mBookName,
-                    String.valueOf(position + 1));
+            return ContentPoemTextFragment.newInstance(mBookKey, mBookName,
+                    String.valueOf(position + 1), mBookPoem);
         }
 
         @Override
