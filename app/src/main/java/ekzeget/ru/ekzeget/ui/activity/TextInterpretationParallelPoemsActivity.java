@@ -30,12 +30,14 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
     public static final String BOOK_CHAPTER = "book_chapter";
     public static final String BOOK_ST_NO = "book_st_no";
     public static final String BOOK_POEM = "book_poem";
+    public static final String BOOK_CHAPTER_SIZE = "book_chapter_size";
 
     private static String mBookName;
     private static String mBookKey;
     private static String mBookChapter;
     private static String mBookStNo;
     private static String mBookPoem;
+    private static int mBookChapterSize;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -53,6 +55,7 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         mBookChapter = getIntent().getStringExtra(BOOK_CHAPTER);
         mBookStNo = getIntent().getStringExtra(BOOK_ST_NO);
         mBookPoem = getIntent().getStringExtra(BOOK_POEM);
+        mBookChapterSize = getIntent().getIntExtra(BOOK_CHAPTER_SIZE, 0);
 
         ButterKnife.bind(this);
 
@@ -75,7 +78,7 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
 //                .commit();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                mBookKey, 10, mBookName, mBookPoem);
+                mBookKey, mBookChapter, mBookChapterSize, mBookName, mBookPoem);
 
         mViewPager = findViewById(R.id.view_pager_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -131,20 +134,22 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
         private String mBookKey;
         private int mBookParts;
         private String mBookPoem;
+        private String mBookChapter;
 
-        private SectionsPagerAdapter(FragmentManager fm, String bookKey,
+        private SectionsPagerAdapter(FragmentManager fm, String bookKey, String bookChapter,
                                      int bookParts, String bookName, String bookPoem) {
             super(fm);
 
             mBookName = bookName;
             mBookKey = bookKey;
+            mBookChapter = bookChapter;
             mBookParts = bookParts;
             mBookPoem = bookPoem;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ContentPoemTextFragment.newInstance(mBookKey, mBookName,
+            return ContentPoemTextFragment.newInstance(mBookKey, mBookChapter,
                     String.valueOf(position + 1), mBookPoem);
         }
 

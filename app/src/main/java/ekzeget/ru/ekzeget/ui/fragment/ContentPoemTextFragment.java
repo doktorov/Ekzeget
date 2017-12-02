@@ -2,6 +2,7 @@ package ekzeget.ru.ekzeget.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +14,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.model.BibleTranslate;
@@ -31,7 +33,8 @@ public class ContentPoemTextFragment extends Fragment {
     private static String mBookStNo;
     private static String mBookPoem;
 
-    private TextView mContextText;
+    @BindView(R.id.context_text)
+    TextView mContextText;
 
     public static ContentPoemTextFragment newInstance(String bookKey, String bookChapter,
                                                       String bookStNo, String bookPoem) {
@@ -49,29 +52,44 @@ public class ContentPoemTextFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        LinearLayout ll = (LinearLayout) inflater.inflate(
-                R.layout.fragment_content_poem_text_list, container, false);
 
         mBookKey = getArguments().getString(BOOK_KEY);
         mBookChapter = getArguments().getString(BOOK_CHAPTER);
         mBookStNo = getArguments().getString(BOOK_ST_NO);
         mBookPoem = getArguments().getString(BOOK_POEM);
 
-        mContextText = ll.findViewById(R.id.context_text);
+        //mContextText = ll.findViewById(R.id.context_text);
 
 //        RecyclerView rv = ll.findViewById(R.id.recyclerview);
 //
 //        setupRecyclerView(rv);
 
-        return ll;
+        return inflater.inflate(R.layout.fragment_content_poem_text_list, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
+
+        List<BibleTranslate> bibleTranslates = BibleQueries.getTranslates(mBookKey + mBookChapter, Integer.parseInt(mBookStNo));
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (BibleTranslate bibleTranslate : bibleTranslates) {
+            stringBuilder.append(bibleTranslate.text).append("\n");
+            stringBuilder.append(bibleTranslate.translate).append("\n");
+        }
+
+        mContextText.setText(stringBuilder.toString());
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {

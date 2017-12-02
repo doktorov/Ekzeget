@@ -119,6 +119,7 @@ public class ContextTextPagerFragment extends Fragment {
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER, getBookChapter());
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_POEM, contentString.getText());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER_SIZE, bibles.size());
                     startActivityForResult(intent, 1111);
                 }
 
