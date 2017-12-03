@@ -87,6 +87,10 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+                mViewPagerTalksPoemText.setCurrentItem(position);
+                mTalksPoemTextAdapter.notifyDataSetChanged();
+                mViewPagerParallelsListPoemText.setCurrentItem(position);
+                mParallelsListPoemTextAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -108,6 +112,10 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+                mViewPagerContentPoemText.setCurrentItem(position);
+                mContentPoemTextPagerAdapter.notifyDataSetChanged();
+                mViewPagerParallelsListPoemText.setCurrentItem(position);
+                mParallelsListPoemTextAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -129,6 +137,10 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 mToolbar.setTitle(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, String.valueOf(position + 1)));
+                mViewPagerTalksPoemText.setCurrentItem(position);
+                mTalksPoemTextAdapter.notifyDataSetChanged();
+                mViewPagerParallelsListPoemText.setCurrentItem(position);
+                mParallelsListPoemTextAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -179,8 +191,6 @@ public class TextInterpretationParallelPoemsActivity extends AppCompatActivity
                 mViewPagerParallelsListPoemText.setVisibility(View.VISIBLE);
                 break;
         }
-
-        updateToolbarText(String.format("%s. Глава %s, стр %s", mBookName, mBookChapter, mBookStNo));
 
         return true;
     }
