@@ -1,12 +1,14 @@
 package ekzeget.ru.ekzeget;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 
 import ekzeget.ru.ekzeget.db.DbHelper;
 import ekzeget.ru.ekzeget.db.DbQuery;
+import ekzeget.ru.ekzeget.db.EkzegetDatabase;
 import ekzeget.ru.ekzeget.preferences.PDefaultValue;
 import ekzeget.ru.ekzeget.preferences.Prefs;
 import ekzeget.ru.ekzeget.util.AppVersionCode;
@@ -66,6 +68,9 @@ public class App extends Application {
 
         if (Prefs.getApplicationVersionCode(this) < AppVersionCode.getApkVersionCode(this))
             checkApplicationVersionCode();
+
+//        EkzegetDatabase db = Room.databaseBuilder(getApplicationContext(),
+//                EkzegetDatabase.class, "database-name").build();
     }
 
     public static Resources getAppResources() {

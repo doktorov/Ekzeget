@@ -20,7 +20,6 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.DbHelper;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class SplashActivity extends AppCompatActivity {
@@ -33,11 +32,16 @@ public class SplashActivity extends AppCompatActivity {
             LinearLayout progress = findViewById(R.id.progressBarView);
             progress.setVisibility(View.VISIBLE);
 
+//            final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
+//                subscriber.onNext(onUnzipZip());
+//                subscriber.onCompleted();
+//            }).subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread());
+
             final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
                 subscriber.onNext(onUnzipZip());
                 subscriber.onCompleted();
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread());
+            }).subscribeOn(Schedulers.io());
 
             operationObservable.subscribe(new Subscriber<String>() {
                 @Override
