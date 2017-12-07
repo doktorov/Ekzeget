@@ -2,6 +2,7 @@ package ekzeget.ru.ekzeget.db.table;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "bible")
@@ -57,6 +58,20 @@ public class Bible {
 
     @ColumnInfo(name = "nkjv")
     private String mNkjv;
+
+    public Bible() {
+
+    }
+
+//    @Ignore
+//    public Bible(String userName) {
+//        this.mStText = userName;
+//    }
+//
+//    public Bible(int id, String userName) {
+//        this.mId = id;
+//        this.mStText = userName;
+//    }
 
     public int getId() {
         return mId;

@@ -1,5 +1,6 @@
 package ekzeget.ru.ekzeget.ui.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,20 +13,35 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
+import ekzeget.ru.ekzeget.db.model.BibleViewModel;
+import ekzeget.ru.ekzeget.db.model.Injection;
+import ekzeget.ru.ekzeget.db.model.ViewModelFactory;
 import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.VZListFragment;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private TextView mUserName;
 
     private DrawerLayout mDrawerLayout;
+
+    private ViewModelFactory mViewModelFactory;
+    private BibleViewModel mViewModel;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +71,17 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(BibleViewModel.class);
+
+        mUserName = findViewById(R.id.user_name);
+
+        mDisposable.add(mViewModel.getBibleName()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userName -> mUserName.setText(userName),
+                        throwable -> Log.e(TAG, "Unable to update username", throwable)));
     }
 
     @Override

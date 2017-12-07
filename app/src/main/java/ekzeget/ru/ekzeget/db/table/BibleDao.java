@@ -13,8 +13,8 @@ public interface BibleDao {
     Flowable<Bible> getBible();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUser(Bible bible);
+    void insertBible(Bible bible);
 
     @Query("DELETE FROM Bible")
-    void deleteAllUsers();
+    void deleteAllBibles();
 }
