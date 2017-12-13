@@ -24,7 +24,7 @@ import java.util.List;
 
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.BibleModel;
 import ekzeget.ru.ekzeget.model.ContentString;
 import ekzeget.ru.ekzeget.ui.activity.BookContentActivity;
 import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
@@ -82,15 +82,15 @@ public class ContentTextFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Bible> bibles = BibleQueries.getChapterContent(mBookKey + mBookChapter);
+        List<BibleModel> bibleModels = BibleQueries.getChapterContent(mBookKey + mBookChapter);
 
         List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        for (Bible bible : bibles) {
-            String res = String.format("%s %s \n", bible.stNo, bible.stText);
+        for (BibleModel bibleModel : bibleModels) {
+            String res = String.format("%s %s \n", bibleModel.stNo, bibleModel.stText);
 
             contentStrings.add(new ContentString(
-                    bible.stNo,
+                    bibleModel.stNo,
                     stringBuilder.toString().length(),
                             stringBuilder.toString().length() + res.length() - 1,
                     res));

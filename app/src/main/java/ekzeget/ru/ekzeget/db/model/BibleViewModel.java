@@ -4,10 +4,7 @@ import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ekzeget.ru.ekzeget.model.Bible;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 
 public class BibleViewModel extends ViewModel {
 
@@ -36,8 +33,8 @@ public class BibleViewModel extends ViewModel {
 //    public Completable updateUserName(final String userName) {
 //        return Completable.fromAction(() -> {
 ////            mBible = mBible == null
-////                    ? new ekzeget.ru.ekzeget.db.table.Bible(userName)
-////                    : new ekzeget.ru.ekzeget.db.table.Bible(mBible.getId(), userName);
+////                    ? new ekzeget.ru.ekzeget.db.table.BibleModel(userName)
+////                    : new ekzeget.ru.ekzeget.db.table.BibleModel(mBible.getId(), userName);
 ////
 ////            mDataSource.insertOrUpdateBible(mBible);
 //        });

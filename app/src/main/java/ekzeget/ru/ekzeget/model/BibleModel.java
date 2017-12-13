@@ -1,6 +1,6 @@
 package ekzeget.ru.ekzeget.model;
 
-public class Bible {
+public class BibleModel {
     public int stNo;
     public String stText;
     public String chapter;

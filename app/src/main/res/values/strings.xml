@@ -4,7 +4,7 @@
 
     <string name="log_in">Вход</string>
     <string name="registration">Регистрация</string>
-    <string name="bible">Библия</string>
+    <string name="bibleModel">Библия</string>
     <string name="sermons">Проповеди</string>
     <string name="dictionaries">Словари</string>
     <string name="synopsis">Синопсис</string>

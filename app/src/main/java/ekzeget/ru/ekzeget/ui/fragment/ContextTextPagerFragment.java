@@ -6,12 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
@@ -28,9 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
-import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.BibleModel;
 import ekzeget.ru.ekzeget.model.ContentString;
-import ekzeget.ru.ekzeget.ui.activity.BookContentPoemActivity;
 import ekzeget.ru.ekzeget.ui.activity.TextInterpretationParallelPoemsActivity;
 
 public class ContextTextPagerFragment extends Fragment {
@@ -85,15 +82,15 @@ public class ContextTextPagerFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        List<Bible> bibles = BibleQueries.getChapterContent(getBookKey() + String.valueOf(getBookChapter()));
+        List<BibleModel> bibleModels = BibleQueries.getChapterContent(getBookKey() + String.valueOf(getBookChapter()));
 
         List<ContentString> contentStrings = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        for (Bible bible : bibles) {
-            String res = String.format("%s %s \n", bible.stNo, bible.stText);
+        for (BibleModel bibleModel : bibleModels) {
+            String res = String.format("%s %s \n", bibleModel.stNo, bibleModel.stText);
 
             contentStrings.add(new ContentString(
-                    bible.stNo,
+                    bibleModel.stNo,
                     stringBuilder.toString().length(),
                     stringBuilder.toString().length() + res.length() - 1,
                     res));
@@ -119,7 +116,7 @@ public class ContextTextPagerFragment extends Fragment {
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER, getBookChapter());
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_ST_NO, String.valueOf(contentString.getStNo()));
                     intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_POEM, contentString.getText());
-                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER_SIZE, bibles.size());
+                    intent.putExtra(TextInterpretationParallelPoemsActivity.BOOK_CHAPTER_SIZE, bibleModels.size());
                     startActivityForResult(intent, 1111);
                 }
 

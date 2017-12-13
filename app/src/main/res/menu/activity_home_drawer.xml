@@ -16,8 +16,8 @@
         android:id="@+id/menu_middle"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/bible"
-            android:title="@string/bible" />
+            android:id="@+id/bibleModel"
+            android:title="@string/bibleModel" />
         <item
             android:id="@+id/sermons"
             android:title="@string/sermons" />

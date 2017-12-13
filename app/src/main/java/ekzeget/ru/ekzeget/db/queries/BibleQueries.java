@@ -14,12 +14,12 @@ import java.util.regex.Pattern;
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.table.BibleTable;
-import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.BibleModel;
 import ekzeget.ru.ekzeget.model.BibleTranslate;
 
 public class BibleQueries {
-    public static List<Bible> getListContents(String book_kn) {
-        List<Bible> bibleList = new ArrayList<>();
+    public static List<BibleModel> getListContents(String book_kn) {
+        List<BibleModel> bibleModelList = new ArrayList<>();
 
         String sql = "SELECT " + BibleTable.KN + ", count(kn) cnt FROM " + BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN_LIKE + " group by " + BibleTable.KN;
         Cursor cursor = App.getReadableDatabase().rawQuery(sql, new String[]{String.valueOf(book_kn + "%")});
@@ -29,17 +29,17 @@ public class BibleQueries {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Bible bible = new Bible();
-            bible.chapter = cursor.getString(KN_INDEX);
-            bible.parts = cursor.getInt(CNT_INDEX);
-            bibleList.add(bible);
+            BibleModel bibleModel = new BibleModel();
+            bibleModel.chapter = cursor.getString(KN_INDEX);
+            bibleModel.parts = cursor.getInt(CNT_INDEX);
+            bibleModelList.add(bibleModel);
 
             cursor.moveToNext();
         }
 
         cursor.close();
 
-        return bibleList;
+        return bibleModelList;
     }
 
     public static Map<Integer, Integer> getListContentsSorted(String book_kn, int book_parts) {
@@ -70,8 +70,8 @@ public class BibleQueries {
         return new TreeMap<>(bibleList);
     }
 
-    public static List<Bible> getChapterContent(String book_kn) {
-        List<Bible> bibleList = new ArrayList<>();
+    public static List<BibleModel> getChapterContent(String book_kn) {
+        List<BibleModel> bibleModelList = new ArrayList<>();
 
         String sql = "SELECT " + BibleTable.ST_NO + ", " + BibleTable.ST_TEXT + " FROM " +
                 BibleTable.TABLE_NAME + " WHERE " + BibleTable.WHERE_KN + " ORDER BY " + BibleTable.ST_NO;
@@ -82,17 +82,17 @@ public class BibleQueries {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Bible bible = new Bible();
-            bible.stNo = cursor.getInt(ST_NO_INDEX);
-            bible.stText = cursor.getString(ST_TEXT_INDEX);
-            bibleList.add(bible);
+            BibleModel bibleModel = new BibleModel();
+            bibleModel.stNo = cursor.getInt(ST_NO_INDEX);
+            bibleModel.stText = cursor.getString(ST_TEXT_INDEX);
+            bibleModelList.add(bibleModel);
 
             cursor.moveToNext();
         }
 
         cursor.close();
 
-        return bibleList;
+        return bibleModelList;
     }
 
     public static List<BibleTranslate> getTranslates(String book_kn, int st_no) {
@@ -393,8 +393,8 @@ public class BibleQueries {
         return translates;
     }
 
-    public static Map<Integer, List<Bible>> getListContextTextSorted(String book_kn, int book_parts) {
-        Map<Integer, List<Bible>> bibleList = new HashMap<>();
+    public static Map<Integer, List<BibleModel>> getListContextTextSorted(String book_kn, int book_parts) {
+        Map<Integer, List<BibleModel>> bibleList = new HashMap<>();
 
         for (int i = 1; i < book_parts + 1; i++) {
             String sql = "SELECT " + BibleTable.ST_NO + ", " + BibleTable.ST_TEXT + " FROM " +
@@ -404,14 +404,14 @@ public class BibleQueries {
             final int ST_NO_INDEX = cursor.getColumnIndex(BibleTable.ST_NO);
             final int ST_TEXT_INDEX = cursor.getColumnIndex(BibleTable.ST_TEXT);
 
-            List<Bible> contextList = new ArrayList<>();
+            List<BibleModel> contextList = new ArrayList<>();
 
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Bible bible = new Bible();
-                bible.stNo = cursor.getInt(ST_NO_INDEX);
-                bible.stText = cursor.getString(ST_TEXT_INDEX);
-                contextList.add(bible);
+                BibleModel bibleModel = new BibleModel();
+                bibleModel.stNo = cursor.getInt(ST_NO_INDEX);
+                bibleModel.stText = cursor.getString(ST_TEXT_INDEX);
+                contextList.add(bibleModel);
 
                 cursor.moveToNext();
             }

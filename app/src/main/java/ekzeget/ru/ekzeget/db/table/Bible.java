@@ -64,11 +64,11 @@ public class Bible {
     }
 
 //    @Ignore
-//    public Bible(String userName) {
+//    public BibleModel(String userName) {
 //        this.mStText = userName;
 //    }
 //
-//    public Bible(int id, String userName) {
+//    public BibleModel(int id, String userName) {
 //        this.mId = id;
 //        this.mStText = userName;
 //    }

@@ -15,7 +15,7 @@ import java.util.List;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.queries.BibleQueries;
 import ekzeget.ru.ekzeget.db.queries.TalksQueries;
-import ekzeget.ru.ekzeget.model.Bible;
+import ekzeget.ru.ekzeget.model.BibleModel;
 import ekzeget.ru.ekzeget.model.Talks;
 import ekzeget.ru.ekzeget.ui.fragment.GlavaTalkContextFragment;
 
@@ -76,16 +76,16 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private List<Bible> mBible;
+        private List<BibleModel> mBibleModel;
 
-        private SectionsPagerAdapter(FragmentManager fm, List<Bible> bible, List<Talks> talks) {
+        private SectionsPagerAdapter(FragmentManager fm, List<BibleModel> bibleModel, List<Talks> talks) {
             super(fm);
 
-            mBible = bible;
+            mBibleModel = bibleModel;
 
             if (talks.size() != 0) {
                 for (Talks talk : talks) {
-                    for (Bible chp : bible) {
+                    for (BibleModel chp : bibleModel) {
                         if (talk.stNo == chp.stNo) {
                             chp.comments = talk.comments;
                             break;
@@ -97,13 +97,13 @@ public class GlavaTalkContextActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return GlavaTalkContextFragment.newInstance(mBible.get(position).stNo,
-                    mBible.get(position).stText, mBible.get(position).comments);
+            return GlavaTalkContextFragment.newInstance(mBibleModel.get(position).stNo,
+                    mBibleModel.get(position).stText, mBibleModel.get(position).comments);
         }
 
         @Override
         public int getCount() {
-            return mBible.size();
+            return mBibleModel.size();
         }
     }
 }
