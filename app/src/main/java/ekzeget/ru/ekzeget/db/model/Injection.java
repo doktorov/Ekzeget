@@ -5,7 +5,7 @@ import android.content.Context;
 import ekzeget.ru.ekzeget.db.EkzegetDatabase;
 
 public class Injection {
-    public static BibleDataSource provideBibleDataSource(Context context) {
+    private static BibleDataSource provideBibleDataSource(Context context) {
         EkzegetDatabase database = EkzegetDatabase.getInstance(context);
         return new LocalBibleDataSource(database.bibleDao());
     }

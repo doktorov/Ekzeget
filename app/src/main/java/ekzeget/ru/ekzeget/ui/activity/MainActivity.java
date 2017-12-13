@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +28,11 @@ import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.model.BibleViewModel;
 import ekzeget.ru.ekzeget.db.model.Injection;
 import ekzeget.ru.ekzeget.db.model.ViewModelFactory;
+import ekzeget.ru.ekzeget.db.table.Bible;
 import ekzeget.ru.ekzeget.ui.fragment.NZListFragment;
 import ekzeget.ru.ekzeget.ui.fragment.VZListFragment;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -82,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userName -> mUserName.setText(userName),
                         throwable -> Log.e(TAG, "Unable to update username", throwable)));
+
+        Flowable<List<Bible>> mBibles = null;
+
+
     }
 
     @Override

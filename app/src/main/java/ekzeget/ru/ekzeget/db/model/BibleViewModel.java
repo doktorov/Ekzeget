@@ -2,17 +2,21 @@ package ekzeget.ru.ekzeget.db.model;
 
 import android.arch.lifecycle.ViewModel;
 
+import java.util.List;
+
 import ekzeget.ru.ekzeget.model.Bible;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 
 public class BibleViewModel extends ViewModel {
 
     private final BibleDataSource mDataSource;
 
     private ekzeget.ru.ekzeget.db.table.Bible mBible;
+    private List<ekzeget.ru.ekzeget.db.table.Bible> mList;
 
-    public BibleViewModel(BibleDataSource dataSource) {
+    BibleViewModel(BibleDataSource dataSource) {
         mDataSource = dataSource;
     }
 
@@ -23,6 +27,10 @@ public class BibleViewModel extends ViewModel {
                     return user.getStText();
                 });
 
+    }
+
+    public Flowable<List<ekzeget.ru.ekzeget.db.table.Bible>> getList() {
+        return mDataSource.getList().map(bibles -> bibles);
     }
 
 //    public Completable updateUserName(final String userName) {
