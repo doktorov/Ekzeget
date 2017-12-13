@@ -35,12 +35,11 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    private TextView mUserName;
 
     private DrawerLayout mDrawerLayout;
 
@@ -80,17 +79,22 @@ public class MainActivity extends AppCompatActivity {
         mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(BibleViewModel.class);
 
-        mUserName = findViewById(R.id.user_name);
+//        mDisposable.add(mViewModel.getBibleName()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(userName -> mUserName.setText(userName),
+//                        throwable -> Log.e(TAG, "Unable to update username", throwable)));
 
-        mDisposable.add(mViewModel.getBibleName()
-                .subscribeOn(Schedulers.io())
+        mDisposable.add(mViewModel.getList()
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userName -> mUserName.setText(userName),
-                        throwable -> Log.e(TAG, "Unable to update username", throwable)));
-
-        Flowable<List<Bible>> mBibles = null;
-
-
+                .subscribe(coupons -> {
+                    if (coupons != null) {
+                        String s = "";
+//                            CouponsAdapter ca = new CouponsAdapter(coupons, MainActivity.this);
+//                            couponRecyclerView.setAdapter(ca);
+                    }
+                }, throwable -> Log.e("MainActivity", "exception getting coupons")));
     }
 
     @Override
