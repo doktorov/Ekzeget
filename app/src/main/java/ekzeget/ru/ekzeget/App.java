@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import ekzeget.ru.ekzeget.db.DbHelper;
 import ekzeget.ru.ekzeget.db.DbQuery;
 import ekzeget.ru.ekzeget.db.EkzegetDatabase;
+import ekzeget.ru.ekzeget.di.AppComponent;
+import ekzeget.ru.ekzeget.di.DaggerAppComponent;
+import ekzeget.ru.ekzeget.di.modules.ContextModule;
 import ekzeget.ru.ekzeget.preferences.PDefaultValue;
 import ekzeget.ru.ekzeget.preferences.Prefs;
 import ekzeget.ru.ekzeget.util.AppVersionCode;
@@ -58,9 +61,15 @@ public class App extends Application {
 
     private static String mPackageName;
 
+    private static AppComponent sAppComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        sAppComponent = DaggerAppComponent.builder()
+                .contextModule(new ContextModule(this))
+                .build();
 
         mContext = getApplicationContext();
 
@@ -83,6 +92,10 @@ public class App extends Application {
 
     public static String getInfoPackageName() {
         return mPackageName;
+    }
+
+    public static AppComponent getAppComponent() {
+        return sAppComponent;
     }
 
     public static SQLiteDatabase getWritableDatabase() {
