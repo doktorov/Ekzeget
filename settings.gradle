@@ -1,1 +1,1 @@
-include ':app', ':app-ekzeget'
+include ':app', ':app-kotlin'

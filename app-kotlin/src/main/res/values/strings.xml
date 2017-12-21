@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Экзегет</string>
+    <string name="title_activity_home">Экзегет</string>
+
+    <string name="log_in">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="bibleModel">Библия</string>
+    <string name="sermons">Проповеди</string>
+    <string name="dictionaries">Словари</string>
+    <string name="synopsis">Синопсис</string>
+    <string name="exegetes">Экзегеты</string>
+    <string name="exegesis">Экзегеза</string>
+    <string name="links_generator">Генератор ссылок</string>
+    <string name="guest_book">Гостевая</string>
+    <string name="title_activity_interpreting">Толкования</string>
+
+    <string name="nz">Новый завет</string>
+    <string name="vz">Ветхий завет</string>
+
+    <string name="content">Содержание</string>
+    <string name="book_info">Сведения о книге</string>
+
+    <string name="text">Текст</string>
+    <string name="interpretations">Толкования</string>
+    <string name="parallel_poems">Параллельные стихи</string>
+    <string name="translates">Переводы</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="bible_translate_st_text">Синодальный перевод</string>
+    <string name="bible_translate_csya_old">Церковно-славянский перевод</string>
+    <string name="bible_translate_csya">Церковно-славянский перевод (транслит)</string>
+    <string name="bible_translate_new_text">Современный перевод «Радостная весть» 2004 г.</string>
+    <string name="bible_translate_averincev">Перевод С.С. Аверинцева</string>
+    <string name="bible_translate_kassian">Перевод епископа Кассиана (Безобразова)</string>
+    <string name="bible_translate_ungerov">Перевод проф. П.А. Юнгерова</string>
+    <string name="bible_translate_grek">Ελληνικά</string>
+    <string name="bible_translate_podstr">Подстрочный перевод с греческого А. Винокурова</string>
+    <string name="bible_translate_latin">Latina Vulgata</string>
+    <string name="bible_translate_ukr">Український переклад І. Огієнка</string>
+    <string name="bible_translate_sovr_rbo">Современный перевод "Российского Библейского общества" 2011 г.</string>
+    <string name="bible_translate_nkjv">English version New King James Version</string>
+    <string name="bible_translate_desnitsky">Перевод А.С. Десницкого</string>
+    <string name="title_activity_text_interpretation_parallel_poems">Перевод</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="unpacking_database">Идёт распаковка базы&#8230;</string>
+</resources>
