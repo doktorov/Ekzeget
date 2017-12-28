@@ -9,12 +9,11 @@ import java.io.OutputStream;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
-import io.reactivex.Observable;
 import ru.ekzeget.App;
 import ru.ekzeget.db.DbHelper;
 
 public class Zip {
-    public Observable<String> onUnzipZip() {
+    public String onUnzipZip() {
         try {
             InputStream is = Objects.requireNonNull(App.Companion.getContext()).getAssets().open(DbHelper.PACK_DATABASE_NAME);
             File db_path = App.Companion.getContext().getDatabasePath(DbHelper.DATABASE_NAME);
@@ -41,6 +40,6 @@ public class Zip {
             e.printStackTrace();
         }
 
-        return null;
+        return "";
     }
 }

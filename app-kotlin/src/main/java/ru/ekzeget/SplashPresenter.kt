@@ -8,24 +8,23 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.AsyncSubject
 import ru.ekzeget.db.DbHelper
 import ru.ekzeget.utils.Zip
 
 @InjectViewState
 class SplashPresenter : MvpPresenter<SplashView>() {
     private val observable: Observable<String>
-        get() = Observable.just("Cricket", "Football")
+        get() = Observable.create { subscriber ->
+            subscriber.onNext(onUnzip())
+            subscriber.onComplete()
+        }
 
     fun checkDataBaseBeforeStart() {
         viewState.showProgress()
 
         if (!checkDataBase()) {
-//            val source = AsyncSubject.create<String>()
-//            source.subscribe(unzipObserver)
-//            source.onComplete()
-
             observable
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(unzipObserver)
         } else {
@@ -47,20 +46,27 @@ class SplashPresenter : MvpPresenter<SplashView>() {
     private val unzipObserver: Observer<String>
         get() = object : Observer<String> {
             override fun onSubscribe(d: Disposable) {
-                val zip = Zip()
-                zip.onUnzipZip()
+
             }
 
-            override fun onNext(t: String) {
-               val s = ""
+            override fun onNext(value: String) {
+
             }
 
-            override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {
+
+            }
 
             override fun onComplete() {
                 viewState.hideProgress()
 
-                Handler().postDelayed({ viewState.showMain() }, 1000)
+                viewState.showMain()
             }
         }
+
+    private fun onUnzip(): String {
+        val zip = Zip()
+        return zip.onUnzipZip()
+    }
 }
+
