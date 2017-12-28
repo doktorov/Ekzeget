@@ -1,47 +1,37 @@
 package ru.ekzeget
 
+import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.AsyncSubject
 import ru.ekzeget.db.DbHelper
-import java.util.zip.ZipFile
-import java.util.zip.ZipInputStream
-import android.content.res.AssetManager
 import ru.ekzeget.utils.Zip
-import java.io.*
-import java.util.zip.ZipOutputStream
-
 
 @InjectViewState
 class SplashPresenter : MvpPresenter<SplashView>() {
+    private val observable: Observable<String>
+        get() = Observable.just("Cricket", "Football")
+
     fun checkDataBaseBeforeStart() {
         viewState.showProgress()
 
         if (!checkDataBase()) {
-//            val operationObservable = Observable.create({ subscriber ->
-//                subscriber.onNext(onUnzipZip())
-//                subscriber.onCompleted()
-//            } as Observable.OnSubscribe<String>).subscribeOn(Schedulers.io())
-//
-//            operationObservable.subscribe(object : Subscriber<String>() {
-//                override fun onCompleted() {
-//
-//                }
-//
-//                override fun onError(e: Throwable) {}
-//
-//                override fun onNext(value: String) {
-//                    viewState.showMain()
-//                }
-//            })
-            val zip: Zip = Zip()
-            val onUnzipZip = zip.onUnzipZip()
+//            val source = AsyncSubject.create<String>()
+//            source.subscribe(unzipObserver)
+//            source.onComplete()
 
-            val s1 = ""
-
+            observable
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(unzipObserver)
         } else {
             viewState.hideProgress()
 
-            viewState.delayShowMain()
+            Handler().postDelayed({ viewState.showMain() }, 1000)
         }
     }
 
@@ -53,4 +43,24 @@ class SplashPresenter : MvpPresenter<SplashView>() {
 
         return false
     }
+
+    private val unzipObserver: Observer<String>
+        get() = object : Observer<String> {
+            override fun onSubscribe(d: Disposable) {
+                val zip = Zip()
+                zip.onUnzipZip()
+            }
+
+            override fun onNext(t: String) {
+               val s = ""
+            }
+
+            override fun onError(e: Throwable) {}
+
+            override fun onComplete() {
+                viewState.hideProgress()
+
+                Handler().postDelayed({ viewState.showMain() }, 1000)
+            }
+        }
 }

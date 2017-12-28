@@ -40,10 +40,12 @@ class SplashActivity  : MvpAppCompatActivity(), SplashView {
     }
 
     override fun delayShowMain() {
+        var s = ""
         //Handler().postDelayed({ this.showMain() }, 1000)
     }
 
     override fun showMain() {
+        var s = ""
         //val intent = Intent(this, MainActivity::class.java)
         //startActivity(intent)
         //finish()
