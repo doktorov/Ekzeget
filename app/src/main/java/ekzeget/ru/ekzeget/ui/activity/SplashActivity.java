@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.arellomobile.mvp.MvpAppCompatActivity;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -17,28 +13,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import ekzeget.ru.ekzeget.R;
 import ekzeget.ru.ekzeget.db.DbHelper;
-import ekzeget.ru.ekzeget.mvp.presenters.SplashPresenter;
-import ekzeget.ru.ekzeget.mvp.views.SplashView;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observables.ConnectableObservable;
-import io.reactivex.subjects.PublishSubject;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.schedulers.Schedulers;
 
 //public class SplashActivity extends MvpAppCompatActivity implements SplashView {
 //    @InjectPresenter
@@ -91,39 +75,17 @@ public class SplashActivity extends AppCompatActivity {
             LinearLayout progress = findViewById(R.id.progressBarView);
             progress.setVisibility(View.VISIBLE);
 
-//            final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
-//                subscriber.onNext(onUnzipZip());
-//                subscriber.onCompleted();
-//            }).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread());
-//
-//            operationObservable.subscribe(new Subscriber<String>() {
-//                @Override
-//                public void onCompleted() {
-//
-//                }
-//
-//                @Override
-//                public void onError(Throwable e) {
-//                }
-//
-//                @Override
-//                public void onNext(String value) {
-//                    showMain();
-//                }
-//            });
-
             getObservable()
-                    .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                    .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
         } else {
             new Handler().postDelayed(this::showMain, 1000);
         }
     }
 
-    private io.reactivex.Observable<String> getObservable() {
-        return io.reactivex.Observable.create(subscriber -> {
+    private Observable<String> getObservable() {
+        return Observable.create(subscriber -> {
             subscriber.onNext(onUnzipZip());
             subscriber.onComplete();
         });
