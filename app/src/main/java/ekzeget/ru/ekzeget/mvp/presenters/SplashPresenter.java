@@ -14,14 +14,19 @@ import java.util.zip.ZipInputStream;
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.db.DbHelper;
 import ekzeget.ru.ekzeget.mvp.views.SplashView;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class SplashPresenter extends MvpPresenter<SplashView> {
-    private io.reactivex.Observable<String> getObservable() {
-        return io.reactivex.Observable.just("Cricket", "Football");
+    private Observable<String> getObservable() {
+        return Observable.create(subscriber -> {
+            subscriber.onNext(onUnzipZip());
+            subscriber.onComplete();
+        });
     }
 
     public void checkDataBaseBeforeStart() {
@@ -29,7 +34,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
 
         if (!checkDataBase()) {
             getObservable()
-                    .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
         } else {
@@ -46,10 +51,9 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
 
     private Observer<String> getObserver() {
         return new Observer<String>() {
-
             @Override
             public void onSubscribe(Disposable d) {
-                onUnzipZip();
+
             }
 
             @Override
