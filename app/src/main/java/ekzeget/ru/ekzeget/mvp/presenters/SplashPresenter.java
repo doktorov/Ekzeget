@@ -14,42 +14,24 @@ import java.util.zip.ZipInputStream;
 import ekzeget.ru.ekzeget.App;
 import ekzeget.ru.ekzeget.db.DbHelper;
 import ekzeget.ru.ekzeget.mvp.views.SplashView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 @InjectViewState
 public class SplashPresenter extends MvpPresenter<SplashView> {
+    private io.reactivex.Observable<String> getObservable() {
+        return io.reactivex.Observable.just("Cricket", "Football");
+    }
+
     public void checkDataBaseBeforeStart() {
         getViewState().showProgress();
 
         if (!checkDataBase()) {
-//            final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
-//                subscriber.onNext(onUnzipZip());
-//                subscriber.onCompleted();
-//            }).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread());
-
-            final Observable<String> operationObservable = Observable.create((Observable.OnSubscribe<String>) subscriber -> {
-                subscriber.onNext(onUnzipZip());
-                subscriber.onCompleted();
-            }).subscribeOn(Schedulers.io());
-
-            operationObservable.subscribe(new Subscriber<String>() {
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(String value) {
-                    getViewState().showMain();
-                }
-            });
+            getObservable()
+                    .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getObserver());
         } else {
             getViewState().hideProgress();
 
@@ -60,6 +42,31 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
     private boolean checkDataBase() {
         File db_path = App.getContext().getDatabasePath(DbHelper.DATABASE_NAME);
         return db_path.exists();
+    }
+
+    private Observer<String> getObserver() {
+        return new Observer<String>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                onUnzipZip();
+            }
+
+            @Override
+            public void onNext(String value) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                getViewState().showMain();
+            }
+        };
     }
 
     private String onUnzipZip() {
