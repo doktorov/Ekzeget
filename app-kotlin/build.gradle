@@ -45,12 +45,18 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:27.0.2'
 
-    implementation 'com.arello-mobile:moxy:1.5.3'
-    implementation 'com.arello-mobile:moxy-app-compat:1.5.3'
-    kapt 'com.arello-mobile:moxy-compiler:1.5.3'
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+    //Rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+
+    //Dagger 2
+    compile "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //Moxy
+    implementation "com.arello-mobile:moxy:$moxy_version"
+    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
+    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
 }
