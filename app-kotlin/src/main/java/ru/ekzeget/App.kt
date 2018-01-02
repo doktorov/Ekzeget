@@ -3,6 +3,7 @@ package ru.ekzeget
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
+import ru.ekzeget.injection.*
 import ru.ekzeget.preferences.PDefaultValue
 import ru.ekzeget.preferences.Prefs
 import ru.ekzeget.utils.AppVersionCode
@@ -11,6 +12,10 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        appComponent = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
 
         context = applicationContext
 
@@ -46,6 +51,9 @@ class App : Application() {
 
         val appResources: Resources
             get() = context!!.resources
+
+        lateinit var appComponent: AppComponent
+            private set
 
 //        val writableDatabase: SQLiteDatabase
 //            get() = DbHelper(context).writableDatabase

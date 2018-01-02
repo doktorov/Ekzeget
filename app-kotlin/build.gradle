@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -60,3 +61,8 @@ dependencies {
     implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
     kapt "com.arello-mobile:moxy-compiler:$moxy_version"
 }
+
+repositories {
+    mavenCentral()
+}
+
