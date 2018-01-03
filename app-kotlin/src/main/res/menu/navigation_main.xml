@@ -2,15 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:title="1" />
+        android:id="@+id/navigation_nz"
+        android:title="@string/nz" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:title="2" />
-
-    <item
-        android:id="@+id/navigation_notifications"
-        android:title="3" />
+        android:id="@+id/navigation_vz"
+        android:title="@string/vz" />
 
 </menu>
