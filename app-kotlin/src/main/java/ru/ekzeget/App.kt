@@ -49,11 +49,10 @@ class App : Application() {
         var infoPackageName: String? = null
             private set
 
-        val appResources: Resources
-            get() = context!!.resources
+        val appResources: Resources?
+            get() = context?.resources
 
         lateinit var appComponent: AppComponent
-            private set
 
 //        val writableDatabase: SQLiteDatabase
 //            get() = DbHelper(context).writableDatabase

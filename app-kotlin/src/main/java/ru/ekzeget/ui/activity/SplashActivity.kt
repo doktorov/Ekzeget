@@ -1,14 +1,15 @@
-package ru.ekzeget
+package ru.ekzeget.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.arellomobile.mvp.presenter.ProvidePresenterTag
+import ru.ekzeget.R
+import ru.ekzeget.mvp.presenters.SplashPresenter
+import ru.ekzeget.mvp.views.SplashView
 
 class SplashActivity  : MvpAppCompatActivity(), SplashView {
     @InjectPresenter(type = PresenterType.GLOBAL)
@@ -37,11 +38,6 @@ class SplashActivity  : MvpAppCompatActivity(), SplashView {
 
     override fun hideProgress() {
         mProgress?.visibility= View.GONE
-    }
-
-    override fun delayShowMain() {
-        var s = ""
-        //Handler().postDelayed({ this.showMain() }, 1000)
     }
 
     override fun showMain() {

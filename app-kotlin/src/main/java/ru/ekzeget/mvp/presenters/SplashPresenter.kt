@@ -1,4 +1,4 @@
-package ru.ekzeget
+package ru.ekzeget.mvp.presenters
 
 import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
@@ -8,7 +8,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import ru.ekzeget.App
 import ru.ekzeget.db.DbHelper
+import ru.ekzeget.mvp.views.SplashView
 import ru.ekzeget.utils.Zip
 
 @InjectViewState

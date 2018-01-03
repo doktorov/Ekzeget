@@ -1,4 +1,4 @@
-package ru.ekzeget
+package ru.ekzeget.mvp.views
 
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
@@ -9,8 +9,6 @@ interface SplashView : MvpView {
     fun showProgress()
 
     fun hideProgress()
-
-    fun delayShowMain()
 
     fun showMain()
 }
