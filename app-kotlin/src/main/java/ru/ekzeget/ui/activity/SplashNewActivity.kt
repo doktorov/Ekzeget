@@ -1,5 +1,6 @@
 package ru.ekzeget.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -8,7 +9,7 @@ import ru.ekzeget.R
 import ru.ekzeget.mvp.presenters.SplashNewPresenter
 import ru.ekzeget.mvp.views.SplashView
 
-class SplashNewActivity  : MvpAppCompatActivity(), SplashView {
+class SplashNewActivity : MvpAppCompatActivity(), SplashView {
 
     @InjectPresenter
     lateinit var splashPresenter: SplashNewPresenter
@@ -33,6 +34,8 @@ class SplashNewActivity  : MvpAppCompatActivity(), SplashView {
     }
 
     override fun showMain() {
-        var s = ""
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
